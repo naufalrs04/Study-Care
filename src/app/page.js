@@ -3,6 +3,9 @@
 import React from 'react';
 import Navbar from '@/components/navbar-landing';
 import Image from 'next/image';
+import About from '@/components/landing/about';
+import Services from '@/components/landing/services';
+import Contact from '@/components/landing/contact';
 
 function App() {
   return (
@@ -12,7 +15,7 @@ function App() {
         <div className="absolute w-[800px] h-[800px] bg-gradient-to-b from-[#7FD8E8] to-[#0798C5] rounded-full -top-1/4 -right-1/4"></div>
       </div>
 
-      <div className="relative overflow-hidden min-h-screen bg-white flex items-center px-16">
+      <section className="relative overflow-hidden min-h-screen bg-white flex items-center px-16">
         <aside className="w-1/2">
           <h2 className="text-[#0798C5] font-medium text-xl mb-2">Educational</h2>
           <h1 className="text-5xl font-bold mb-2 text-black">StudyCare</h1>
@@ -27,10 +30,13 @@ function App() {
         </button>
         </aside>
         
-        <div className="w-1/2 z-50 flex justify-center items-center">
+        <div className="w-1/2 z-20 flex justify-center items-center">
           <Image src="/assets/Human.png" alt="Main Logo" width={500} height={350}/>
         </div>
-      </div>
+      </section>
+      <About/>
+      <Services/>
+      <Contact/>
     </div>
   );
 }

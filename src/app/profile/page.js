@@ -1,7 +1,10 @@
+"use client";
+
 import '@/app/globals.css';
 import Image from 'next/image';
 import { useState } from 'react';
 import { ArrowLeft, Edit, Eye, EyeOff, Upload, Trash2, X, Settings, LogOut, Save, Cancel } from 'lucide-react';
+import Link from 'next/link';
 
 export default function ProfilePage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -164,12 +167,12 @@ export default function ProfilePage() {
           <div className="px-8 py-6 bg-gray-50 border-b border-gray-200">
             <div className="flex gap-4 justify-center">
 
-              <a
+              <Link
                 href="/welcome-test"
                 className="block w-full max-w-xs bg-gradient-to-r from-cyan-400 to-cyan-500 hover:from-cyan-500 hover:to-cyan-600 text-white font-semibold py-3 px-6 rounded-full shadow-lg transition-all duration-200 hover:shadow-xl transform hover:-translate-y-1 text-center"
               >
                 Tes Lagi!
-              </a>
+              </Link>
 
               
             </div>

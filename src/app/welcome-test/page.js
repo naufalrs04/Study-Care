@@ -1,3 +1,5 @@
+"use client";
+
 import '@/app/globals.css';
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
@@ -229,9 +231,9 @@ const LearningStyleQuiz = () => {
           <div className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl">
             <h3 className="text-2xl font-bold text-gray-800 mb-6">Contoh Cerita Belajar</h3>
             <div className="text-gray-600 space-y-4 text-lg">
-              <p>"Saya biasanya belajar sambil mendengarkan musik instrumental..."</p>
-              <p>"Ketika belajar matematika, saya suka membuat catatan berwarna-warni..."</p>
-              <p>"Saya lebih mudah memahami materi ketika dijelaskan dengan diagram..."</p>
+              <p>Saya biasanya belajar sambil mendengarkan musik instrumental...</p>
+              <p>Ketika belajar matematika, saya suka membuat catatan berwarna-warni...</p>
+              <p>Saya lebih mudah memahami materi ketika dijelaskan dengan diagram...</p>
             </div>
             <button
               onClick={() => setShowInfoPopup(false)}

@@ -37,7 +37,7 @@ function Navbar() {
       </div>
 
       <Link
-        href="/login-page"
+        href="/login"
         className={`px-6 py-2 rounded-xl hover:rounded-full transition-[border-radius] duration-500 ease-in-out cursor-pointer 
           ${
             isScrolled

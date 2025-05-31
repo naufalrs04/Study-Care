@@ -1,7 +1,10 @@
+"use client";
+
 import '@/app/globals.css';
 import Image from 'next/image';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
@@ -38,7 +41,7 @@ const LoginPage = () => {
         <div className="text-center mb-8">
           <h1 className="text-2xl font-medium text-cyan-500 mb-1">Selamat datang kembali</h1>
           <p className="text-gray-400 text-sm">
-            Baru di StudyFinder? <a href="/register-page" className="text-cyan-500 hover:underline">Daftar Gratis</a>
+            Baru di StudyFinder? <Link href="/register" className="text-cyan-500 hover:underline">Daftar Gratis</Link>
           </p>
         </div>
 

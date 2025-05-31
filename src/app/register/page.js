@@ -1,6 +1,9 @@
+"use client";
+
 import '@/app/globals.css';
 import React, { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const LoginPage = () => {
   const [name, setName] = useState('');
@@ -28,7 +31,7 @@ const LoginPage = () => {
         <div className="text-center mb-8">
           <h1 className="text-2xl font-medium text-[#0798C5] mb-1">Hai, Selamat datang!</h1>
           <p className="text-gray-400 text-sm">
-            Sudah punya akun? <a href="/login-page" className="text-cyan-500 hover:underline">Masuk Sekarang</a>
+            Sudah punya akun? <Link href="/login" className="text-cyan-500 hover:underline">Masuk Sekarang</Link>
           </p>
         </div>
 

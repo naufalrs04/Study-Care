@@ -1,7 +1,10 @@
+"use client";
+
 import '@/app/globals.css';
 import Image from 'next/image';
 import React, { useState } from 'react';
 import { ChevronDown, LogOut, User } from 'lucide-react';
+import Link from 'next/link';
 
 // Main Layout Component
 const Layout = () => {
@@ -68,10 +71,10 @@ const Layout = () => {
 
       {isDropdownOpen && (
         <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10">
-          <a href="/user-profile" className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+          <Link href="/profile" className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
             <User size={16} className="mr-2" />
             Profile
-          </a>
+          </Link>
           <a href="#" className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
             <LogOut size={16} className="mr-2" />
             Logout

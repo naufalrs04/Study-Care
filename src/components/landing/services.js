@@ -6,7 +6,7 @@ import { LuAlarmClock } from "react-icons/lu";
 function Services() {
     return(
         <section id="services" className="px-16 py-45">
-            <div className="grid grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* Gaya Belajar Card - Featured */}
             <div className="bg-gradient-to-br from-[#0798C5] to-[#7FD8E8] text-white p-6 rounded-3xl relative overflow-hidden hover:scale-105 transition-transform duration-300 shadow-lg">
                 <div className="flex justify-between items-start mb-4">

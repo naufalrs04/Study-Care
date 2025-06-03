@@ -4,16 +4,12 @@ import { MdMarkEmailUnread } from "react-icons/md";
 
 function Contact() {
     return(
-        <section id="contact" className="relative py-20 bg-white">
-      {/* Background Decorative Elements */}
-        <div className="absolute top-10 right-0 w-[500px] h-[500px] overflow-hidden">
-          <div className="absolute w-[600px] h-[600px] bg-gradient-to-b from-[#7FD8E8]/20 to-[#0798C5]/20 rounded-full -top-1/4 -right-1/4"></div>
-        </div>
+        <section id="contact" className="px-16 py-20">
         
-        <div className="container mx-auto px-16">
-          <div className="flex items-center min-h-[600px]">
+        <div className="container mx-auto">
+          <div className="flex flex-col gap-15 md:gap-5 md:flex-row items-center">
             {/* Left Side - Contact Info */}
-            <div className="w-1/2 pr-12">
+            <div className="w-full md:w-1/2 md:pr-12">
               <h2 className="text-[#0798C5] font-medium text-xl mb-2">Hubungi Kami</h2>
               <h1 className="text-5xl font-bold mb-6 text-black">
                 Mari Berdiskusi<br/>
@@ -52,14 +48,14 @@ function Contact() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-800">Email</h4>
-                    <p className="text-gray-600">info@studycare.com</p>
+                    <p className="text-gray-600">info@studyfinder.com</p>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Right Side - Contact Form */}
-            <div className="w-1/2 relative z-10">
+            <div className="w-full md:w-1/2 relative z-10">
               <div className="bg-white p-8 rounded-3xl shadow-xl border border-gray-100">
                 <h3 className="text-2xl font-bold text-gray-800 mb-6">Kirim Pesan</h3>
                 

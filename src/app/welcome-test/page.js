@@ -3,6 +3,7 @@
 import '@/app/globals.css';
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
+import { useRef } from 'react';
 import { ArrowLeft, Info, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const LearningStyleQuiz = () => {
@@ -13,6 +14,8 @@ const LearningStyleQuiz = () => {
   const [showInfoPopup, setShowInfoPopup] = useState(false);
   const [autoNextCountdown, setAutoNextCountdown] = useState(0);
   const [isAutoNexting, setIsAutoNexting] = useState(false);
+  const countdownRef = useRef(null);
+  const isProcessingRef = useRef(false);
 
   // Dummy quiz questions
   const quizQuestions = [
@@ -40,9 +43,12 @@ const LearningStyleQuiz = () => {
 
   const handleQuizAnswer = (questionId, answer) => {
     // Jangan proses jika sedang auto next
-    if (isAutoNexting) {
+    // Prevent double execution
+    if (isAutoNexting || isProcessingRef.current) {
       return;
     }
+
+    isProcessingRef.current = true;
 
     // Update jawaban
     setQuizAnswers(prev => ({
@@ -50,36 +56,88 @@ const LearningStyleQuiz = () => {
       [questionId]: answer
     }));
 
+    // // Auto next hanya jika ini bukan pertanyaan terakhir
+    // if (currentQuestion < quizQuestions.length - 1) {
+    //   setIsAutoNexting(true);
+    //   setAutoNextCountdown(2); // Set initial countdown value
+      
+    //   // Countdown timer
+    //   const countdownInterval = setInterval(() => {
+    //     setAutoNextCountdown(prev => {
+    //       if (prev <= 1) {
+    //         clearInterval(countdownInterval);
+    //         setIsAutoNexting(false);
+    //         setCurrentQuestion(curr => curr + 1);
+    //         return 0;
+    //       }
+    //       return prev - 1;
+    //     });
+    //   }, 1000);
+
+    //   // Simpan interval ID untuk cleanup
+    //   window.currentCountdownInterval = countdownInterval;
+    // }
+    
     // Auto next hanya jika ini bukan pertanyaan terakhir
     if (currentQuestion < quizQuestions.length - 1) {
       setIsAutoNexting(true);
-      setAutoNextCountdown(2); // Set initial countdown value
+      setAutoNextCountdown(2);
       
-      // Countdown timer
-      const countdownInterval = setInterval(() => {
-        setAutoNextCountdown(prev => {
-          if (prev <= 1) {
-            clearInterval(countdownInterval);
-            setIsAutoNexting(false);
-            setCurrentQuestion(curr => curr + 1);
-            return 0;
-          }
-          return prev - 1;
-        });
+      // Clear previous interval if exists
+      if (countdownRef.current) {
+        clearInterval(countdownRef.current);
+      }
+      
+      let countdown = 2;
+      countdownRef.current = setInterval(() => {
+        countdown -= 1;
+        setAutoNextCountdown(countdown);
+        
+        if (countdown <= 0) {
+          clearInterval(countdownRef.current);
+          countdownRef.current = null;
+          setIsAutoNexting(false);
+          setCurrentQuestion(prev => prev + 1);
+          isProcessingRef.current = false;
+        }
       }, 1000);
-
-      // Simpan interval ID untuk cleanup
-      window.currentCountdownInterval = countdownInterval;
+    } else {
+      isProcessingRef.current = false;
     }
   };
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (countdownRef.current) {
+        clearInterval(countdownRef.current);
+      }
+    };
+  }, []);
+
+  // Fungsi untuk handle next manual
+  // const handleNextQuestion = () => {
+  //   // Clear auto next jika sedang berjalan
+  //   if (window.currentCountdownInterval) {
+  //     clearInterval(window.currentCountdownInterval);
+  //     setIsAutoNexting(false);
+  //     setAutoNextCountdown(0);
+  //   }
+    
+  //   if (currentQuestion < quizQuestions.length - 1) {
+  //     setCurrentQuestion(prev => prev + 1);
+  //   }
+  // };
 
   // Fungsi untuk handle next manual
   const handleNextQuestion = () => {
     // Clear auto next jika sedang berjalan
-    if (window.currentCountdownInterval) {
-      clearInterval(window.currentCountdownInterval);
+    if (countdownRef.current) {
+      clearInterval(countdownRef.current);
+      countdownRef.current = null;
       setIsAutoNexting(false);
       setAutoNextCountdown(0);
+      isProcessingRef.current = false;
     }
     
     if (currentQuestion < quizQuestions.length - 1) {
@@ -92,12 +150,27 @@ const LearningStyleQuiz = () => {
     return quizAnswers[currentQuestionId] !== undefined;
   };
 
+  // const handlePrevQuestion = () => {
+  //   // Clear auto next jika sedang berjalan
+  //   if (window.currentCountdownInterval) {
+  //     clearInterval(window.currentCountdownInterval);
+  //     setIsAutoNexting(false);
+  //     setAutoNextCountdown(0);
+  //   }
+    
+  //   if (currentQuestion > 0) {
+  //     setCurrentQuestion(prev => prev - 1);
+  //   }
+  // };
+
   const handlePrevQuestion = () => {
     // Clear auto next jika sedang berjalan
-    if (window.currentCountdownInterval) {
-      clearInterval(window.currentCountdownInterval);
+    if (countdownRef.current) {
+      clearInterval(countdownRef.current);
+      countdownRef.current = null;
       setIsAutoNexting(false);
       setAutoNextCountdown(0);
+      isProcessingRef.current = false;
     }
     
     if (currentQuestion > 0) {

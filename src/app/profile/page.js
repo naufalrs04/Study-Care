@@ -3,7 +3,7 @@
 import '@/app/globals.css';
 import Image from 'next/image';
 import { useState } from 'react';
-import { ArrowLeft, Edit, Eye, EyeOff, Upload, Trash2, X, Settings, LogOut, Save, Cancel } from 'lucide-react';
+import { ArrowLeft, Edit, Eye, EyeOff, Upload, Trash2, X, Settings, LogOut, Save } from 'lucide-react';
 import Link from 'next/link';
 
 export default function ProfilePage() {
@@ -80,7 +80,7 @@ export default function ProfilePage() {
     <div className="min-h-screen bg-gradient-to-br from-cyan-50 to-blue-100">
       {/* Header */}
       <div className="bg-white shadow-sm">
-        <div className="max-w-4xl mx-auto px-4 py-4">
+        <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <button
               onClick={handleBackClick}
@@ -114,181 +114,359 @@ export default function ProfilePage() {
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="max-w-4xl mx-auto p-4">
-        <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
-          {/* Profile Header */}
-          <div className="bg-gradient-to-r from-cyan-400 to-blue-500 px-8 py-12 text-center relative">
-            <div className="absolute inset-0 bg-cyan bg-opacity-10"></div>
-            
-            {/* Profile Photo */}
-            <div className="relative z-10 mb-6">
-              <div className="w-32 h-32 mx-auto rounded-full bg-white border-4 border-white shadow-lg flex items-center justify-center overflow-hidden">
-                {profilePhoto ? (
-                  <img src={profilePhoto} alt="Profile" className="w-full h-full object-cover" />
-                ) : (
-                  <div className="w-20 h-20 rounded-full bg-gradient-to-br from-cyan-200 to-cyan-300 flex items-center justify-center">
-                    <div className="w-8 h-8 rounded-full bg-cyan-400"></div>
-                  </div>
-                )}
-              </div>
-              <button
-                onClick={() => setShowPhotoOptions(true)}
-                className="absolute bottom-0 right-1/2 transform translate-x-1/2 translate-y-2 w-8 h-8 bg-gray-600 hover:bg-gray-700 text-white rounded-full flex items-center justify-center shadow-lg transition-colors duration-200"
-              >
-                <Edit size={14} />
-              </button>
-            </div>
-
-            {/* Name and Learning Style */}
-            <h2 className="text-3xl font-bold text-white mb-3">Aditya Haidar Faishal</h2>
-            <span className="inline-block px-4 py-2 bg-yellow-400 text-yellow-900 rounded-full text-sm font-medium shadow-lg">
-              Visual
-            </span>
-            
-            {/* Stats */}
-            <div className="flex justify-center gap-8 mt-6 text-white">
-              <div className="text-center">
-                <div className="text-2xl font-bold">127</div>
-                <div className="text-sm opacity-90">Teman</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold">15</div>
-                <div className="text-sm opacity-90">Streak</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold">892</div>
-                <div className="text-sm opacity-90">Jam</div>
-              </div>
-            </div>
-          </div>
-
-          {/* Action Buttons */}
-          <div className="px-8 py-6 bg-gray-50 border-b border-gray-200">
-            <div className="flex gap-4 justify-center">
-
-              <Link
-                href="/welcome-test"
-                className="block w-full max-w-xs bg-gradient-to-r from-cyan-400 to-cyan-500 hover:from-cyan-500 hover:to-cyan-600 text-white font-semibold py-3 px-6 rounded-full shadow-lg transition-all duration-200 hover:shadow-xl transform hover:-translate-y-1 text-center"
-              >
-                Tes Lagi!
-              </Link>
-
+      {/* Main Content - Desktop: Horizontal Layout, Mobile: Vertical Layout */}
+      <div className="max-w-7xl mx-auto p-4">
+        {/* Mobile Layout (below lg breakpoint) */}
+        <div className="lg:hidden">
+          <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
+            {/* Profile Header */}
+            <div className="bg-gradient-to-r from-cyan-400 to-blue-500 px-8 py-12 text-center relative">
+              <div className="absolute inset-0 bg-cyan bg-opacity-10"></div>
               
-            </div>
-          </div>
+              {/* Profile Photo */}
+              <div className="relative z-10 mb-6">
+                <div className="w-32 h-32 mx-auto rounded-full bg-white border-4 border-white shadow-lg flex items-center justify-center overflow-hidden">
+                  {profilePhoto ? (
+                    <img src={profilePhoto} alt="Profile" className="w-full h-full object-cover" />
+                  ) : (
+                    <div className="w-20 h-20 rounded-full bg-gradient-to-br from-cyan-200 to-cyan-300 flex items-center justify-center">
+                      <div className="w-8 h-8 rounded-full bg-cyan-400"></div>
+                    </div>
+                  )}
+                </div>
+                <button
+                  onClick={() => setShowPhotoOptions(true)}
+                  className="absolute bottom-0 right-1/2 transform translate-x-1/2 translate-y-2 w-8 h-8 bg-gray-600 hover:bg-gray-700 text-white rounded-full flex items-center justify-center shadow-lg transition-colors duration-200"
+                >
+                  <Edit size={14} />
+                </button>
+              </div>
 
-          {/* Account Info Section */}
-          <div className="px-8 py-8">
-            <h3 className="text-xl font-bold text-gray-800 mb-6">Informasi Akun</h3>
-            
-            <div className="space-y-6">
-              {/* Email Field */}
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Email</label>
-                <div className="bg-gray-50 rounded-xl p-4 border border-gray-200">
-                  <div className="text-gray-600">ahf.aditya@gmail.com</div>
-                  <div className="text-xs text-gray-500 mt-1">Email tidak dapat diubah</div>
+              {/* Name and Learning Style */}
+              <h2 className="text-3xl font-bold text-white mb-3">Aditya Haidar Faishal</h2>
+              <span className="inline-block px-4 py-2 bg-yellow-400 text-yellow-900 rounded-full text-sm font-medium shadow-lg">
+                Visual
+              </span>
+              
+              {/* Stats */}
+              <div className="flex justify-center gap-8 mt-6 text-white">
+                <div className="text-center">
+                  <div className="text-2xl font-bold">127</div>
+                  <div className="text-sm opacity-90">Teman</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold">15</div>
+                  <div className="text-sm opacity-90">Streak</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold">892</div>
+                  <div className="text-sm opacity-90">Jam</div>
                 </div>
               </div>
+            </div>
 
-              {/* Password Field */}
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Password</label>
-                <div className="flex gap-3">
-                  <div className="relative flex-1">
-                    <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 pr-12">
-                      <div className="text-gray-600">
-                        {showPassword ? password : "••••••••••••"}
+            {/* Action Button */}
+            <div className="px-8 py-6 bg-gray-50 border-b border-gray-200">
+              <div className="flex gap-4 justify-center">
+
+                <Link
+                  href="/pomodoro"
+                  className="block w-full max-w-xs bg-gradient-to-r from-cyan-400 to-cyan-500 hover:from-cyan-500 hover:to-cyan-600 text-white font-semibold py-3 px-6 rounded-full shadow-lg transition-all duration-200 hover:shadow-xl transform hover:-translate-y-1 text-center"
+                >
+                  Tes Lagi!
+                </Link>
+
+              </div>
+            </div>
+
+            {/* Account Info Section */}
+            <div className="px-8 py-8">
+              <h3 className="text-xl font-bold text-gray-800 mb-6">Informasi Akun</h3>
+              
+              <div className="space-y-6">
+                {/* Email Field */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Email</label>
+                  <div className="bg-gray-50 rounded-xl p-4 border border-gray-200">
+                    <div className="text-gray-600">ahf.aditya@gmail.com</div>
+                    <div className="text-xs text-gray-500 mt-1">Email tidak dapat diubah</div>
+                  </div>
+                </div>
+
+                {/* Password Field */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Password</label>
+                  <div className="flex gap-3">
+                    <div className="relative flex-1">
+                      <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 pr-12">
+                        <div className="text-gray-600">
+                          {showPassword ? password : "••••••••••••"}
+                        </div>
                       </div>
+                      <button
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                      >
+                        {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                      </button>
                     </div>
                     <button
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                      onClick={() => setIsEditingPassword(true)}
+                      className="px-6 py-3 bg-cyan-400 hover:bg-cyan-500 text-white rounded-xl font-medium transition-colors duration-200"
                     >
-                      {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                      Ubah
                     </button>
                   </div>
-                  <button
-                    onClick={() => setIsEditingPassword(true)}
-                    className="px-6 py-3 bg-cyan-400 hover:bg-cyan-500 text-white rounded-xl font-medium transition-colors duration-200"
-                  >
-                    Ubah
-                  </button>
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Bio Section */}
-          <div className="px-8 py-6 border-t border-gray-200">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xl font-bold text-gray-800">Tentang</h3>
-              {!isEditingBio && (
-                <button
-                  onClick={() => setIsEditingBio(true)}
-                  className="flex items-center gap-2 text-cyan-500 hover:text-cyan-600 font-medium"
-                >
-                  <Edit size={16} />
-                  <span>Edit</span>
-                </button>
+            {/* Bio Section */}
+            <div className="px-8 py-6 border-t border-gray-200">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-xl font-bold text-gray-800">Tentang</h3>
+                {!isEditingBio && (
+                  <button
+                    onClick={() => setIsEditingBio(true)}
+                    className="flex items-center gap-2 text-cyan-500 hover:text-cyan-600 font-medium"
+                  >
+                    <Edit size={16} />
+                    <span>Edit</span>
+                  </button>
+                )}
+              </div>
+              
+              {isEditingBio ? (
+                <div className="space-y-4">
+                  <textarea
+                    value={tempBio}
+                    onChange={(e) => setTempBio(e.target.value)}
+                    className="w-full p-4 border border-gray-300 rounded-2xl resize-none h-32 focus:ring-2 focus:ring-cyan-400 focus:border-transparent"
+                    placeholder="Tulis bio Anda..."
+                  />
+                  <div className="flex gap-3 justify-end">
+                    <button
+                      onClick={handleBioCancel}
+                      className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-800 font-medium"
+                    >
+                      <X size={16} />
+                      <span>Batal</span>
+                    </button>
+                    <button
+                      onClick={handleBioSave}
+                      className="flex items-center gap-2 px-6 py-2 bg-cyan-400 hover:bg-cyan-500 text-white rounded-lg font-medium transition-colors duration-200"
+                    >
+                      <Save size={16} />
+                      <span>Simpan</span>
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="bg-gray-50 rounded-2xl p-6 text-gray-700 leading-relaxed">
+                  {bio}
+                </div>
               )}
             </div>
-            
-            {isEditingBio ? (
-              <div className="space-y-4">
-                <textarea
-                  value={tempBio}
-                  onChange={(e) => setTempBio(e.target.value)}
-                  className="w-full p-4 border border-gray-300 rounded-2xl text-black resize-none h-32 focus:ring-2 focus:ring-cyan-400 focus:border-transparent"
-                  placeholder="Tulis bio Anda..."
-                />
-                <div className="flex gap-3 justify-end">
-                  <button
-                    onClick={handleBioCancel}
-                    className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-800 font-medium"
-                  >
-                    <X size={16} />
-                    <span>Batal</span>
-                  </button>
-                  <button
-                    onClick={handleBioSave}
-                    className="flex items-center gap-2 px-6 py-2 bg-cyan-400 hover:bg-cyan-500 text-white rounded-lg font-medium transition-colors duration-200"
-                  >
-                    <Save size={16} />
-                    <span>Simpan</span>
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <div className="bg-gray-50 rounded-2xl p-6 text-gray-700 leading-relaxed">
-                {bio}
-              </div>
-            )}
-          </div>
 
-          {/* Additional Info */}
-          <div className="px-8 py-6 bg-gray-50 border-t border-gray-200">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <h4 className="font-semibold text-gray-800 mb-2">Gaya Belajar Saya</h4>
-                <div className="flex flex-wrap gap-2">
-                  <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-medium">Visual</span>
-                  <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium">Praktikal</span>
+            {/* Additional Info */}
+            <div className="px-8 py-6 bg-gray-50 border-t border-gray-200">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <h4 className="font-semibold text-gray-800 mb-2">Gaya Belajar Saya</h4>
+                  <div className="flex flex-wrap gap-2">
+                    <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-medium">Visual</span>
+                    <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium">Praktikal</span>
+                  </div>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-gray-800 mb-2">Topik Favorit</h4>
+                  <div className="flex flex-wrap gap-2">
+                    <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">Matematika</span>
+                    <span className="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-xs font-medium">Sains</span>
+                    <span className="px-3 py-1 bg-pink-100 text-pink-800 rounded-full text-xs font-medium">Teknologi</span>
+                  </div>
                 </div>
               </div>
-              <div>
-                <h4 className="font-semibold text-gray-800 mb-2">Topik Favorit</h4>
-                <div className="flex flex-wrap gap-2">
-                  <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">Matematika</span>
-                  <span className="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-xs font-medium">Sains</span>
-                  <span className="px-3 py-1 bg-pink-100 text-pink-800 rounded-full text-xs font-medium">Teknologi</span>
-                </div>
+              
+              <div className="mt-6 text-center text-sm text-gray-500">
+                Bergabung sejak Januari 2024
               </div>
             </div>
-            
-            <div className="mt-6 text-center text-sm text-gray-500">
-              Bergabung sejak Januari 2024
+          </div>
+        </div>
+
+        {/* Desktop Layout (lg and above) */}
+        <div className="hidden lg:block">
+          <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
+            <div className="flex">
+              {/* Left Side - Profile Info */}
+              <div className="w-1/3 bg-gradient-to-b from-cyan-400 to-blue-500 p-8 text-center relative">
+                <div className="absolute inset-0 bg-cyan bg-opacity-10"></div>
+                
+                {/* Profile Photo */}
+                <div className="relative z-10 mb-6">
+                  <div className="w-32 h-32 mx-auto rounded-full bg-white border-4 border-white shadow-lg flex items-center justify-center overflow-hidden">
+                    {profilePhoto ? (
+                      <img src={profilePhoto} alt="Profile" className="w-full h-full object-cover" />
+                    ) : (
+                      <div className="w-20 h-20 rounded-full bg-gradient-to-br from-cyan-200 to-cyan-300 flex items-center justify-center">
+                        <div className="w-8 h-8 rounded-full bg-cyan-400"></div>
+                      </div>
+                    )}
+                  </div>
+                  <button
+                    onClick={() => setShowPhotoOptions(true)}
+                    className="absolute bottom-0 right-1/2 transform translate-x-1/2 translate-y-2 w-8 h-8 bg-gray-600 hover:bg-gray-700 text-white rounded-full flex items-center justify-center shadow-lg transition-colors duration-200"
+                  >
+                    <Edit size={14} />
+                  </button>
+                </div>
+
+                {/* Name and Learning Style */}
+                <h2 className="text-2xl font-bold text-white mb-3">Aditya Haidar Faishal</h2>
+                <span className="inline-block px-4 py-2 bg-yellow-400 text-yellow-900 rounded-full text-sm font-medium shadow-lg mb-6">
+                  Visual
+                </span>
+                
+                {/* Stats */}
+                <div className="space-y-4 text-white mb-8">
+                  <div className="text-center">
+                    <div className="text-2xl font-bold">127</div>
+                    <div className="text-sm opacity-90">Teman</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold">15</div>
+                    <div className="text-sm opacity-90">Streak</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold">892</div>
+                    <div className="text-sm opacity-90">Jam</div>
+                  </div>
+                </div>
+
+                {/* Action Button GABISAAA*/}
+                <Link href="/pomodoro" className="w-full w-full relative z-50">
+                  <div className='bg-white text-cyan-600 font-semibold py-3 px-6 rounded-full shadow-lg transition-all duration-200 hover:shadow-xl transform hover:-translate-y-1 text-center'>
+                    Tes Lagi!
+                  </div>
+                </Link>
+
+
+                {/* Additional Info */}
+                <div className="mt-8 space-y-6 text-left">
+                  <div>
+                    <h4 className="font-semibold text-white mb-2">Gaya Belajar Saya</h4>
+                    <div className="flex flex-wrap gap-2">
+                      <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-medium">Visual</span>
+                      <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium">Praktikal</span>
+                    </div>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-white mb-2">Topik Favorit</h4>
+                    <div className="flex flex-wrap gap-2">
+                      <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">Matematika</span>
+                      <span className="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-xs font-medium">Sains</span>
+                      <span className="px-3 py-1 bg-pink-100 text-pink-800 rounded-full text-xs font-medium">Teknologi</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="mt-8 text-center text-sm text-white opacity-75">
+                  Bergabung sejak Januari 2024
+                </div>
+              </div>
+
+              {/* Right Side - Account Info and Bio */}
+              <div className="w-2/3 flex flex-col">
+                {/* Account Info Section */}
+                <div className="p-8 flex-1">
+                  <h3 className="text-xl font-bold text-gray-800 mb-6">Informasi Akun</h3>
+                  
+                  <div className="space-y-6">
+                    {/* Email Field */}
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">Email</label>
+                      <div className="bg-gray-50 rounded-xl p-4 border border-gray-200">
+                        <div className="text-gray-600">ahf.aditya@gmail.com</div>
+                        <div className="text-xs text-gray-500 mt-1">Email tidak dapat diubah</div>
+                      </div>
+                    </div>
+
+                    {/* Password Field */}
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">Password</label>
+                      <div className="flex gap-3">
+                        <div className="relative flex-1">
+                          <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 pr-12">
+                            <div className="text-gray-600">
+                              {showPassword ? password : "••••••••••••"}
+                            </div>
+                          </div>
+                          <button
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                          >
+                            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                          </button>
+                        </div>
+                        <button
+                          onClick={() => setIsEditingPassword(true)}
+                          className="px-6 py-3 bg-cyan-400 hover:bg-cyan-500 text-white rounded-xl font-medium transition-colors duration-200"
+                        >
+                          Ubah
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Bio Section */}
+                <div className="px-8 py-6 border-t border-gray-200 flex-1">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-xl font-bold text-gray-800">Tentang</h3>
+                    {!isEditingBio && (
+                      <button
+                        onClick={() => setIsEditingBio(true)}
+                        className="flex items-center gap-2 text-cyan-500 hover:text-cyan-600 font-medium"
+                      >
+                        <Edit size={16} />
+                        <span>Edit</span>
+                      </button>
+                    )}
+                  </div>
+                  
+                  {isEditingBio ? (
+                    <div className="space-y-4">
+                      <textarea
+                        value={tempBio}
+                        onChange={(e) => setTempBio(e.target.value)}
+                        className="w-full p-4 border border-gray-300 rounded-2xl resize-none h-40 focus:ring-2 focus:ring-cyan-400 focus:border-transparent"
+                        placeholder="Tulis bio Anda..."
+                      />
+                      <div className="flex gap-3 justify-end">
+                        <button
+                          onClick={handleBioCancel}
+                          className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-800 font-medium"
+                        >
+                          <X size={16} />
+                          <span>Batal</span>
+                        </button>
+                        <button
+                          onClick={handleBioSave}
+                          className="flex items-center gap-2 px-6 py-2 bg-cyan-400 hover:bg-cyan-500 text-white rounded-lg font-medium transition-colors duration-200"
+                        >
+                          <Save size={16} />
+                          <span>Simpan</span>
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="bg-gray-50 rounded-2xl p-6 text-gray-700 leading-relaxed h-40 overflow-y-auto">
+                      {bio}
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -352,7 +530,7 @@ export default function ProfilePage() {
                   type="password"
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl text-black focus:ring-2 focus:ring-cyan-400 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-400 focus:border-transparent"
                   placeholder="Masukkan password baru"
                 />
               </div>
@@ -362,7 +540,7 @@ export default function ProfilePage() {
                   type="password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl text-black focus:ring-2 focus:ring-cyan-400 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-400 focus:border-transparent"
                   placeholder="Konfirmasi password baru"
                 />
               </div>

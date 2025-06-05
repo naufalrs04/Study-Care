@@ -50,7 +50,7 @@ function Navbar() {
             <a href="#about" className="rounded-full px-3 py-2 text-gray-600 hover:text-white hover:bg-[#0798C5] transition-colors">About</a>
             <a href="#services" className="rounded-full px-3 py-2 text-gray-600 hover:text-white hover:bg-[#0798C5] transition-colors">Services</a>
             <a href="#contact" className="rounded-full px-3 py-2 text-gray-600 hover:text-white hover:bg-[#0798C5] transition-colors">Contact</a>
-            <Link href="/main" className="rounded-full py-2 px-3 text-gray-600 hover:text-white hover:bg-[#0798C5] transition-colors">Main</Link>
+            <Link href="/dashboard" className="rounded-full py-2 px-3 text-gray-600 hover:text-white hover:bg-[#0798C5] transition-colors">Dashboard</Link>
           </div>
         </div>
 
@@ -142,11 +142,11 @@ function Navbar() {
               Contact
             </a>
             <Link 
-              href="/main" 
+              href="/dashboard" 
               onClick={closeMobileMenu}
               className="block px-6 py-4 text-gray-700 hover:text-[#0798C5] hover:bg-gray-50 transition-colors border-b border-gray-50"
             >
-              Main
+              Dashboard
             </Link>
           </div>
 

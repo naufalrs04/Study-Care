@@ -1,7 +1,7 @@
 'use client';
 
 import '@/app/globals.css';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { Settings, Info, X, RotateCcw, SkipForward, RefreshCw } from 'lucide-react';
 import { usePomodoroContext } from '../../contexts/PomodoroContext';
 
@@ -30,7 +30,6 @@ const PomodoroTimer = () => {
   const startPauseRef = useRef(false);
   const skipResetRef = useRef(false);
   const resetIntervalRef = useRef(false);
-  const isInitializedRef = useRef(false);
 
   const modes = {
     pomodoro: { 
@@ -56,37 +55,37 @@ const PomodoroTimer = () => {
     }
   };
 
-  // Update timer when mode changes (only if not running)
-  useEffect(() => {
+  // PERBAIKAN: HAPUS useEffect yang mereset timeLeft saat page load
+  // Biarkan PomodoroContext mengelola semua state management
+  // Context sudah handle localStorage restore dengan baik
+
+  const handleModeChange = (mode) => {
+    console.log('🎯 DEBUG: handleModeChange called with mode:', mode);
     
-    // Skip pada initial mount
-    if (!isInitializedRef.current) {
-      console.log('🔄 DEBUG: Skipping - not initialized yet');
-      isInitializedRef.current = true;
-      return;
-    }
-
-    // PERBAIKAN: Cek isRunning di dalam useEffect, bukan di dependency
-    if (!isRunning) {
-      const newTime = getModeTime(currentMode);
-      setTimeLeft(newTime);
-    } else {
-      console.log('🔄 DEBUG: NOT setting timeLeft because timer is running');
-    }
-  }, [currentMode, pomodoroTime, shortBreakTime, longBreakTime]); // HAPUS isRunning dari dependency!
-
-  const handleModeChange = (mode) => {  
     // Prevent double execution
     if (modeChangeRef.current) {
+      console.log('🎯 DEBUG: Preventing double execution of mode change');
       return;
     }
 
     if (mode !== currentMode) {
+      console.log('🎯 DEBUG: Changing mode from', currentMode, 'to', mode);
       modeChangeRef.current = true;
-      setCurrentMode(mode);
-      setIsRunning(false);
-      setStartTime(null);
-      setTimeLeft(getModeTime(mode));
+      
+      // HANYA reset timer jika user secara manual mengubah mode dan timer tidak sedang berjalan
+      if (!isRunning) {
+        setCurrentMode(mode);
+        setTimeLeft(getModeTime(mode));
+        setStartTime(null);
+        console.log('🎯 DEBUG: Mode changed and timer reset because not running');
+      } else {
+        // Jika timer sedang berjalan, tanya user dulu atau langsung stop
+        console.log('🎯 DEBUG: Timer is running, stopping before mode change');
+        setIsRunning(false);
+        setStartTime(null);
+        setCurrentMode(mode);
+        setTimeLeft(getModeTime(mode));
+      }
       
       // Reset flag setelah operasi selesai
       setTimeout(() => {
@@ -96,22 +95,27 @@ const PomodoroTimer = () => {
   };
 
   const handleStartPause = () => {
+    console.log('▶️ DEBUG: handleStartPause called');
+    console.log('▶️ DEBUG: Current state - isRunning:', isRunning, 'timeLeft:', timeLeft, 'startTime:', startTime);
     
     // Prevent double execution
     if (startPauseRef.current) {
+      console.log('▶️ DEBUG: Preventing double execution of start/pause');
       return;
     }
 
     startPauseRef.current = true;
 
     if (!isRunning) {
-      // START
+      // START: resume timer dari waktu saat ini
       const newStartTime = Date.now() - (getModeTime(currentMode) - timeLeft) * 1000;
+      console.log('▶️ DEBUG: STARTING timer from timeLeft:', timeLeft);
       
       setStartTime(newStartTime);
       setIsRunning(true);
     } else {
-      // PAUSE
+      // PAUSE: hanya hentikan timer, jangan reset
+      console.log('▶️ DEBUG: PAUSING timer at timeLeft:', timeLeft);
       setIsRunning(false);
       // TIDAK mengubah startTime atau timeLeft saat pause
     }
@@ -123,9 +127,11 @@ const PomodoroTimer = () => {
   };
 
   const handleSkipReset = () => {
+    console.log('⏭️ DEBUG: handleSkipReset called, isRunning:', isRunning);
     
     // Prevent double execution
     if (skipResetRef.current) {
+      console.log('⏭️ DEBUG: Preventing double execution of skip/reset');
       return;
     }
 
@@ -133,11 +139,13 @@ const PomodoroTimer = () => {
 
     if (isRunning) {
       // Skip to next mode
+      console.log('⏭️ DEBUG: Skipping to next mode');
       setIsRunning(false);
       setStartTime(null);
       handleTimerComplete();
     } else {
-      // Reset current timer
+      // Reset current timer to full time
+      console.log('⏭️ DEBUG: Resetting current timer to full time');
       setTimeLeft(getModeTime(currentMode));
       setStartTime(null);
     }
@@ -149,9 +157,11 @@ const PomodoroTimer = () => {
   };
 
   const handleResetInterval = () => {
+    console.log('🔄 DEBUG: handleResetInterval called');
     
     // Prevent double execution
     if (resetIntervalRef.current) {
+      console.log('🔄 DEBUG: Preventing double execution of reset interval');
       return;
     }
 
@@ -168,6 +178,7 @@ const PomodoroTimer = () => {
     // Reset interval ke 1
     setCurrentInterval(1);
 
+    console.log('🔄 DEBUG: Reset interval completed');
 
     // Reset flag setelah operasi selesai
     setTimeout(() => {
@@ -184,8 +195,7 @@ const PomodoroTimer = () => {
   const currentModeConfig = modes[currentMode];
 
   return (
-    <div className={`min-h-screen transition-colors duration-500 ${currentModeConfig.bgColor}`}>
-
+    <div id="pomodoro-page" className={`min-h-screen transition-colors duration-500  ${currentModeConfig.bgColor}`}>
 
       {/* Header */}
       <div className="flex justify-between items-center p-6 text-white">
@@ -279,7 +289,7 @@ const PomodoroTimer = () => {
 
       {/* Settings Modal */}
       {showSettings && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-lg p-6 w-full max-w-md">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-xl font-bold text-gray-800">Settings</h2>
@@ -390,7 +400,7 @@ const PomodoroTimer = () => {
 
       {/* About Modal */}
       {showAbout && (
-        <div className="fixed inset-0 bg-black/40 bg-opacity-50 flex items-center justify-center p-4 z-50">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-lg p-6 w-full max-w-md">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-xl font-bold text-gray-800">About</h2>

@@ -3,7 +3,7 @@
 import '@/app/globals.css';
 import React from 'react';
 import Link from 'next/link';
-import { usePomodoroContext } from '../contexts/PomodoroContext';
+import { usePomodoroContext } from '@/contexts/PomodoroContext';
 
 const MiniTimer = () => {
   const { timeLeft, currentMode, isRunning } = usePomodoroContext();

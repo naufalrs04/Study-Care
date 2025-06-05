@@ -2,6 +2,7 @@
 
 import '@/app/globals.css';
 import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
+
 const PomodoroContext = createContext();
 
 export const usePomodoroContext = () => {
@@ -132,7 +133,7 @@ export const PomodoroProvider = ({ children }) => {
     }
   };
 
-  // Background timer logic - PERBAIKAN: Jangan reset timeLeft saat pause
+  // Background timer logic
   useEffect(() => {
     if (isRunning && timeLeft > 0) {
       backgroundTimerRef.current = setInterval(() => {
@@ -147,7 +148,6 @@ export const PomodoroProvider = ({ children }) => {
         });
       }, 1000);
     } else {
-      // PERBAIKAN: Hanya clear interval, jangan reset timeLeft
       if (backgroundTimerRef.current) {
         clearInterval(backgroundTimerRef.current);
       }
@@ -160,62 +160,61 @@ export const PomodoroProvider = ({ children }) => {
     };
   }, [isRunning, timeLeft, currentMode, currentInterval, longBreakInterval, autoStartBreaks, autoStartPomodoros]);
 
-  // PERBAIKAN: Update timeLeft hanya ketika mode berubah dan timer tidak berjalan
-  useEffect(() => {
-    // Skip pada initial mount
-    if (!isInitializedRef.current) {
-      return;
-    }
-
-    // PENTING: Hanya update timeLeft jika timer tidak sedang berjalan
-    if (!isRunning) {
-      setTimeLeft(getModeTime(currentMode));
-    }
-  }, [currentMode, pomodoroTime, shortBreakTime, longBreakTime]);
-
-  // Load state dari localStorage saat komponen mount
+  // CRITICAL: Load state dari localStorage saat komponen mount
   useEffect(() => {
     // Prevent double execution pada mount
     if (isInitializedRef.current) {
       return;
     }
 
+    console.log('🔄 CONTEXT: Initializing from localStorage...');
+
     if (typeof window !== 'undefined') {
       const savedState = JSON.parse(localStorage.getItem('pomodoroState') || '{}');
-      if (savedState.currentMode) {
-        setCurrentMode(savedState.currentMode);
-        setCurrentInterval(savedState.currentInterval || 1);
-        setPomodoroTime(savedState.pomodoroTime || 25);
-        setShortBreakTime(savedState.shortBreakTime || 5);
-        setLongBreakTime(savedState.longBreakTime || 15);
-        setAutoStartBreaks(savedState.autoStartBreaks ?? true);
-        setAutoStartPomodoros(savedState.autoStartPomodoros ?? true);
-        setLongBreakInterval(savedState.longBreakInterval || 4);
+      
+      if (Object.keys(savedState).length > 0) {
+        console.log('🔄 CONTEXT: Found saved state:', savedState);
         
-        // Hitung sisa waktu berdasarkan waktu yang tersimpan per mode
+        // Restore all settings
+        if (savedState.currentMode) setCurrentMode(savedState.currentMode);
+        if (savedState.currentInterval) setCurrentInterval(savedState.currentInterval);
+        if (savedState.pomodoroTime) setPomodoroTime(savedState.pomodoroTime);
+        if (savedState.shortBreakTime) setShortBreakTime(savedState.shortBreakTime);
+        if (savedState.longBreakTime) setLongBreakTime(savedState.longBreakTime);
+        if (savedState.autoStartBreaks !== undefined) setAutoStartBreaks(savedState.autoStartBreaks);
+        if (savedState.autoStartPomodoros !== undefined) setAutoStartPomodoros(savedState.autoStartPomodoros);
+        if (savedState.longBreakInterval) setLongBreakInterval(savedState.longBreakInterval);
+        
+        // Restore timer state
         if (savedState.isRunning && savedState.startTime) {
           const elapsed = Math.floor((Date.now() - savedState.startTime) / 1000);
           const modeTime = getModeTimeFromSaved(savedState.currentMode, savedState);
           const remaining = modeTime - elapsed;
           
           if (remaining > 0) {
+            console.log('🔄 CONTEXT: Restoring running timer, remaining:', remaining);
             setTimeLeft(remaining);
             setIsRunning(true);
             setStartTime(savedState.startTime);
           } else {
-            // Timer sudah habis, handle completion
+            console.log('🔄 CONTEXT: Timer expired, handling completion');
             setTimeLeft(0);
             setIsRunning(false);
             setTimeout(() => handleTimerComplete(), 100);
           }
         } else {
+          console.log('🔄 CONTEXT: Restoring paused timer');
           const modeTime = getModeTimeFromSaved(savedState.currentMode, savedState);
           setTimeLeft(savedState.timeLeft || modeTime);
+          setIsRunning(false);
         }
+      } else {
+        console.log('🔄 CONTEXT: No saved state, using defaults');
       }
+      
       isInitializedRef.current = true;
     }
-  }, []);
+  }, []); // Empty dependency array - hanya run sekali saat mount
 
   // Helper function to get mode time from saved state
   const getModeTimeFromSaved = (mode, savedState) => {
@@ -227,7 +226,7 @@ export const PomodoroProvider = ({ children }) => {
     return times[mode] || times.pomodoro;
   };
 
-  // Simpan state ke localStorage setiap kali ada perubahan
+  // CRITICAL: Save state ke localStorage setiap kali ada perubahan
   useEffect(() => {
     // Skip save pada initial mount
     if (!isInitializedRef.current) {
@@ -249,6 +248,8 @@ export const PomodoroProvider = ({ children }) => {
         longBreakInterval,
         lastSaved: Date.now()
       };
+      
+      console.log('💾 CONTEXT: Saving state to localStorage:', stateToSave);
       localStorage.setItem('pomodoroState', JSON.stringify(stateToSave));
     }
   }, [currentMode, timeLeft, isRunning, currentInterval, startTime, pomodoroTime, shortBreakTime, longBreakTime, autoStartBreaks, autoStartPomodoros, longBreakInterval]);
@@ -258,26 +259,55 @@ export const PomodoroProvider = ({ children }) => {
     if (typeof window !== 'undefined') {
       const handleVisibilityChange = () => {
         if (!document.hidden && isRunning && startTime) {
+          console.log('👁️ CONTEXT: Page visible, syncing timer...');
           // Recalculate time when page becomes visible
           const elapsed = Math.floor((Date.now() - startTime) / 1000);
           const modeTime = getModeTime(currentMode);
           const remaining = modeTime - elapsed;
           
           if (remaining > 0) {
+            console.log('👁️ CONTEXT: Synced time remaining:', remaining);
             setTimeLeft(remaining);
           } else {
+            console.log('👁️ CONTEXT: Timer expired while away');
             setTimeLeft(0);
-            // Reset flag sebelum handle completion
             handleTimerCompleteRef.current = false;
             handleTimerComplete();
           }
         }
       };
 
+      const handleBeforeUnload = () => {
+        console.log('🚪 CONTEXT: Page unloading, saving final state...');
+        // Force save before page unload
+        if (isInitializedRef.current) {
+          const stateToSave = {
+            currentMode,
+            timeLeft,
+            isRunning,
+            currentInterval,
+            startTime,
+            pomodoroTime,
+            shortBreakTime,
+            longBreakTime,
+            autoStartBreaks,
+            autoStartPomodoros,
+            longBreakInterval,
+            lastSaved: Date.now()
+          };
+          localStorage.setItem('pomodoroState', JSON.stringify(stateToSave));
+        }
+      };
+
       document.addEventListener('visibilitychange', handleVisibilityChange);
-      return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.addEventListener('beforeunload', handleBeforeUnload);
+      
+      return () => {
+        document.removeEventListener('visibilitychange', handleVisibilityChange);
+        window.removeEventListener('beforeunload', handleBeforeUnload);
+      };
     }
-  }, [isRunning, startTime, currentMode]);
+  }, [isRunning, startTime, currentMode, timeLeft, currentInterval, pomodoroTime, shortBreakTime, longBreakTime, autoStartBreaks, autoStartPomodoros, longBreakInterval]);
 
   // Cleanup function
   useEffect(() => {

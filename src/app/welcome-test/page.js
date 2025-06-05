@@ -352,7 +352,7 @@ const LearningStyleQuiz = () => {
             </div>
             <div className="flex-1 mx-12">
               <div className="flex justify-between items-center mb-3">
-                {[1, 2, 3, 4, 5].map((num) => (
+                {[1, 2, 3, 4].map((num) => (
                   <div key={num} className="w-6 h-6 bg-[#0B92C2] rounded-full shadow-lg"></div>
                 ))}
               </div>
@@ -360,7 +360,7 @@ const LearningStyleQuiz = () => {
             </div>
             <div className="text-center">
               <p className="text-[#0B92C2] font-bold text-lg ">Sangat Setuju</p>
-              <p className="text-[#0B92C2] font-bold text-lg ">5</p>
+              <p className="text-[#0B92C2] font-bold text-lg ">4</p>
             </div>
           </div>
 
@@ -413,9 +413,9 @@ const LearningStyleQuiz = () => {
 
           {/* DIV 2: Question Container - Fixed Height & Width */}
           <div className="flex-1 flex items-center justify-center">
-            <div className="border-2 border-[#0B92C2]/30 rounded-xl p-8 w-full max-w-4xl h-40 flex items-center justify-center mx-auto">
+            <div className="bg-gradient-to-t from-[#0B92C2] to-[#7FD8E8]  rounded-xl p-8 w-full max-w-4xl h-40 flex items-center justify-center mx-auto">
               <div className="w-full max-w-3xl">
-                <h2 className="text-3xl font-bold text-[#0B92C2] text-center leading-relaxed break-words">
+                <h2 className="text-3xl font-bold text-white text-center leading-relaxed break-words">
                   {currentQuestionData.text}
                 </h2>
               </div>
@@ -437,7 +437,7 @@ const LearningStyleQuiz = () => {
 
             {/* Rating Scale */}
             <div className="flex justify-center items-center space-x-8 mb-8">
-              {[1, 2, 3, 4, 5].map((rating) => (
+              {[1, 2, 3, 4].map((rating) => (
                 <button
                   key={rating}
                   onClick={() => handleQuizAnswer(currentQuestionData.id, rating)}

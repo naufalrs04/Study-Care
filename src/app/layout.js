@@ -1,7 +1,8 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import MotionWrapper from './motion-wrapper';
-import { PomodoroProvider } from '../contexts/PomodoroContext';
+import { PomodoroProvider } from '@/contexts/PomodoroContext';
+import MainLayoutWrapper from '@/components/layout-wrapper';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,7 +27,9 @@ export default function RootLayout({ children }) {
       >
         <MotionWrapper>
           <PomodoroProvider>
-          {children}
+            <MainLayoutWrapper>
+              {children}
+            </MainLayoutWrapper>
           </PomodoroProvider>
         </MotionWrapper>
       </body>

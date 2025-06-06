@@ -57,7 +57,7 @@ function Navbar() {
         {/* Desktop Login Button */}
         <Link
           href="/login"
-          className={`hidden lg:block px-6 py-2 rounded-xl hover:rounded-full transition-[border-radius] duration-500 ease-in-out cursor-pointer 
+          className={`hidden lg:block px-6 py-2 rounded-xl hover:shadow-lg transition-all duration-200 transform hover:scale-105 cursor-pointer 
             ${
               isScrolled
                 ? 'bg-[#0798C5] text-white'

@@ -77,52 +77,26 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-cyan-50 to-blue-100">
-      {/* Header */}
-      <div className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <button
-              onClick={handleBackClick}
-              className="flex items-center justify-center w-10 h-10 bg-cyan-400 hover:bg-cyan-500 text-white rounded-full transition-colors duration-200"
-            >
-              <ArrowLeft size={18} />
-            </button>
-            <h1 className="text-xl font-bold text-gray-800">Profil</h1>
-            <div className="relative">
-              <button
-                onClick={() => setShowMoreOptions(!showMoreOptions)}
-                className="flex items-center justify-center w-10 h-10 text-gray-600 hover:bg-gray-100 rounded-full transition-colors duration-200"
-              >
-                <Settings size={18} />
-              </button>
-              
-              {/* More Options Dropdown */}
-              {showMoreOptions && (
-                <div className="absolute right-0 top-12 bg-white rounded-lg shadow-lg border border-gray-200 py-2 w-48 z-10">
-                  <button
-                    onClick={handleLogout}
-                    className="flex items-center gap-3 px-4 py-2 text-red-600 hover:bg-red-50 w-full text-left transition-colors duration-200"
-                  >
-                    <LogOut size={16} />
-                    <span className="text-sm">Keluar</span>
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
+    <div className="min-h-screen bg-[#F9F9F9]">
 
       {/* Main Content - Desktop: Horizontal Layout, Mobile: Vertical Layout */}
-      <div className="max-w-7xl mx-auto p-4">
+      <div className="max-w-10xl mx-auto p-4">
         {/* Mobile Layout (below lg breakpoint) */}
         <div className="lg:hidden">
           <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
             {/* Profile Header */}
             <div className="bg-gradient-to-r from-cyan-400 to-blue-500 px-8 py-12 text-center relative">
               <div className="absolute inset-0 bg-cyan bg-opacity-10"></div>
-              
+              {/* Back Button - Mobile */}
+              <button
+                onClick={handleBackClick}
+                className="absolute top-4 left-4 p-2 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm transition-all duration-200 group"
+              >
+                <ArrowLeft 
+                  size={20} 
+                  className="text-white transition-transform duration-200 group-hover:-translate-x-1" 
+                />
+              </button>
               {/* Profile Photo */}
               <div className="relative z-10 mb-6">
                 <div className="w-32 h-32 mx-auto rounded-full bg-white border-4 border-white shadow-lg flex items-center justify-center overflow-hidden">
@@ -302,7 +276,16 @@ export default function ProfilePage() {
               {/* Left Side - Profile Info */}
               <div className="w-1/3 bg-gradient-to-b from-cyan-400 to-blue-500 p-8 text-center relative">
                 <div className="absolute inset-0 bg-cyan bg-opacity-10"></div>
-                
+                {/* Back Button - Desktop */}
+                <button
+                  onClick={handleBackClick}
+                  className="z-99 absolute top-6 left-6 p-2 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm transition-all duration-200 group"
+                >
+                  <ArrowLeft 
+                    size={24} 
+                    className="text-white transition-transform duration-200 group-hover:-translate-x-1" 
+                  />
+                </button>
                 {/* Profile Photo */}
                 <div className="relative z-10 mb-6">
                   <div className="w-32 h-32 mx-auto rounded-full bg-white border-4 border-white shadow-lg flex items-center justify-center overflow-hidden">
@@ -329,7 +312,7 @@ export default function ProfilePage() {
                 </span>
                 
                 {/* Stats */}
-                <div className="space-y-4 text-white mb-8">
+                <div className="flex justify-center text-white mb-8 gap-x-8">
                   <div className="text-center">
                     <div className="text-2xl font-bold">127</div>
                     <div className="text-sm opacity-90">Teman</div>

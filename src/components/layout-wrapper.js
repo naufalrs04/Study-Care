@@ -8,8 +8,8 @@ const MainLayoutWrapper = ({ children }) => {
   const pathname = usePathname();
   
   // Daftar pages yang membutuhkan navbar
-  const pagesWithNavbar = ['/dashboard', '/pomodoro', '/friend', '/room'];
-  const pagesWithTimer = ['/dashboard','/friend', '/room'];
+  const pagesWithNavbar = ['/dashboard', '/pomodoro', '/friend', '/room', '/profile', '/friend-detail'];
+  const pagesWithTimer = ['/dashboard','/friend', '/room', '/profile', '/friend-detail'];
 
   // Check apakah current page membutuhkan navbar atau timer
   const shouldShowNavbar = pagesWithNavbar.includes(pathname);

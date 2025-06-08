@@ -25,8 +25,8 @@ const DashboardSection = () => {
   };
 
   return (
-    <section id="dashboard-page" className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-7xl mx-auto">
+    <section id="dashboard-page" className="p-6">
+      <div className="bg-white rounded-lg shadow-md p-6">
         {/* Header Greeting */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-[#4A90A4] mb-6">Good Morning, Aditya!</h1>

@@ -1,6 +1,5 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import MotionWrapper from './motion-wrapper';
 import { PomodoroProvider } from '@/contexts/PomodoroContext';
 import MainLayoutWrapper from '@/components/layout-wrapper';
 
@@ -25,13 +24,11 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <MotionWrapper>
-          <PomodoroProvider>
-            <MainLayoutWrapper>
-              {children}
-            </MainLayoutWrapper>
-          </PomodoroProvider>
-        </MotionWrapper>
+        <PomodoroProvider>
+          <MainLayoutWrapper>
+            {children}
+          </MainLayoutWrapper>
+        </PomodoroProvider>
       </body>
     </html>
   );

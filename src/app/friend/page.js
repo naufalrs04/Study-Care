@@ -736,7 +736,7 @@ const DaftarTeman = () => {
               onClick={() => setError("")}
               className="ml-2 text-red-500 hover:text-red-700"
             >
-              ×
+              x
             </button>
           </div>
         )}
@@ -921,7 +921,7 @@ const DaftarTeman = () => {
               {searchQuery.length >= 2 && (
                 <div className="space-y-4">
                   <h4 className="text-md font-medium text-gray-800 text-center">
-                    Hasil Pencarian "{searchQuery}"
+                    Hasil Pencarian {searchQuery}
                   </h4>
                   {searchResults.length > 0 ? (
                     searchResults.map((user) => (

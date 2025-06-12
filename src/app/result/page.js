@@ -8,6 +8,13 @@ import AudLearningPage from '@/components/result/aud';
 import KineLearningPage from '@/components/result/kine';
 import LoadingPage from '@/components/result/loading';
 
+// Komponen fallback bernama, agar tidak terkena error react/display-name
+const UnknownLearningStyle = () => (
+  <div className="text-center text-red-500 p-4">
+    Gaya belajar tidak dikenali.
+  </div>
+);
+
 const LearningResultPage = ({ learning_style }) => {
   let ComponentToRender;
 
@@ -22,20 +29,12 @@ const LearningResultPage = ({ learning_style }) => {
       ComponentToRender = KineLearningPage;
       break;
     default:
-      ComponentToRender = () => (
-        <div className="text-center text-red-500 p-4">
-          Gaya belajar tidak dikenali.
-        </div>
-      );
+      ComponentToRender = UnknownLearningStyle;
   }
 
   return (
     <div>
-      {/* <ComponentToRender /> */}
-      {/* <AudLearningPage/> */}
-      {/* <VisualLearningPage/> */}
-      {/* <KineLearningPage/> */}
-      <LoadingPage />
+      <ComponentToRender />
     </div>
   );
 };

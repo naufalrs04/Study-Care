@@ -35,7 +35,7 @@ const LearningResultPage = ({ learning_style }) => {
       {/* <AudLearningPage/> */}
       {/* <VisualLearningPage/> */}
       {/* <KineLearningPage/> */}
-      {/* <LoadingPage /> */}
+      <LoadingPage />
     </div>
   );
 };

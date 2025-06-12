@@ -253,13 +253,7 @@ const PomodoroTimer = () => {
         <div className="relative mb-8 w-full max-w-2xl transition-all duration-500">
         {/* Timer Box - Lebar sama dengan navbar, INTERVAL di dalam kotak */}
         <div
-            className={`w-full h-56 rounded-3xl flex flex-col items-center justify-center shadow-2xl transition-all duration-500 ${
-            currentMode === 'pomodoro'
-                ? 'bg-gradient-to-br from-red-400 to-red-500'
-                : currentMode === 'shortBreak'
-                ? 'bg-gradient-to-br from-green-400 to-green-500'
-                : 'bg-gradient-to-br from-blue-400 to-blue-500'
-            }`}
+          className={`w-full h-56 rounded-3xl flex flex-col items-center justify-center shadow-2xl transition-colors duration-500 ${currentModeConfig.bgColor}`}
         >
             {/* Interval Counter - Di dalam kotak, kecil dan putih */}
             <div className="text-sm font-medium text-white mb-2">
@@ -339,7 +333,7 @@ const PomodoroTimer = () => {
                 <h2 className="text-2xl font-bold text-white">Settings</h2>
                 <button
                 onClick={handleCloseSettings}
-                className="text-white hover:bg-white hover:bg-opacity-20 p-2 rounded-full transition-colors"
+                className="text-white hover:bg-white/20 hover:bg-opacity-20 p-2 rounded-full transition-colors"
                 >
                 <X size={24} />
                 </button>
@@ -454,7 +448,7 @@ const PomodoroTimer = () => {
                 <h2 className="text-2xl font-bold text-white">About</h2>
                 <button
                 onClick={() => setShowAbout(false)}
-                className="text-white hover:bg-white hover:bg-opacity-20 p-2 rounded-full transition-colors"
+                className="text-white hover:bg-white/20 hover:bg-opacity-20 p-2 rounded-full transition-colors"
                 >
                 <X size={24} />
                 </button>

@@ -6,6 +6,16 @@ import Image from 'next/image';
 function VisualLearningPage() {
   return (
     <div className="min-h-screen bg-white relative overflow-hidden">
+        <style jsx>{`
+            @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            }
+
+            .floating-animation {
+            animation: floating 3s ease-in-out infinite;
+            }
+      `}</style>
       {/* Share Button - Desktop */}
       <div className="absolute top-6 right-25 z-20 hidden lg:block">
         <button className="bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-full flex items-center gap-2 font-medium shadow-lg transition-colors">
@@ -38,16 +48,16 @@ function VisualLearningPage() {
         {/* Left Side - Character */}
         <div className="flex">
           {/* Main Character */}
-          <div className="relative z-10">
+            <div className="relative z-20 floating-animation">
             <Image 
-              src="/assets/visuall.png" 
-              alt="visual image" 
-              width={800} 
-              height={500}
-              className="w-[400px] h-[300px] sm:w-[450px] sm:h-[340px] md:w-[500px] md:h-[375px] lg:w-[600px] lg:h-[450px] xl:w-[800px] xl:h-[650px] object-contain"
-              priority
+                src="/assets/visuall.png" 
+                alt="visual image" 
+                width={400} 
+                height={300}
+                className="w-[500px] h-[500px] sm:w-[550px] sm:h-[550px] md:w-[699px] md:h-[600px] object-contain"
+                priority
             />
-          </div>
+            </div>
         </div>
 
         {/* Right Side - Content */}
@@ -86,16 +96,16 @@ function VisualLearningPage() {
         
         {/* Top Section - Image overlaid on gradient */}
         <div className="relative h-[60vh] flex items-center justify-center">
-          <div className="relative z-20">
-            <Image 
-              src="/assets/visuall.png" 
-              alt="visual image" 
-              width={400} 
-              height={300}
-              className="w-[500px] h-[500px] sm:w-[550px] sm:h-[550px] md:w-[699px] md:h-[600px] object-contain"
-              priority
-            />
-          </div>
+        <div className="relative z-20 floating-animation">
+        <Image 
+            src="/assets/visuall.png" 
+            alt="visual image" 
+            width={400} 
+            height={300}
+            className="w-[500px] h-[500px] sm:w-[550px] sm:h-[550px] md:w-[699px] md:h-[600px] object-contain"
+            priority
+        />
+        </div>
         </div>
 
         {/* Bottom Section - Content */}

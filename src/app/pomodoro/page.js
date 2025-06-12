@@ -1,9 +1,9 @@
 'use client';
 
 import '@/app/globals.css';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useMemo } from 'react';
 import { Settings, Info, X, RotateCcw, SkipForward, RefreshCw } from 'lucide-react';
-import { usePomodoroContext } from '../../contexts/PomodoroContext';
+import { usePomodoroContext } from '@/contexts/PomodoroContext';
 
 const PomodoroTimer = () => {
   const {
@@ -31,7 +31,8 @@ const PomodoroTimer = () => {
   const skipResetRef = useRef(false);
   const resetIntervalRef = useRef(false);
 
-  const modes = {
+  // ✅ PERBAIKAN: Gunakan useMemo untuk membuat objek modes yang reaktif
+  const modes = useMemo(() => ({
     pomodoro: { 
       name: 'Pomodoro', 
       time: pomodoroTime * 60, 
@@ -53,11 +54,7 @@ const PomodoroTimer = () => {
       textColor: 'text-blue-500',
       buttonColor: 'bg-blue-500 hover:bg-blue-600'
     }
-  };
-
-  // PERBAIKAN: HAPUS useEffect yang mereset timeLeft saat page load
-  // Biarkan PomodoroContext mengelola semua state management
-  // Context sudah handle localStorage restore dengan baik
+  }), [pomodoroTime, shortBreakTime, longBreakTime]); // Dependency array
 
   const handleModeChange = (mode) => {
     console.log('🎯 DEBUG: handleModeChange called with mode:', mode);
@@ -184,6 +181,17 @@ const PomodoroTimer = () => {
     setTimeout(() => {
       resetIntervalRef.current = false;
     }, 100);
+  };
+
+  // ✅ TAMBAHAN: Handler untuk close settings dengan auto update
+  const handleCloseSettings = () => {
+    setShowSettings(false);
+    
+    // Jika timer tidak sedang berjalan, update timeLeft dengan nilai baru
+    if (!isRunning) {
+      console.log('⚙️ Settings closed, updating timer display for current mode:', currentMode);
+      setTimeLeft(getModeTime(currentMode));
+    }
   };
 
   const formatTime = (seconds) => {
@@ -330,7 +338,7 @@ const PomodoroTimer = () => {
             <div className="flex justify-between items-center">
                 <h2 className="text-2xl font-bold text-white">Settings</h2>
                 <button
-                onClick={() => setShowSettings(false)}
+                onClick={handleCloseSettings}
                 className="text-white hover:bg-white hover:bg-opacity-20 p-2 rounded-full transition-colors"
                 >
                 <X size={24} />
@@ -343,34 +351,34 @@ const PomodoroTimer = () => {
                 <h3 className="font-semibold text-gray-800 mb-4 text-lg">Time (minutes)</h3>
                 <div className="grid grid-cols-3 gap-4">
                 <div>
-                    <label className="block text-sm font-medium text-gray-600 mb-2">Pomodoro</label>
+                    <label className="block text-sm font-medium text-black mb-2">Pomodoro</label>
                     <input
                     type="number"
                     value={pomodoroTime}
                     onChange={(e) => setPomodoroTime(parseInt(e.target.value) || 25)}
-                    className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-400 focus:border-transparent"
+                    className="w-full p-3 text-black border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-400 focus:border-transparent"
                     min="1"
                     max="60"
                     />
                 </div>
                 <div>
-                    <label className="block text-sm font-medium text-gray-600 mb-2">Short Break</label>
+                    <label className="block text-sm font-medium text-black mb-2">Short Break</label>
                     <input
                     type="number"
                     value={shortBreakTime}
                     onChange={(e) => setShortBreakTime(parseInt(e.target.value) || 5)}
-                    className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-400 focus:border-transparent"
+                    className="w-full p-3 text-black border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-400 focus:border-transparent"
                     min="1"
                     max="30"
                     />
                 </div>
                 <div>
-                    <label className="block text-sm font-medium text-gray-600 mb-2">Long Break</label>
+                    <label className="block text-sm font-medium text-black mb-2">Long Break</label>
                     <input
                     type="number"
                     value={longBreakTime}
                     onChange={(e) => setLongBreakTime(parseInt(e.target.value) || 15)}
-                    className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-400 focus:border-transparent"
+                    className="w-full p-3 text-black border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-400 focus:border-transparent"
                     min="1"
                     max="60"
                     />
@@ -417,7 +425,7 @@ const PomodoroTimer = () => {
                     type="number"
                     value={longBreakInterval}
                     onChange={(e) => setLongBreakInterval(parseInt(e.target.value) || 4)}
-                    className="w-20 p-2 border border-gray-300 rounded-lg text-center font-medium focus:ring-2 focus:ring-cyan-400 focus:border-transparent"
+                    className="w-20 p-2 text-black border border-gray-300 rounded-lg text-center font-medium focus:ring-2 focus:ring-cyan-400 focus:border-transparent"
                     min="2"
                     max="10"
                 />

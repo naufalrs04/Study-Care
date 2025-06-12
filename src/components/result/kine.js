@@ -3,9 +3,19 @@ import React from 'react';
 import { Share } from 'lucide-react';
 import Image from 'next/image';
 
-function AudLearningPage() {
+function KineLearningPage() {
   return (
     <div className="min-h-screen bg-white relative overflow-hidden">
+        <style jsx>{`
+            @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            }
+
+            .floating-animation {
+            animation: floating 3s ease-in-out infinite;
+            }
+      `}</style>        
       {/* Share Button - Desktop */}
       <div className="absolute top-6 right-25 z-20 hidden lg:block">
         <button className="bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-full flex items-center gap-2 font-medium shadow-lg transition-colors">
@@ -38,10 +48,10 @@ function AudLearningPage() {
         {/* Left Side - Character */}
         <div className="flex">
           {/* Main Character */}
-          <div className="relative z-10">
+          <div className="relative z-20 floating-animation">
             <Image 
-              src="/assets/aud.png" 
-              alt="auditory image" 
+              src="/assets/kine.png" 
+              alt="kinestetik image" 
               width={800} 
               height={500}
               className="w-[400px] h-[300px] sm:w-[450px] sm:h-[340px] md:w-[500px] md:h-[375px] lg:w-[600px] lg:h-[450px] xl:w-[800px] xl:h-[650px] object-contain"
@@ -57,15 +67,15 @@ function AudLearningPage() {
             <h2 className="text-cyan-600 text-3xl font-bold mb-2">
               Gaya belajar kamu
             </h2>
-            <h1 className="text-8xl font-extrabold text-black mb-6">
-              Auditori
+            <h1 className="text-7xl font-extrabold text-black mb-6">
+              Kinestetik
             </h1>
           </div>
           
           {/* Description */}
           <div className="mb-8 text-right">
             <p className="text-[#A4A4A4] text-lg font-semibold leading-relaxed">
-                Pembelajar auditori adalah individu yang lebih mudah memahami dan mengingat informasi melalui pendengaran. Mereka cenderung menyerap informasi secara efektif melalui penjelasan lisan, diskusi, ceramah, atau rekaman suara. Suara, intonasi, dan ritme menjadi faktor penting dalam proses belajar mereka.
+                Pembelajar kinestetik adalah individu yang belajar paling baik melalui pengalaman langsung dan aktivitas fisik. Mereka cenderung menyukai metode pembelajaran yang melibatkan gerakan, praktik, atau simulasi. Pembelajar ini memahami konsep dengan lebih baik ketika mereka bisa menyentuh, memanipulasi objek, atau melakukan aktivitas secara langsung.
             </p>
           </div>
           
@@ -86,10 +96,10 @@ function AudLearningPage() {
         
         {/* Top Section - Image overlaid on gradient */}
         <div className="relative h-[60vh] flex items-center justify-center">
-          <div className="relative z-20">
+          <div className="relative z-20 floating-animation">
             <Image 
-              src="/assets/aud.png" 
-              alt="auditory image" 
+              src="/assets/kine.png" 
+              alt="kinestetik image" 
               width={400} 
               height={300}
               className="w-[500px] h-[500px] sm:w-[550px] sm:h-[550px] md:w-[699px] md:h-[600px] object-contain"
@@ -107,14 +117,14 @@ function AudLearningPage() {
               Gaya belajar kamu
             </h2>
             <h1 className="text-6xl sm:text-7xl md:text-8xl font-extrabold text-black mb-4">
-              Auditori
+              Kinestetik
             </h1>
           </div>
           
           {/* Description */}
           <div className="mb-8 text-center max-w-2xl mx-auto">
             <p className="text-[#A4A4A4] text-lg font-semibold leading-relaxed">
-                Pembelajar auditori adalah individu yang lebih mudah memahami dan mengingat informasi melalui pendengaran. Mereka cenderung menyerap informasi secara efektif melalui penjelasan lisan, diskusi, ceramah, atau rekaman suara. Suara, intonasi, dan ritme menjadi faktor penting dalam proses belajar mereka.
+                Pembelajar kinestetik adalah individu yang belajar paling baik melalui pengalaman langsung dan aktivitas fisik. Mereka cenderung menyukai metode pembelajaran yang melibatkan gerakan, praktik, atau simulasi. Pembelajar ini memahami konsep dengan lebih baik ketika mereka bisa menyentuh, memanipulasi objek, atau melakukan aktivitas secara langsung.
             </p>
           </div>
           
@@ -134,4 +144,4 @@ function AudLearningPage() {
   );
 }
 
-export default AudLearningPage;
+export default KineLearningPage;

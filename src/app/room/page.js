@@ -1,376 +1,561 @@
 "use client";
+import React, { useState, useEffect, useRef } from "react";
+import {
+  Users,
+  Clock,
+  Send,
+  LogOut,
+  X,
+  Eye,
+  UserPlus,
+  UserMinus,
+} from "lucide-react";
+import { io } from "socket.io-client";
 
-import '@/app/globals.css';
-import React, { useState } from 'react';
-import { X, Users, Clock } from 'lucide-react';
-
-const RoomPage = () => {
+export default function RoomPage() {
   const [selectedRoom, setSelectedRoom] = useState(null);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showJoinCodeModal, setShowJoinCodeModal] = useState(false);
-  const [roomName, setRoomName] = useState('');
-  const [roomDescription, setRoomDescription] = useState('');
+  const [showChatModal, setShowChatModal] = useState(false);
+
+  const [roomName, setRoomName] = useState("");
+  const [roomDescription, setRoomDescription] = useState("");
   const [isPrivate, setIsPrivateRoom] = useState(false);
-  const [roomCode, setRoomCode] = useState('');
+  const [roomCode, setRoomCode] = useState("");
 
-  const publicRooms = [
-    {
-      id: 1,
-      name: "Aditya's Room",
-      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
-      joined: "5",
-      timeLast: "02 : 10 : 45",
-      description: "Sini bray join kita chill sampe pagi, gas kuy"
-    },
-    {
-      id: 2,
-      name: "Bambang's Room",
-      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
-      joined: "3",
-      timeLast: "01 : 30 : 22",
-      description: "Belajar bareng matematika dan fisika, yuk join!"
-    },
-    {
-      id: 3,
-      name: "Rudi's Room",
-      avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face",
-      joined: "7",
-      timeLast: "03 : 45 : 15",
-      description: "Study session untuk persiapan ujian akhir semester"
+  // Room & Chat state
+  const [publicRooms, setPublicRooms] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const [currentRoom, setCurrentRoom] = useState(null);
+  const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState("");
+  const [roomMembers, setRoomMembers] = useState([]);
+  const [onlineUsers, setOnlineUsers] = useState(new Set());
+
+  const socketRef = useRef(null);
+  const messagesEndRef = useRef(null);
+
+  // Ambil token dan user hanya di client
+  const getAuthToken = () => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("token");
     }
-  ];
-
-  const handleRoomClick = (room) => {
-    setSelectedRoom(room);
+    return null;
   };
 
-  const handleCloseModal = () => {
-    setSelectedRoom(null);
+  const getCurrentUser = () => {
+    if (typeof window !== "undefined") {
+      const userData = localStorage.getItem("user");
+      return userData ? JSON.parse(userData) : null;
+    }
+    return null;
   };
 
-  const handleJoinRoom = () => {
-    alert(`Bergabung dengan ${selectedRoom.name}!`);
-    setSelectedRoom(null);
-  };
+  // Inisialisasi socket
+  useEffect(() => {
+    const token = getAuthToken();
+    if (token && !socketRef.current) {
+      socketRef.current = io("http://localhost:5000", {
+        auth: { token },
+      });
 
-  const handleCancelJoin = () => {
-    setSelectedRoom(null);
-  };
+      // Event listeners
+      socketRef.current.on("connect", () => console.log("Connected to server"));
+      socketRef.current.on("disconnect", () =>
+        console.log("Disconnected from server")
+      );
+      socketRef.current.on("joined_room", (data) => {
+        setCurrentRoom(data);
+        setShowChatModal(true);
+      });
+      socketRef.current.on("user_joined", (data) => {
+        setMessages((prev) => [
+          ...prev,
+          {
+            type: "system",
+            message: `${data.userName} bergabung`,
+            timestamp: data.timestamp,
+          },
+        ]);
+        setOnlineUsers((prev) => new Set([...prev, data.userId]));
+      });
+      socketRef.current.on("user_left", (data) => {
+        setMessages((prev) => [
+          ...prev,
+          {
+            type: "system",
+            message: `${data.userName} meninggalkan room`,
+            timestamp: data.timestamp,
+          },
+        ]);
+        setOnlineUsers((prev) => {
+          const newSet = new Set(prev);
+          newSet.delete(data.userId);
+          return newSet;
+        });
+      });
+      socketRef.current.on("new_message", (data) => {
+        setMessages((prev) => [...prev, data]);
+      });
+      socketRef.current.on("room_members", (members) => {
+        setRoomMembers(members);
+        setOnlineUsers(new Set(members.map((m) => m.id)));
+      });
+      socketRef.current.on("error", (err) => {
+        setError(err.message || "Kesalahan pada koneksi");
+      });
 
-  const handleCreateRoom = () => {
-    setShowCreateModal(true);
-  };
-
-  const handleCloseCreateModal = () => {
-    setShowCreateModal(false);
-    setRoomName('');
-    setRoomDescription('');
-    setIsPrivateRoom(false);
-  };
-
-  const handleCreateNewRoom = () => {
-    if (roomName.trim()) {
-      const newRoom = {
-        name: roomName,
-        description: roomDescription,
-        isPrivate: isPrivate,
-        createdAt: new Date(),
+      return () => {
+        if (socketRef.current) {
+          socketRef.current.disconnect();
+        }
       };
+    }
+  }, []);
 
-      console.log('Room berhasil dibuat:', newRoom);
-      setShowCreateModal(false);
-      setRoomName('');
-      setRoomDescription('');
-      setIsPrivateRoom(false);
-    } 
-    else {
-      alert('Nama room tidak boleh kosong!');
+  // Scroll otomatis saat ada pesan baru
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  // Ambil daftar room publik
+  const fetchPublicRooms = async () => {
+    setLoading(true);
+    try {
+      const token = getAuthToken();
+      const res = await fetch("http://localhost:5000/api/rooms/public", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = await res.json();
+      setPublicRooms(data);
+    } catch (err) {
+      setError("Gagal memuat room");
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleCancelCreate = () => {
-    setShowCreateModal(false);
-    setRoomName('');
-    setRoomDescription('');
-    setIsPrivateRoom(false);
-  };
+  useEffect(() => {
+    fetchPublicRooms();
+  }, []);
 
-  const handleJoinWithCode = () => {
-    setShowJoinCodeModal(true);
-  };
-
-  const handleCloseJoinCodeModal = () => {
-    setShowJoinCodeModal(false);
-    setRoomCode('');
-  };
-
-  const handleJoinRoomWithCode = () => {
-    if (roomCode.trim()) {
-      if (roomCode.length >= 6) {
-        console.log(`Bergabung dengan room menggunakan kode: ${roomCode}`);
-        setShowJoinCodeModal(false);
-        setRoomCode('');
-      } else {
-        alert('Kode room harus minimal 6 karakter!');
+  // Handle join room
+  const handleJoinRoom = async () => {
+    if (!selectedRoom) return;
+    setLoading(true);
+    try {
+      const token = getAuthToken();
+      const res = await fetch(
+        `http://localhost:5000/api/rooms/${selectedRoom.id}/join`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const data = await res.json();
+      if (res.ok) {
+        if (socketRef.current) {
+          socketRef.current.emit("join_room", { roomId: selectedRoom.id });
+        }
+        setSelectedRoom(null);
       }
-    } 
-    else {
-      alert('Kode room tidak boleh kosong!');
+    } catch (err) {
+      setError("Gagal bergabung ke room");
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleCancelJoinCode = () => {
-    setShowJoinCodeModal(false);
-    setRoomCode('');
+  // Handle buat room
+  const handleCreateNewRoom = async () => {
+    if (!roomName.trim()) {
+      setError("Nama room tidak boleh kosong");
+      return;
+    }
+    setLoading(true);
+    try {
+      const token = getAuthToken();
+      const res = await fetch("http://localhost:5000/api/rooms", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: roomName,
+          description: roomDescription,
+          isPrivate: isPrivate,
+        }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        if (socketRef.current) {
+          socketRef.current.emit("join_room", { roomId: data.room.id });
+        }
+        setRoomName("");
+        setRoomDescription("");
+        setIsPrivateRoom(false);
+        setShowCreateModal(false);
+        fetchPublicRooms();
+      }
+    } catch (err) {
+      setError("Gagal membuat room");
+    } finally {
+      setLoading(false);
+    }
   };
+
+  // Handle join dengan kode
+  const handleJoinRoomWithCode = async () => {
+    if (!roomCode.trim()) {
+      setError("Kode room tidak boleh kosong");
+      return;
+    }
+    setLoading(true);
+    try {
+      const token = getAuthToken();
+      const res = await fetch("http://localhost:5000/api/rooms/join-code", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ roomCode: roomCode.toUpperCase() }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        if (socketRef.current) {
+          socketRef.current.emit("join_room", { roomId: data.roomId });
+        }
+        setRoomCode("");
+        setShowJoinCodeModal(false);
+      }
+    } catch (err) {
+      setError("Gagal bergabung dengan kode room");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Handle send chat
+  const handleSendMessage = () => {
+    if (!newMessage.trim() || !currentRoom || !socketRef.current) return;
+    socketRef.current.emit("send_message", {
+      roomId: currentRoom.roomId,
+      message: newMessage.trim(),
+    });
+    setNewMessage("");
+  };
+
+  // Handle keluar dari room
+  const handleLeaveRoom = async () => {
+    try {
+      const token = getAuthToken();
+      await fetch("http://localhost:5000/api/rooms/leave", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      if (socketRef.current) {
+        socketRef.current.emit("leave_room");
+      }
+      setCurrentRoom(null);
+      setShowChatModal(false);
+      setMessages([]);
+      setRoomMembers([]);
+      setOnlineUsers(new Set());
+    } catch (err) {
+      setError("Gagal keluar dari room");
+    }
+  };
+
+  const currentUser = getCurrentUser();
 
   return (
-    <div className='p-6'>
-      <div className='flex'>
-        <div className='flex flex-col flex-grow'>
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">
-            Belajar bersama, masuk ke{' '}
-            <span className="text-blue-500">Ruang Belajar</span>
-          </h1>
-          <p className="text-gray-600 max-w-5xl">
-            Kamu bisa belajar bersama dengan masuk ke room yang sama dengan temanmu, buat room 
-            dan undang temanmu atau bergabung ke room public yang tersedia. Kamu juga bisa 
-            mengobrol dengan temanmu di room tersebut, ayo belajar bersama!
-          </p>
-        </div>
-        <div className='flex my-auto mx-auto gap-x-4'>
-          <button 
-          onClick={handleJoinWithCode}
-          className="cursor-pointer bg-gradient-to-t from-[#0B92C2] to-[#7FD8E8] text-white px-4 py-2 rounded-full transform hover:bg-gradient-to-t hover:from-[#7FD8E8] hover:to-[#0B92C2] transition-colors flex items-center">
-            Join Room with Code
-          </button>
-          <button 
-          onClick = {handleCreateRoom}
-          className="cursor-pointer bg-gradient-to-t from-[#0B92C2] to-[#7FD8E8] text-white px-4 py-2 rounded-full transform hover:bg-gradient-to-t hover:from-[#7FD8E8] hover:to-[#0B92C2] transition-colors flex items-center gap-2">
-            <span className="text-sm">+</span>
-            Buat Room
+    <div className="p-6">
+      {/* Error Message */}
+      {error && (
+        <div className="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg flex justify-between items-center">
+          <span>{error}</span>
+          <button onClick={() => setError("")}>
+            <X size={20} />
           </button>
         </div>
+      )}
+
+      {/* Judul */}
+      <div className="flex flex-col md:flex-row md:items-center gap-4 mb-6">
+        <h1 className="text-3xl font-bold text-gray-800">
+          Belajar bersama, masuk ke{" "}
+          <span className="text-blue-500">Ruang Belajar</span>
+        </h1>
+        <p className="text-gray-600 max-w-2xl">
+          Kamu bisa belajar bersama teman dengan masuk ke room yang sama.
+        </p>
       </div>
 
-      <div className="bg-white rounded-lg shadow-md mt-5 p-6">
-        {/* Public Room Section */}
-        <div className="w-full">
-          <div className="flex justify-center gap-3 mb-6">
-            <h2 className="text-2xl font-semibold text-gray-800">Public Room</h2>
-          </div>
+      {/* Tombol Aksi */}
+      <div className="flex flex-wrap gap-3 mb-6">
+        <button
+          onClick={() => setShowCreateModal(true)}
+          className="bg-gradient-to-r from-blue-500 to-cyan-400 text-white px-4 py-2 rounded-full hover:from-cyan-400 hover:to-blue-500 transition-all"
+        >
+          + Buat Room
+        </button>
+        <button
+          onClick={() => setShowJoinCodeModal(true)}
+          className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full transition-all"
+        >
+          Gabung dengan Kode
+        </button>
+      </div>
 
-          {/* Room Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-7 gap-6">
-            {publicRooms.map((room) => (
-              <div
-                key={room.id}
-                onClick={() => handleRoomClick(room)}
-                className="bg-transparent rounded-xl p-4 hover:shadow-md transition-shadow cursor-pointer"
-              >
-                <div className="flex flex-col items-center text-center">
-                  <div className="relative mb-4">
-                    <img
-                      src={room.avatar}
-                      alt={room.name}
-                      className="w-20 h-20 rounded-full object-cover border-4 border-blue-100"
-                    />
-                    <div className="absolute -bottom-1 -right-1 bg-green-500 w-6 h-6 rounded-full border-2 border-white"></div>
-                  </div>
-                  <h3 className="font-semibold text-gray-800 mb-1">{room.name}</h3>
-                  <p className="text-sm text-blue-500 mb-2">{room.joined} joined  </p>
-                </div>
+      {/* Daftar Room Publik */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        {loading ? (
+          <p>Loading room...</p>
+        ) : publicRooms.length > 0 ? (
+          publicRooms.map((room) => (
+            <div
+              key={room.id}
+              onClick={() => setSelectedRoom(room)}
+              className="border rounded-lg p-4 shadow-sm hover:shadow-md cursor-pointer transition-shadow"
+            >
+              <div className="relative mb-4">
+                <img
+                  src={
+                    room.creator_avatar ||
+                    "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=60&ixlib=rb-4.0.3"
+                  }
+                  alt={room.name}
+                  className="w-16 h-16 mx-auto rounded-full object-cover border-2 border-blue-100"
+                />
+                <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-white"></div>
               </div>
-            ))}
-          </div>
-        </div>
-
-        {selectedRoom && (
-          <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-            <div className="bg-white rounded-2xl p-6 w-full max-w-md relative">
-              {/* Close Button */}
-              <button
-                onClick={handleCloseModal}
-                className="cursor-pointer absolute top-4 right-4 text-gray-400 hover:text-gray-600"
-              >
-                <X className="w-6 h-6" />
-              </button>
-
-              {/* Header */}
-              <h2 className="text-xl font-semibold text-gray-800 mb-6">
-                Join <span className="text-blue-500">{selectedRoom.name}</span>?
-              </h2>
-
-              {/* Content */}
-              <div className="space-y-4 mb-6">
-                <div>
-                  <h3 className="text-sm font-medium text-gray-600 mb-2">Description</h3>
-                  <p className="text-gray-800">{selectedRoom.description}</p>
-                </div>
-                
-                <div className="flex justify-between">
-                  <div>
-                    <h3 className="text-sm font-medium text-gray-600 mb-1">Joined</h3>
-                    <p className="text-blue-500 font-medium">{selectedRoom.joined}</p>
-                  </div>
-                  <div className="text-right">
-                    <h3 className="text-sm font-medium text-gray-600 mb-1">Time Last</h3>
-                    <p className="text-blue-500 font-medium font-mono">{selectedRoom.timeLast}</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Buttons */}
-              <div className="flex gap-3">
-                <button
-                  onClick={handleJoinRoom}
-                  className="cursor-pointer flex-1 bg-gradient-to-t from-[#0B92C2] to-[#7FD8E8] py-3 rounded-lg hover:bg-gradient-to-t hover:from-[#7FD8E8] hover:to-[#0B92C2] transition-colors font-medium"
-                >
-                  Join
-                </button>
-                <button
-                  onClick={handleCancelJoin}
-                  className="cursor-pointer flex-1 border border-gray-300 text-gray-700 py-3 rounded-lg hover:bg-gray-50 transition-colors font-medium"
-                >
-                  Batal
-                </button>
+              <h3 className="font-semibold text-center">{room.name}</h3>
+              <p className="text-sm text-gray-600 text-center truncate">
+                {room.description || "Tidak ada deskripsi"}
+              </p>
+              <div className="mt-2 flex justify-between text-xs text-gray-500">
+                <span>Pembuat: {room.creator_name}</span>
+                <span>{room.joined} orang</span>
               </div>
             </div>
-          </div>
+          ))
+        ) : (
+          <p>Tidak ada room tersedia.</p>
         )}
+      </div>
 
-        {showCreateModal && (
+      {/* Modal: Pilih Room */}
+      {selectedRoom && (
         <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-2xl p-6 w-full max-w-md relative">
-            {/* Close Button */}
             <button
-              onClick={handleCloseCreateModal}
-              className="cursor-pointer absolute top-4 right-4 text-gray-400 hover:text-gray-600"
+              onClick={() => setSelectedRoom(null)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
             >
-              <X className="w-6 h-6" />
+              <X size={20} />
             </button>
-
-            {/* Header */}
-            <h2 className="text-xl font-semibold text-gray-800 mb-6 text-center">
-              Buat Room
+            <h2 className="text-xl font-semibold text-gray-800 mb-4 text-center">
+              Bergabung dengan{" "}
+              <span className="text-blue-500">{selectedRoom.name}</span>?
             </h2>
-
-            {/* Form */}
             <div className="space-y-4 mb-6">
               <div>
-                <input
-                  type="text"
-                  placeholder="Nama room"
-                  value={roomName}
-                  onChange={(e) => setRoomName(e.target.value)}
-                  className="w-full px-4 py-3 text-gray-600 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
-                />
+                <h3 className="text-sm font-medium text-gray-600 mb-1">
+                  Deskripsi
+                </h3>
+                <p className="text-gray-800">{selectedRoom.description}</p>
               </div>
-              
-              <div>
-                <textarea
-                  placeholder="Deskripsi Room"
-                  value={roomDescription}
-                  onChange={(e) => setRoomDescription(e.target.value)}
-                  rows={4}
-                  className="w-full px-4 py-3 text-gray-600 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none resize-none"
-                />
-              </div>
-
-              <div>
-                <label className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    checked={isPrivate}
-                    onChange={(e) => setIsPrivateRoom(e.target.checked)}
-                    className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                  />
-                  <span className="text-gray-600">Private Room</span>
-                </label>
+              <div className="flex justify-between">
+                <div>
+                  <h3 className="text-sm font-medium text-gray-600">Jumlah Orang</h3>
+                  <p className="text-blue-500 font-medium">{selectedRoom.joined}</p>
+                </div>
+                <div className="text-right">
+                  <h3 className="text-sm font-medium text-gray-600">Dibuat</h3>
+                  <p className="text-blue-500 font-mono">
+                    {new Date(selectedRoom.createdAt || Date.now()).toLocaleDateString()}
+                  </p>
+                </div>
               </div>
             </div>
+            <div className="flex gap-3">
+              <button
+                onClick={handleJoinRoom}
+                className="flex-1 bg-gradient-to-t from-[#0B92C2] to-[#7FD8E8] py-3 rounded-lg hover:from-[#7FD8E8] hover:to-[#0B92C2] transition-colors font-medium text-white" 
+              >
+                Join
+              </button>
+              <button
+                onClick={() => setSelectedRoom(null)}
+                className="flex-1 border border-gray-300 text-gray-700 py-3 rounded-lg hover:bg-gray-50 transition-colors font-medium"
+              >
+                Batal
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
-            {/* Buttons */}
+      {/* Modal: Buat Room */}
+      {showCreateModal && (
+        <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-2xl p-6 w-full max-w-md relative">
+            <button
+              onClick={() => setShowCreateModal(false)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
+            >
+              <X size={20} />
+            </button>
+            <h2 className="text-xl font-semibold text-gray-800 mb-4 text-center">
+              Buat Room Baru
+            </h2>
+            <input
+              value={roomName}
+              onChange={(e) => setRoomName(e.target.value)}
+              placeholder="Nama Room"
+              className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none mb-3"
+            />
+            <textarea
+              value={roomDescription}
+              onChange={(e) => setRoomDescription(e.target.value)}
+              placeholder="Deskripsi (opsional)"
+              rows={3}
+              className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none mb-4"
+            ></textarea>
+            <label className="flex items-center space-x-2 mb-4">
+              <input
+                type="checkbox"
+                checked={isPrivate}
+                onChange={() => setIsPrivateRoom(!isPrivate)}
+              />
+              <span>Room Private</span>
+            </label>
             <div className="flex gap-3">
               <button
                 onClick={handleCreateNewRoom}
-                className="cursor-pointer flex-1 bg-gradient-to-t from-[#0B92C2] to-[#7FD8E8] py-3 rounded-lg hover:bg-gradient-to-t hover:from-[#7FD8E8] hover:to-[#0B92C2] transition-colors font-medium"
+                disabled={loading}
+                className="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg"
               >
-                Buat
+                {loading ? "Loading..." : "Buat"}
               </button>
               <button
-                onClick={handleCancelCreate}
-                className="cursor-pointer flex-1 border border-gray-300 text-gray-700 py-3 rounded-lg hover:bg-gray-50 transition-colors font-medium"
+                onClick={() => setShowCreateModal(false)}
+                className="flex-1 bg-gray-200 hover:bg-gray-300 py-2 rounded-lg"
               >
                 Batal
               </button>
             </div>
           </div>
         </div>
-        )}
+      )}
 
-        {showJoinCodeModal && (
+      {/* Modal: Join dengan Kode */}
+      {showJoinCodeModal && (
         <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-2xl p-6 w-full max-w-md relative">
-            {/* Close Button */}
             <button
-              onClick={handleCloseJoinCodeModal}
-              className="cursor-pointer absolute top-4 right-4 text-gray-400 hover:text-gray-600"
+              onClick={() => setShowJoinCodeModal(false)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
             >
-              <X className="w-6 h-6" />
+              <X size={20} />
             </button>
-
-            {/* Header */}
-            <h2 className="text-xl font-semibold text-gray-800 mb-6 text-center">
-              Join Room with Code
+            <h2 className="text-xl font-semibold text-gray-800 mb-4 text-center">
+              Masukkan Kode Room
             </h2>
-
-            {/* Form */}
-            <div className="space-y-4 mb-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-600 mb-2">
-                  Masukkan Kode Room
-                </label>
-                <input
-                  type="text"
-                  placeholder="Contoh: ABC123"
-                  value={roomCode}
-                  onChange={(e) => setRoomCode(e.target.value.toUpperCase())}
-                  className="text-gray-600 w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-center text-lg font-mono tracking-wider"
-                  maxLength={10}
-                />
-              </div>
-              
-              <div className="bg-blue-50 p-4 rounded-lg">
-                <p className="text-sm text-blue-700">
-                  💡 <strong>Tips:</strong> Minta kode room dari teman yang sudah membuat room.
-                </p>
-              </div>
+            <input
+              value={roomCode}
+              onChange={(e) => setRoomCode(e.target.value.toUpperCase())}
+              placeholder="Contoh: ABC123"
+              className="w-full p-3 border rounded-lg text-center text-lg font-mono tracking-widest uppercase focus:ring-2 focus:ring-blue-500 outline-none"
+              maxLength={6}
+            />
+            <div className="mt-4 bg-blue-50 p-3 rounded-lg text-sm text-blue-700">
+              💡 Minta kode room dari teman kamu untuk bergabung.
             </div>
-
-            {/* Buttons */}
-            <div className="flex gap-3">
+            <div className="flex gap-3 mt-6">
               <button
                 onClick={handleJoinRoomWithCode}
-                className="cursor-pointer flex-1 bg-gradient-to-t from-[#0B92C2] to-[#7FD8E8] py-3 rounded-lg hover:bg-gradient-to-t hover:from-[#7FD8E8] hover:to-[#0B92C2] transition-colors font-medium"
+                disabled={loading}
+                className="flex-1 bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg"
               >
-                Join Room
+                {loading ? "Loading..." : "Gabung"}
               </button>
               <button
-                onClick={handleCancelJoinCode}
-                className="cursor-pointer flex-1 border border-gray-300 text-gray-700 py-3 rounded-lg hover:bg-gray-50 transition-colors font-medium"
+                onClick={() => setShowJoinCodeModal(false)}
+                className="flex-1 bg-gray-200 hover:bg-gray-300 py-2 rounded-lg"
               >
                 Batal
               </button>
             </div>
           </div>
         </div>
-        )}
+      )}
 
-
-      </div>
+      {/* Modal: Chat Room */}
+      {showChatModal && currentRoom && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white w-full max-w-3xl h-[90vh] rounded-2xl overflow-hidden shadow-xl">
+            <div className="flex justify-between items-center p-4 border-b">
+              <h2 className="text-xl font-semibold">{currentRoom.roomName}</h2>
+              <button
+                onClick={handleLeaveRoom}
+                className="text-red-500 hover:text-red-700"
+              >
+                <LogOut size={20} />
+              </button>
+            </div>
+            {/* Pesan */}
+            <div className="flex flex-col flex-grow p-4 overflow-y-auto h-[70vh]">
+              {messages.map((msg, index) => (
+                <div
+                  key={index}
+                  className={`mb-3 ${
+                    msg.type === "system"
+                      ? "text-center text-gray-500"
+                      : ""
+                  }`}
+                >
+                  {msg.type !== "system" && (
+                    <>
+                      <strong>{msg.userName}</strong>:{" "}
+                    </>
+                  )}
+                  {msg.message}
+                </div>
+              )}
+              <div ref={messagesEndRef}></div>
+            </div>
+            {/* Input */}
+            <div className="border-t p-4 flex gap-2">
+              <input
+                value={newMessage}
+                onChange={(e) => setNewMessage(e.target.value)}
+                onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
+                placeholder="Ketik pesan..."
+                className="flex-grow p-2 border rounded-lg"
+              />
+              <button
+                onClick={handleSendMessage}
+                className="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-lg"
+              >
+                <Send size={18} />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
-};
-
-export default RoomPage;
+}

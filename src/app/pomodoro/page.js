@@ -55,6 +55,10 @@ const PomodoroTimer = () => {
     }
   };
 
+  // PERBAIKAN: HAPUS useEffect yang mereset timeLeft saat page load
+  // Biarkan PomodoroContext mengelola semua state management
+  // Context sudah handle localStorage restore dengan baik
+
   const handleModeChange = (mode) => {
     console.log('🎯 DEBUG: handleModeChange called with mode:', mode);
     
@@ -339,34 +343,34 @@ const PomodoroTimer = () => {
                 <h3 className="font-semibold text-gray-800 mb-4 text-lg">Time (minutes)</h3>
                 <div className="grid grid-cols-3 gap-4">
                 <div>
-                    <label className="block text-sm font-medium text-black mb-2">Pomodoro</label>
+                    <label className="block text-sm font-medium text-gray-600 mb-2">Pomodoro</label>
                     <input
                     type="number"
                     value={pomodoroTime}
                     onChange={(e) => setPomodoroTime(parseInt(e.target.value) || 25)}
-                    className="w-full p-3 text-black border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-400 focus:border-transparent"
+                    className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-400 focus:border-transparent"
                     min="1"
                     max="60"
                     />
                 </div>
                 <div>
-                    <label className="block text-sm font-medium text-black mb-2">Short Break</label>
+                    <label className="block text-sm font-medium text-gray-600 mb-2">Short Break</label>
                     <input
                     type="number"
                     value={shortBreakTime}
                     onChange={(e) => setShortBreakTime(parseInt(e.target.value) || 5)}
-                    className="w-full p-3 text-black border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-400 focus:border-transparent"
+                    className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-400 focus:border-transparent"
                     min="1"
                     max="30"
                     />
                 </div>
                 <div>
-                    <label className="block text-sm font-medium text-black mb-2">Long Break</label>
+                    <label className="block text-sm font-medium text-gray-600 mb-2">Long Break</label>
                     <input
                     type="number"
                     value={longBreakTime}
                     onChange={(e) => setLongBreakTime(parseInt(e.target.value) || 15)}
-                    className="w-full p-3 text-black border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-400 focus:border-transparent"
+                    className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-400 focus:border-transparent"
                     min="1"
                     max="60"
                     />
@@ -413,7 +417,7 @@ const PomodoroTimer = () => {
                     type="number"
                     value={longBreakInterval}
                     onChange={(e) => setLongBreakInterval(parseInt(e.target.value) || 4)}
-                    className="w-20 p-2 text-black border border-gray-300 rounded-lg text-center font-medium focus:ring-2 focus:ring-cyan-400 focus:border-transparent"
+                    className="w-20 p-2 border border-gray-300 rounded-lg text-center font-medium focus:ring-2 focus:ring-cyan-400 focus:border-transparent"
                     min="2"
                     max="10"
                 />

@@ -823,7 +823,7 @@ const LearningStyleQuiz = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await fetch(
-        "http://localhost:5000/api/ml/predict/story",
+        `${process.env.NEXT_PUBLIC_API_URL}/api/ml/predict/story`,
         {
           method: "POST",
           headers: {
@@ -851,7 +851,7 @@ const LearningStyleQuiz = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await fetch(
-        "http://localhost:5000/api/ml/predict/quiz",
+        `${process.env.NEXT_PUBLIC_API_URL}/api/ml/predict/quiz`,
         {
           method: "POST",
           headers: {

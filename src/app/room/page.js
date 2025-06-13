@@ -296,7 +296,7 @@ export default function RoomPage() {
     console.log("Initializing socket connection...");
     isInitializedRef.current = true;
 
-    const socket = io("http://localhost:5000", {
+    const socket = io("https://study-finder-be-production.up.railway.app", {
       auth: { token },
       autoConnect: true,
       reconnection: true,
@@ -451,7 +451,7 @@ export default function RoomPage() {
       if (!token) return;
 
       try {
-        const res = await fetch("http://localhost:5000/api/rooms/current", {
+        const res = await fetch("https://study-finder-be-production.up.railway.app/api/rooms/current", {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();
@@ -479,7 +479,7 @@ export default function RoomPage() {
     setLoading(true);
     try {
       const token = getAuthToken();
-      const res = await fetch("http://localhost:5000/api/rooms/public", {
+      const res = await fetch("https://study-finder-be-production.up.railway.app/api/rooms/public", {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -520,7 +520,7 @@ export default function RoomPage() {
         }
 
         const res = await fetch(
-          `http://localhost:5000/api/rooms/${roomToJoin.id}/join`,
+          `https://study-finder-be-production.up.railway.app/api/rooms/${roomToJoin.id}/join`,
           {
             method: "POST",
             headers: {
@@ -581,7 +581,7 @@ export default function RoomPage() {
   const handleLeaveRoom = useCallback(async () => {
     try {
       const token = getAuthToken();
-      await fetch("http://localhost:5000/api/rooms/leave", {
+      await fetch("https://study-finder-be-production.up.railway.app/api/rooms/leave", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -641,7 +641,7 @@ export default function RoomPage() {
     setLoading(true);
     try {
       const token = getAuthToken();
-      const res = await fetch("http://localhost:5000/api/rooms", {
+      const res = await fetch("https://study-finder-be-production.up.railway.app/api/rooms", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -706,7 +706,7 @@ export default function RoomPage() {
           requestBody.password = password;
         }
 
-        const res = await fetch("http://localhost:5000/api/rooms/join-code", {
+        const res = await fetch("https://study-finder-be-production.up.railway.app/api/rooms/join-code", {
           method: "POST",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -993,7 +993,7 @@ export default function RoomPage() {
                     <img
                       src={
                         member.profile_picture
-                          ? `http://localhost:5000/uploads/avatars/${member.profile_picture}`
+                          ? `https://study-finder-be-production.up.railway.app/uploads/avatars/${member.profile_picture}`
                           : "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face"
                       }
                       alt={member.name}
@@ -1056,7 +1056,7 @@ export default function RoomPage() {
                     <img
                       src={
                         message.userAvatar
-                          ? `http://localhost:5000/uploads/avatars/${message.userAvatar}`
+                          ? `https://study-finder-be-production.up.railway.app/uploads/avatars/${message.userAvatar}`
                           : "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&h=32&fit=crop&crop=face"
                       }
                       alt={message.userName}

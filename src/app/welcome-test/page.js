@@ -255,22 +255,6 @@ const LearningStyleQuiz = () => {
           }
         `}</style>
 
-        {/* Share Button - Desktop */}
-        {/* <div className="absolute top-6 right-25 z-20 hidden lg:block">
-          <button className="bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-full flex items-center gap-2 font-medium shadow-lg transition-colors">
-            <Share size={20} />
-            Share
-          </button>
-        </div> */}
-
-        {/* Share Button - Mobile/Tablet */}
-        {/* <div className="absolute top-6 right-6 z-20 lg:hidden">
-          <button className="bg-white hover:bg-gray-50 text-cyan-600 px-4 py-2 rounded-full flex items-center gap-2 font-medium shadow-lg transition-colors border border-gray-200">
-            <Share size={20} />
-            Share
-          </button>
-        </div> */}
-
         {/* Background Circle - Desktop */}
         <div className="absolute top-0 left-0 z-10 w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] md:w-[500px] md:h-[500px] lg:w-[600px] lg:h-[600px] xl:w-[700px] xl:h-[700px] overflow-hidden hidden lg:block">
           <div className="absolute w-[120%] h-[120%] bg-gradient-to-b from-[#7FD8E8] to-[#0798C5] rounded-full -top-1/4 -left-1/4"></div>
@@ -282,7 +266,7 @@ const LearningStyleQuiz = () => {
         </div>
 
         {/* Desktop Layout */}
-        <div className="hidden lg:flex container mx-auto px-6 py-12 items-center justify-center gap-8 min-h-screen">
+        <div className="hidden lg:flex container mx-auto px-6 py-12 items-start justify-center gap-8 min-h-screen">
           {/* Left Side - Character */}
           <div className="flex">
             {/* Main Character */}
@@ -299,7 +283,7 @@ const LearningStyleQuiz = () => {
           </div>
 
           {/* Right Side - Content */}
-          <div className="flex-1 max-w-md relative">
+          <div className="flex-1 max-w-2xl relative">
             {/* Header */}
             <div className="mb-8 text-right">
               <h2 className="text-cyan-600 text-3xl font-bold mb-2">
@@ -322,6 +306,36 @@ const LearningStyleQuiz = () => {
               <p className="text-[#A4A4A4] text-lg font-semibold leading-relaxed">
                 {style.description}
               </p>
+            </div>
+
+            {/* Karakteristik - Desktop */}
+            <div className="mb-8">
+              <h3 className="text-xl font-semibold text-gray-800 mb-4 text-right">
+                Karakteristik
+              </h3>
+              <ul className="space-y-2 text-right">
+                {style.characteristics.map((char, idx) => (
+                  <li key={idx} className="flex items-start gap-2 justify-end">
+                    <span className="text-gray-600">{char}</span>
+                    <CheckCircle className="w-5 h-5 text-green-500 mt-0.5" />
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Tips Belajar - Desktop */}
+            <div className="mb-8">
+              <h3 className="text-xl font-semibold text-gray-800 mb-4 text-right">
+                Tips Belajar
+              </h3>
+              <ul className="space-y-2 text-right">
+                {style.tips.map((tip, idx) => (
+                  <li key={idx} className="flex items-start gap-2 justify-end">
+                    <span className="text-gray-600">{tip}</span>
+                    <Brain className="w-5 h-5 text-cyan-500 mt-0.5" />
+                  </li>
+                ))}
+              </ul>
             </div>
 
             {/* Action Buttons */}
@@ -370,7 +384,6 @@ const LearningStyleQuiz = () => {
             </div>
 
             {/* Description */}
-
             <div className="flex items-center justify-center space-x-2 mb-6">
               <CheckCircle className="w-6 h-6 text-green-500" />
               <span className="text-lg text-gray-600">
@@ -412,15 +425,16 @@ const LearningStyleQuiz = () => {
               </ul>
             </div>
 
+            {/* Fixed width buttons for mobile */}
             <div className="flex gap-4 justify-center flex-col sm:flex-row max-w-md mx-auto">
               <button
                 onClick={onRetake}
-                className="px-8 py-3 border-2 border-cyan-500 text-cyan-600 rounded-full font-medium hover:bg-cyan-50 transition-colors"
+                className="w-full px-8 py-3 border-2 border-cyan-500 text-cyan-600 rounded-full font-medium hover:bg-cyan-50 transition-colors"
               >
                 Tes Ulang
               </button>
-              <Link href="/dashboard">
-                <button className="px-8 py-3 bg-cyan-500 text-white rounded-full font-medium hover:bg-cyan-600 transition-colors shadow-lg">
+              <Link href="/dashboard" className="w-full">
+                <button className="w-full px-8 py-3 bg-cyan-500 text-white rounded-full font-medium hover:bg-cyan-600 transition-colors shadow-lg">
                   Ke Dashboard
                 </button>
               </Link>
@@ -455,22 +469,6 @@ const LearningStyleQuiz = () => {
           }
         `}</style>
 
-        {/* Share Button - Desktop */}
-        {/* <div className="absolute top-6 right-25 z-20 hidden lg:block">
-          <button className="bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-full flex items-center gap-2 font-medium shadow-lg transition-colors">
-            <Share size={20} />
-            Share
-          </button>
-        </div> */}
-
-        {/* Share Button - Mobile/Tablet */}
-        {/* <div className="absolute top-6 right-6 z-20 lg:hidden">
-          <button className="bg-white hover:bg-gray-50 text-cyan-600 px-4 py-2 rounded-full flex items-center gap-2 font-medium shadow-lg transition-colors border border-gray-200">
-            <Share size={20} />
-            Share
-          </button>
-        </div> */}
-
         {/* Background Circle - Desktop */}
         <div className="absolute top-0 left-0 z-10 w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] md:w-[500px] md:h-[500px] lg:w-[600px] lg:h-[600px] xl:w-[700px] xl:h-[700px] overflow-hidden hidden lg:block">
           <div className="absolute w-[120%] h-[120%] bg-gradient-to-b from-[#7FD8E8] to-[#0798C5] rounded-full -top-1/4 -left-1/4"></div>
@@ -482,7 +480,7 @@ const LearningStyleQuiz = () => {
         </div>
 
         {/* Desktop Layout */}
-        <div className="hidden lg:flex container mx-auto px-6 py-12 items-center justify-center gap-8 min-h-screen">
+        <div className="hidden lg:flex container mx-auto px-6 py-12 items-start justify-center gap-8 min-h-screen">
           {/* Left Side - Character */}
           <div className="flex">
             {/* Main Character */}
@@ -499,7 +497,7 @@ const LearningStyleQuiz = () => {
           </div>
 
           {/* Right Side - Content */}
-          <div className="flex-1 max-w-md relative">
+          <div className="flex-1 max-w-2xl relative">
             {/* Header */}
             <div className="mb-8 text-right">
               <h2 className="text-cyan-600 text-3xl font-bold mb-2">
@@ -524,6 +522,36 @@ const LearningStyleQuiz = () => {
               </p>
             </div>
 
+            {/* Karakteristik - Desktop */}
+            <div className="mb-8">
+              <h3 className="text-xl font-semibold text-gray-800 mb-4 text-right">
+                Karakteristik
+              </h3>
+              <ul className="space-y-2 text-right">
+                {style.characteristics.map((char, idx) => (
+                  <li key={idx} className="flex items-start gap-2 justify-end">
+                    <span className="text-gray-600">{char}</span>
+                    <CheckCircle className="w-5 h-5 text-green-500 mt-0.5" />
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Tips Belajar - Desktop */}
+            <div className="mb-8">
+              <h3 className="text-xl font-semibold text-gray-800 mb-4 text-right">
+                Tips Belajar
+              </h3>
+              <ul className="space-y-2 text-right">
+                {style.tips.map((tip, idx) => (
+                  <li key={idx} className="flex items-start gap-2 justify-end">
+                    <span className="text-gray-600">{tip}</span>
+                    <Brain className="w-5 h-5 text-cyan-500 mt-0.5" />
+                  </li>
+                ))}
+              </ul>
+            </div>
+
             {/* Action Buttons */}
             <div className="flex gap-4 justify-end">
               <button
@@ -541,6 +569,7 @@ const LearningStyleQuiz = () => {
           </div>
         </div>
 
+        {/* Mobile/Tablet Layout */}
         <div className="lg:hidden min-h-screen flex flex-col">
           {/* Top Section - Image overlaid on gradient */}
           <div className="relative h-[60vh] flex items-center justify-center">
@@ -556,6 +585,7 @@ const LearningStyleQuiz = () => {
             </div>
           </div>
 
+          {/* Bottom Section - Content */}
           <div className="flex-1 px-6 py-8 relative z-10 bg-white">
             <div className="mb-6 text-center">
               <h2 className="text-cyan-600 text-2xl sm:text-3xl font-bold mb-2">
@@ -607,15 +637,16 @@ const LearningStyleQuiz = () => {
               </ul>
             </div>
 
+            {/* Fixed width buttons for mobile */}
             <div className="flex gap-4 justify-center flex-col sm:flex-row max-w-md mx-auto">
               <button
                 onClick={onRetake}
-                className="px-8 py-3 border-2 border-cyan-500 text-cyan-600 rounded-full font-medium hover:bg-cyan-50 transition-colors"
+                className="w-full px-8 py-3 border-2 border-cyan-500 text-cyan-600 rounded-full font-medium hover:bg-cyan-50 transition-colors"
               >
                 Tes Ulang
               </button>
-              <Link href="/dashboard">
-                <button className="px-8 py-3 bg-cyan-500 text-white rounded-full font-medium hover:bg-cyan-600 transition-colors shadow-lg">
+              <Link href="/dashboard" className="w-full">
+                <button className="w-full px-8 py-3 bg-cyan-500 text-white rounded-full font-medium hover:bg-cyan-600 transition-colors shadow-lg">
                   Ke Dashboard
                 </button>
               </Link>
@@ -650,22 +681,6 @@ const LearningStyleQuiz = () => {
           }
         `}</style>
 
-        {/* Share Button - Desktop */}
-        {/* <div className="absolute top-6 right-25 z-20 hidden lg:block">
-          <button className="bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-full flex items-center gap-2 font-medium shadow-lg transition-colors">
-            <Share size={20} />
-            Share
-          </button>
-        </div> */}
-
-        {/* Share Button - Mobile/Tablet */}
-        {/* <div className="absolute top-6 right-6 z-20 lg:hidden">
-          <button className="bg-white hover:bg-gray-50 text-cyan-600 px-4 py-2 rounded-full flex items-center gap-2 font-medium shadow-lg transition-colors border border-gray-200">
-            <Share size={20} />
-            Share
-          </button>
-        </div> */}
-
         {/* Background Circle - Desktop */}
         <div className="absolute top-0 left-0 z-10 w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] md:w-[500px] md:h-[500px] lg:w-[600px] lg:h-[600px] xl:w-[700px] xl:h-[700px] overflow-hidden hidden lg:block">
           <div className="absolute w-[120%] h-[120%] bg-gradient-to-b from-[#7FD8E8] to-[#0798C5] rounded-full -top-1/4 -left-1/4"></div>
@@ -677,7 +692,7 @@ const LearningStyleQuiz = () => {
         </div>
 
         {/* Desktop Layout */}
-        <div className="hidden lg:flex container mx-auto px-6 py-12 items-center justify-center gap-8 min-h-screen">
+        <div className="hidden lg:flex container mx-auto px-6 py-12 items-start justify-center gap-8 min-h-screen">
           {/* Left Side - Character */}
           <div className="flex">
             {/* Main Character */}
@@ -694,7 +709,7 @@ const LearningStyleQuiz = () => {
           </div>
 
           {/* Right Side - Content */}
-          <div className="flex-1 max-w-md relative">
+          <div className="flex-1 max-w-2xl relative">
             {/* Header */}
             <div className="mb-8 text-right">
               <h2 className="text-cyan-600 text-3xl font-bold mb-2">
@@ -705,7 +720,6 @@ const LearningStyleQuiz = () => {
               </h1>
             </div>
 
-            {/* Description */}
             <div className="flex items-center justify-end space-x-2 mb-6">
               <CheckCircle className="w-6 h-6 text-green-500" />
               <span className="text-lg text-gray-600">
@@ -720,9 +734,42 @@ const LearningStyleQuiz = () => {
               </p>
             </div>
 
+            {/* Karakteristik - Desktop */}
+            <div className="mb-8">
+              <h3 className="text-xl font-semibold text-gray-800 mb-4 text-right">
+                Karakteristik
+              </h3>
+              <ul className="space-y-2 text-right">
+                {style.characteristics.map((char, idx) => (
+                  <li key={idx} className="flex items-start gap-2 justify-end">
+                    <span className="text-gray-600">{char}</span>
+                    <CheckCircle className="w-5 h-5 text-green-500 mt-0.5" />
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Tips Belajar - Desktop */}
+            <div className="mb-8">
+              <h3 className="text-xl font-semibold text-gray-800 mb-4 text-right">
+                Tips Belajar
+              </h3>
+              <ul className="space-y-2 text-right">
+                {style.tips.map((tip, idx) => (
+                  <li key={idx} className="flex items-start gap-2 justify-end">
+                    <span className="text-gray-600">{tip}</span>
+                    <Brain className="w-5 h-5 text-cyan-500 mt-0.5" />
+                  </li>
+                ))}
+              </ul>
+            </div>
+
             {/* Action Buttons */}
             <div className="flex gap-4 justify-end">
-              <button className="px-8 py-3 border-2 border-cyan-500 text-cyan-600 rounded-full font-medium hover:bg-cyan-50 transition-colors">
+              <button 
+                onClick={onRetake}
+                className="px-8 py-3 border-2 border-cyan-500 text-cyan-600 rounded-full font-medium hover:bg-cyan-50 transition-colors"
+              >
                 Tes Ulang
               </button>
               <Link href="/dashboard">
@@ -736,6 +783,7 @@ const LearningStyleQuiz = () => {
 
         {/* Mobile/Tablet Layout */}
         <div className="lg:hidden min-h-screen flex flex-col">
+          {/* Top Section - Image overlaid on gradient */}
           <div className="relative h-[60vh] flex items-center justify-center">
             <div className="relative z-20 floating-animation">
               <Image
@@ -748,6 +796,8 @@ const LearningStyleQuiz = () => {
               />
             </div>
           </div>
+
+          {/* Bottom Section - Content */}
           <div className="flex-1 px-6 py-8 relative z-10 bg-white">
             <div className="mb-6 text-center">
               <h2 className="text-cyan-600 text-2xl sm:text-3xl font-bold mb-2">
@@ -799,15 +849,16 @@ const LearningStyleQuiz = () => {
               </ul>
             </div>
 
+            {/* Fixed width buttons for mobile */}
             <div className="flex gap-4 justify-center flex-col sm:flex-row max-w-md mx-auto">
               <button
                 onClick={onRetake}
-                className="px-8 py-3 border-2 border-cyan-500 text-cyan-600 rounded-full font-medium hover:bg-cyan-50 transition-colors"
+                className="w-full px-8 py-3 border-2 border-cyan-500 text-cyan-600 rounded-full font-medium hover:bg-cyan-50 transition-colors"
               >
                 Tes Ulang
               </button>
-              <Link href="/dashboard">
-                <button className="px-8 py-3 bg-cyan-500 text-white rounded-full font-medium hover:bg-cyan-600 transition-colors shadow-lg">
+              <Link href="/dashboard" className="w-full">
+                <button className="w-full px-8 py-3 bg-cyan-500 text-white rounded-full font-medium hover:bg-cyan-600 transition-colors shadow-lg">
                   Ke Dashboard
                 </button>
               </Link>

@@ -1129,6 +1129,30 @@ const LearningStyleQuiz = () => {
             </div>
           </div>
 
+          {/* Test buttons untuk development (hapus setelah tidak diperlukan) */}
+          <div className="mb-8">
+            <p className="text-sm text-gray-500 mb-4">Test Result Pages:</p>
+            <div className="flex gap-2 justify-center">
+              <button
+                onClick={() => handleTestResult(1)}
+                className="px-4 py-2 bg-blue-500 text-white rounded text-sm hover:bg-blue-600"
+              >
+                Test Visual
+              </button>
+              <button
+                onClick={() => handleTestResult(2)}
+                className="px-4 py-2 bg-green-500 text-white rounded text-sm hover:bg-green-600"
+              >
+                Test Auditory
+              </button>
+              <button
+                onClick={() => handleTestResult(3)}
+                className="px-4 py-2 bg-purple-500 text-white rounded text-sm hover:bg-purple-600"
+              >
+                Test Kinesthetic
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

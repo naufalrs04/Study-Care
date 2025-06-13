@@ -14,6 +14,7 @@ import {
   Share,
 } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 // Learning Styles Data
 const learningStyles = {
@@ -329,11 +330,13 @@ const LearningStyleQuiz = () => {
                 onClick={onRetake}
                 className="px-8 py-3 border-2 border-cyan-500 text-cyan-600 rounded-full font-medium hover:bg-cyan-50 transition-colors"
               >
-                Re-take
+                Tes Ulang
               </button>
-              <button className="px-8 py-3 bg-cyan-500 text-white rounded-full font-medium hover:bg-cyan-600 transition-colors shadow-lg">
-                Okay
-              </button>
+              <Link href="/dashboard">
+                <button className="px-8 py-3 bg-cyan-500 text-white rounded-full font-medium hover:bg-cyan-600 transition-colors shadow-lg">
+                  Ke Dashboard
+                </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -414,14 +417,13 @@ const LearningStyleQuiz = () => {
                 onClick={onRetake}
                 className="px-8 py-3 border-2 border-cyan-500 text-cyan-600 rounded-full font-medium hover:bg-cyan-50 transition-colors"
               >
-                Re-take
+                Tes Ulang
               </button>
-              <button
-                onClick={() => setCurrentPage("welcome")}
-                className="px-8 py-3 bg-cyan-500 text-white rounded-full font-medium hover:bg-cyan-600 transition-colors shadow-lg"
-              >
-                Okay
-              </button>
+              <Link href="/dashboard">
+                <button className="px-8 py-3 bg-cyan-500 text-white rounded-full font-medium hover:bg-cyan-600 transition-colors shadow-lg">
+                  Ke Dashboard
+                </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -503,7 +505,9 @@ const LearningStyleQuiz = () => {
               <h2 className="text-cyan-600 text-3xl font-bold mb-2">
                 Gaya belajar kamu
               </h2>
-              <h1 className="text-9xl font-extrabold text-black mb-6">Audio</h1>
+              <h1 className="text-9xl font-extrabold text-black mb-6">
+                Auditori
+              </h1>
             </div>
 
             <div className="flex items-center justify-end space-x-2 mb-6">
@@ -526,11 +530,13 @@ const LearningStyleQuiz = () => {
                 onClick={onRetake}
                 className="px-8 py-3 border-2 border-cyan-500 text-cyan-600 rounded-full font-medium hover:bg-cyan-50 transition-colors"
               >
-                Re-take
+                Tes Ulang
               </button>
-              <button className="px-8 py-3 bg-cyan-500 text-white rounded-full font-medium hover:bg-cyan-600 transition-colors shadow-lg">
-                Okay
-              </button>
+              <Link href="/dashboard">
+                <button className="px-8 py-3 bg-cyan-500 text-white rounded-full font-medium hover:bg-cyan-600 transition-colors shadow-lg">
+                  Ke Dashboard
+                </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -606,14 +612,13 @@ const LearningStyleQuiz = () => {
                 onClick={onRetake}
                 className="px-8 py-3 border-2 border-cyan-500 text-cyan-600 rounded-full font-medium hover:bg-cyan-50 transition-colors"
               >
-                Re-take
+                Tes Ulang
               </button>
-              <button
-                onClick={() => setCurrentPage("welcome")}
-                className="px-8 py-3 bg-cyan-500 text-white rounded-full font-medium hover:bg-cyan-600 transition-colors shadow-lg"
-              >
-                Okay
-              </button>
+              <Link href="/dashboard">
+                <button className="px-8 py-3 bg-cyan-500 text-white rounded-full font-medium hover:bg-cyan-600 transition-colors shadow-lg">
+                  Ke Dashboard
+                </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -718,11 +723,13 @@ const LearningStyleQuiz = () => {
             {/* Action Buttons */}
             <div className="flex gap-4 justify-end">
               <button className="px-8 py-3 border-2 border-cyan-500 text-cyan-600 rounded-full font-medium hover:bg-cyan-50 transition-colors">
-                Re-take
+                Tes Ulang
               </button>
-              <button className="px-8 py-3 bg-cyan-500 text-white rounded-full font-medium hover:bg-cyan-600 transition-colors shadow-lg">
-                Okay
-              </button>
+              <Link href="/dashboard">
+                <button className="px-8 py-3 bg-cyan-500 text-white rounded-full font-medium hover:bg-cyan-600 transition-colors shadow-lg">
+                  Ke Dashboard
+                </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -797,14 +804,13 @@ const LearningStyleQuiz = () => {
                 onClick={onRetake}
                 className="px-8 py-3 border-2 border-cyan-500 text-cyan-600 rounded-full font-medium hover:bg-cyan-50 transition-colors"
               >
-                Re-take
+                Tes Ulang
               </button>
-              <button
-                onClick={() => setCurrentPage("welcome")}
-                className="px-8 py-3 bg-cyan-500 text-white rounded-full font-medium hover:bg-cyan-600 transition-colors shadow-lg"
-              >
-                Okay
-              </button>
+              <Link href="/dashboard">
+                <button className="px-8 py-3 bg-cyan-500 text-white rounded-full font-medium hover:bg-cyan-600 transition-colors shadow-lg">
+                  Ke Dashboard
+                </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -996,14 +1002,14 @@ const LearningStyleQuiz = () => {
   };
 
   // // Test function untuk development (hapus setelah tidak diperlukan)
-  // const handleTestResult = (learningStyle) => {
-  //   setPredictionResult({
-  //     learning_style: learningStyle,
-  //     confidence: 0.85,
-  //     message: "Test result",
-  //   });
-  //   setCurrentPage("result");
-  // };
+  const handleTestResult = (learningStyle) => {
+    setPredictionResult({
+      learning_style: learningStyle,
+      confidence: 0.85,
+      message: "Test result",
+    });
+    setCurrentPage("result");
+  };
 
   // Render result page based on learning style
   const renderResultPage = () => {
@@ -1124,7 +1130,7 @@ const LearningStyleQuiz = () => {
           </div>
 
           {/* Test buttons untuk development (hapus setelah tidak diperlukan) */}
-          {/* <div className="mb-8">
+          <div className="mb-8">
             <p className="text-sm text-gray-500 mb-4">Test Result Pages:</p>
             <div className="flex gap-2 justify-center">
               <button
@@ -1146,7 +1152,7 @@ const LearningStyleQuiz = () => {
                 Test Kinesthetic
               </button>
             </div>
-          </div> */}
+          </div>
         </div>
       </div>
     </div>

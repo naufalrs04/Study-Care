@@ -65,12 +65,6 @@ function Navbar() {
             >
               Contact
             </a>
-            <Link
-              href="/dashboard"
-              className="rounded-full py-2 px-3 text-gray-600 hover:text-white hover:bg-[#0798C5] transition-colors"
-            >
-              Dashboard
-            </Link>
           </div>
         </div>
 

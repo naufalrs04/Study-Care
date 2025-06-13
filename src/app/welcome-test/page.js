@@ -1209,7 +1209,7 @@ const LearningStyleQuiz = () => {
       </div>
 
       {showInfoPopup && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-3xl p-8 max-w-lg w-full shadow-2xl">
             <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">
               Contoh Cerita Belajar
@@ -1321,47 +1321,47 @@ const LearningStyleQuiz = () => {
     const isCurrentQuestionAnswered =
       quizAnswers[currentQuestionData.id] !== undefined;
 
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-cyan-50 to-blue-100 flex flex-col p-6">
+  return (
+      <div className="min-h-screen bg-gradient-to-br from-cyan-50 to-blue-100 flex flex-col p-3 sm:p-6">
         <div>
           <button
             onClick={() => setCurrentPage("quiz-intro")}
-            className="bg-gradient-to-t from-[#0B92C2] to-[#7FD8E8] text-white p-4 rounded-full hover:opacity-80 transition-opacity"
+            className="bg-gradient-to-t from-[#0B92C2] to-[#7FD8E8] text-white p-3 sm:p-4 rounded-full hover:opacity-80 transition-opacity"
           >
-            <ArrowLeft className="w-6 h-6" />
+            <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
         </div>
 
-        <div className="max-w-4xl mx-auto flex-1 flex flex-col">
-          <div className="flex flex-col h-20 mb-3">
+        <div className="max-w-4xl mx-auto flex-1 flex flex-col w-full">
+          <div className="flex flex-col h-16 sm:h-20 mb-3">
             <div className="text-center flex-1 flex flex-col justify-center">
-              <p className="text-[#0B92C2] text-2xl font-extrabold mb-4">
+              <p className="text-[#0B92C2] text-xl sm:text-2xl font-extrabold mb-3 sm:mb-4">
                 {currentQuestion + 1} l {totalQuestions}
               </p>
-              <div className="w-full bg-[#A4A4A4]/50 rounded-full h-3">
+              <div className="w-full bg-[#A4A4A4]/50 rounded-full h-2 sm:h-3">
                 <div
-                  className="bg-gradient-to-l from-[#0B92C2] to-[#7FD8E8] h-3 rounded-full transition-all duration-500"
+                  className="bg-gradient-to-l from-[#0B92C2] to-[#7FD8E8] h-2 sm:h-3 rounded-full transition-all duration-500"
                   style={{ width: `${progress}%` }}
                 ></div>
               </div>
             </div>
           </div>
 
-          <div className="flex-1 flex items-center justify-center">
-            <div className="bg-gradient-to-t from-[#0B92C2] to-[#7FD8E8] rounded-xl p-8 w-full max-w-4xl h-40 flex items-center justify-center mx-auto">
-              <div className="w-full max-w-3xl">
-                <h2 className="text-3xl font-bold text-white text-center leading-relaxed break-words">
+          <div className="flex items-center justify-center mb-3 sm:mb-4">
+            <div className="bg-gradient-to-t from-[#0B92C2] to-[#7FD8E8] rounded-xl p-4 sm:p-6 md:p-8 w-full max-w-4xl min-h-[120px] sm:min-h-[140px] md:h-40 flex items-center justify-center mx-auto">
+              <div className="w-full max-w-3xl px-2">
+                <h2 className="text-lg sm:text-2xl md:text-3xl font-bold text-white text-center leading-relaxed break-words hyphens-auto">
                   {currentQuestionData.text}
                 </h2>
               </div>
             </div>
           </div>
 
-          <div className="h-80 flex flex-col">
-            <div className="h-3 flex items-center justify-center mb-6">
+          <div className="flex flex-col">
+            <div className="h-8 sm:h-12 flex items-center justify-center mb-3 sm:mb-4">
               {isAutoNexting && (
-                <div className="bg-white/20 backdrop-blur-sm rounded-full py-3 px-6">
-                  <p className="text-[#0B92C2] font-semibold text-lg">
+                <div className="bg-white/20 backdrop-blur-sm rounded-full py-2 px-4 sm:py-3 sm:px-6 mx-2">
+                  <p className="text-[#0B92C2] font-semibold text-sm sm:text-lg text-center">
                     Otomatis ke pertanyaan berikutnya dalam {autoNextCountdown}{" "}
                     detik...
                   </p>
@@ -1369,7 +1369,7 @@ const LearningStyleQuiz = () => {
               )}
             </div>
 
-            <div className="flex justify-center items-center space-x-8 mb-8">
+            <div className="flex justify-center items-center space-x-4 sm:space-x-6 md:space-x-8 mb-4 sm:mb-6">
               {[1, 2, 3, 4].map((rating) => (
                 <button
                   key={rating}
@@ -1377,7 +1377,7 @@ const LearningStyleQuiz = () => {
                     handleQuizAnswer(currentQuestionData.id, rating)
                   }
                   disabled={isAutoNexting}
-                  className={`w-16 h-16 rounded-full border-4 transition-all duration-300 text-xl font-bold shadow-2xl ${
+                  className={`w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full border-4 transition-all duration-300 text-lg sm:text-xl font-bold shadow-2xl ${
                     isAutoNexting
                       ? quizAnswers[currentQuestionData.id] === rating
                         ? "bg-gradient-to-t from-[#0B92C2] to-[#7FD8E8] border-none text-white scale-110 cursor-not-allowed"
@@ -1392,30 +1392,32 @@ const LearningStyleQuiz = () => {
               ))}
             </div>
 
-            <div className="flex justify-between items-center text-[#0B92C2] font-semibold text-lg w-full max-w-lg mx-auto mb-8">
+            <div className="flex justify-between items-center text-[#0B92C2] font-semibold text-sm sm:text-base md:text-lg w-full max-w-lg mx-auto mb-4 sm:mb-6 px-2">
               <span className="text-left">Sangat Tidak Setuju</span>
               <span className="text-right">Sangat Setuju</span>
             </div>
 
-            <div className="flex justify-between items-center h-16">
+            <div className="flex justify-between items-center h-12 sm:h-16 px-2">
               <button
                 onClick={handlePrevQuestion}
                 disabled={currentQuestion === 0}
-                className="border-2 rounded-full flex items-center space-x-3 px-8 py-3 text-[#0B92C2] hover:text-cyan-500 hover:px-5 transition-all disabled:opacity-50 disabled:cursor-not-allowed text-lg font-semibold"
+                className="border-2 rounded-full flex items-center space-x-2 sm:space-x-3 px-4 sm:px-6 md:px-8 py-2 sm:py-3 text-[#0B92C2] hover:text-cyan-500 hover:px-5 sm:hover:px-7 md:hover:px-9 transition-all disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base md:text-lg font-semibold"
               >
-                <ChevronLeft className="w-6 h-6" />
-                <span>Previous</span>
+                <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+                <span className="hidden xs:inline">Previous</span>
+                <span className="xs:hidden">Prev</span>
               </button>
 
-              <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-2 sm:space-x-4">
                 {isCurrentQuestionAnswered &&
                   currentQuestion < totalQuestions - 1 && (
                     <button
                       onClick={handleNextQuestion}
-                      className="border-2 rounded-full flex items-center space-x-3 px-8 py-3 text-[#0B92C2] hover:text-cyan-500 hover:px-5 transition-all disabled:opacity-50 disabled:cursor-not-allowed text-lg font-semibold"
+                      className="border-2 rounded-full flex items-center space-x-2 sm:space-x-3 px-4 sm:px-6 md:px-8 py-2 sm:py-3 text-[#0B92C2] hover:text-cyan-500 hover:px-5 sm:hover:px-7 md:hover:px-9 transition-all disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base md:text-lg font-semibold"
                     >
-                      <span>Next</span>
-                      <ChevronRight className="w-6 h-6" />
+                      <span className="hidden xs:inline">Next</span>
+                      <span className="xs:hidden">Next</span>
+                      <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
                     </button>
                   )}
 
@@ -1424,7 +1426,7 @@ const LearningStyleQuiz = () => {
                     <button
                       onClick={handleQuizSubmit}
                       disabled={isLoading}
-                      className="bg-gradient-to-t from-[#0B92C2] to-[#7FD8E8] text-white py-3 px-8 rounded-full text-lg font-bold hover:from-cyan-600 hover:to-cyan-700 transition-all duration-300 transform hover:scale-105 disabled:opacity-50"
+                      className="bg-gradient-to-t from-[#0B92C2] to-[#7FD8E8] text-white py-2 sm:py-3 px-4 sm:px-6 md:px-8 rounded-full text-sm sm:text-base md:text-lg font-bold hover:from-cyan-600 hover:to-cyan-700 transition-all duration-300 transform hover:scale-105 disabled:opacity-50"
                     >
                       {isLoading ? "Memproses..." : "Submit Quiz"}
                     </button>

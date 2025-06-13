@@ -1242,20 +1242,20 @@ const LearningStyleQuiz = () => {
             <div className="text-gray-600 space-y-4 text-lg">
               <div className="p-4 bg-gray-50 rounded-lg">
                 <p className="italic">
-                  "Saya biasanya belajar sambil mendengarkan musik instrumental
-                  karena membantu saya fokus..."
+                  &quot;Saya biasanya belajar sambil mendengarkan musik instrumental
+                  karena membantu saya fokus...&quot;
                 </p>
               </div>
               <div className="p-4 bg-gray-50 rounded-lg">
                 <p className="italic">
-                  "Ketika belajar matematika, saya suka membuat catatan
-                  berwarna-warni dan diagram..."
+                  &quot;Ketika belajar matematika, saya suka membuat catatan
+                  berwarna-warni dan diagram...&quot;
                 </p>
               </div>
               <div className="p-4 bg-gray-50 rounded-lg">
                 <p className="italic">
-                  "Saya lebih mudah memahami materi ketika bisa mempraktikkannya
-                  langsung..."
+                  &quot;Saya lebih mudah memahami materi ketika bisa mempraktikkannya
+                  langsung...&quot;
                 </p>
               </div>
             </div>

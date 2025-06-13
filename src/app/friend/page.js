@@ -910,7 +910,7 @@ const DaftarTeman = () => {
                   </span>
                 )}
                 {friend.bio && (
-                  <p className="text-gray-700 mt-3 italic">"{friend.bio}"</p>
+                  <p className="italic">&quot;{friend.bio}&quot;</p>
                 )}
                 {friend.interest && (
                   <p className="text-blue-600 mt-2">
@@ -1309,7 +1309,7 @@ const DaftarTeman = () => {
                         d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                       />
                     </svg>
-                    Hasil Pencarian "{searchQuery}"
+                    Hasil Pencarian &quot;{searchQuery}&quot;
                   </h4>
                   {searchResults.length > 0 ? (
                     searchResults.map((user) => (

@@ -721,7 +721,7 @@ export default function ProfilePage() {
                   <textarea
                     value={tempBio}
                     onChange={(e) => setTempBio(e.target.value)}
-                    className="w-full p-4 border border-gray-300 rounded-2xl resize-none h-32 focus:ring-2 focus:ring-cyan-400 focus:border-transparent"
+                    className="w-full p-4 border border-gray-300 rounded-2xl resize-none h-32 focus:ring-2 focus:ring-cyan-400 focus:border-transparent text-black focus:outline-none"
                     placeholder="Tulis bio Anda..."
                     maxLength={500}
                   />
@@ -777,105 +777,6 @@ export default function ProfilePage() {
                       </span>
                     )}
                   </div>
-                </div>
-
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-semibold text-gray-800">
-                      Topik Favorit
-                    </h4>
-                    {!isEditingTopics && (
-                      <button
-                        onClick={() => setIsEditingTopics(true)}
-                        className="flex items-center gap-1 text-cyan-500 hover:text-cyan-600 text-sm font-medium"
-                      >
-                        <Edit size={14} />
-                        <span>Edit</span>
-                      </button>
-                    )}
-                  </div>
-
-                  {isEditingTopics ? (
-                    <div className="space-y-4">
-                      <div className="flex flex-wrap gap-2 mb-3">
-                        {tempTopics.map((topic, index) => (
-                          <span
-                            key={index}
-                            className="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium"
-                          >
-                            {topic}
-                            <button
-                              onClick={() => handleRemoveTopic(index)}
-                              className="ml-1 text-blue-600 hover:text-blue-800"
-                            >
-                              <X size={12} />
-                            </button>
-                          </span>
-                        ))}
-                      </div>
-
-                      <div className="flex gap-2">
-                        <input
-                          type="text"
-                          value={newTopic}
-                          onChange={(e) => setNewTopic(e.target.value)}
-                          onKeyPress={(e) =>
-                            e.key === "Enter" && handleAddTopic()
-                          }
-                          className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-cyan-400 focus:border-transparent"
-                          placeholder="Tambah topik baru..."
-                          maxLength={20}
-                        />
-                        <button
-                          onClick={handleAddTopic}
-                          className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg text-sm font-medium transition-colors"
-                        >
-                          <Plus size={14} />
-                        </button>
-                      </div>
-
-                      <div className="flex gap-3 justify-end">
-                        <button
-                          onClick={handleTopicsCancel}
-                          disabled={loading.updateProfile}
-                          className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-800 font-medium disabled:opacity-50"
-                        >
-                          <X size={16} />
-                          <span>Batal</span>
-                        </button>
-                        <button
-                          onClick={handleTopicsSave}
-                          disabled={loading.updateProfile}
-                          className="flex items-center gap-2 px-6 py-2 bg-cyan-400 hover:bg-cyan-500 text-white rounded-lg font-medium transition-colors duration-200 disabled:opacity-50"
-                        >
-                          {loading.updateProfile ? (
-                            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                          ) : (
-                            <Save size={16} />
-                          )}
-                          <span>Simpan</span>
-                        </button>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="flex flex-wrap gap-2">
-                      {profileData.interests &&
-                      profileData.interests.length > 0 ? (
-                        profileData.interests.map((topic, index) => (
-                          <span
-                            key={index}
-                            className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium"
-                          >
-                            {topic}
-                          </span>
-                        ))
-                      ) : (
-                        <span className="text-gray-500 text-sm">
-                          Belum ada topik favorit. Klik edit untuk menambahkan.
-                        </span>
-                      )}
-                    </div>
-                  )}
                 </div>
               </div>
 
@@ -1080,7 +981,7 @@ export default function ProfilePage() {
                           <textarea
                             value={tempBio}
                             onChange={(e) => setTempBio(e.target.value)}
-                            className="w-full p-4 border border-gray-300 rounded-2xl resize-none h-32 focus:ring-2 focus:ring-cyan-400 focus:border-transparent"
+                            className="w-full p-4 border border-gray-300 rounded-2xl resize-none h-32 focus:ring-2 focus:ring-cyan-400 focus:border-transparent text-black focus:outline-none"
                             placeholder="Tulis bio Anda..."
                             maxLength={500}
                           />
@@ -1135,106 +1036,6 @@ export default function ProfilePage() {
                             </span>
                           )}
                         </div>
-                      </div>
-
-                      <div>
-                        <div className="flex items-center justify-between mb-3">
-                          <h4 className="font-semibold text-gray-800">
-                            Topik Favorit
-                          </h4>
-                          {!isEditingTopics && (
-                            <button
-                              onClick={() => setIsEditingTopics(true)}
-                              className="flex items-center gap-1 text-cyan-500 hover:text-cyan-600 text-sm font-medium"
-                            >
-                              <Edit size={14} />
-                              <span>Edit</span>
-                            </button>
-                          )}
-                        </div>
-
-                        {isEditingTopics ? (
-                          <div className="space-y-4">
-                            <div className="flex flex-wrap gap-2 mb-3">
-                              {tempTopics.map((topic, index) => (
-                                <span
-                                  key={index}
-                                  className="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium"
-                                >
-                                  {topic}
-                                  <button
-                                    onClick={() => handleRemoveTopic(index)}
-                                    className="ml-1 text-blue-600 hover:text-blue-800"
-                                  >
-                                    <X size={12} />
-                                  </button>
-                                </span>
-                              ))}
-                            </div>
-
-                            <div className="flex gap-2">
-                              <input
-                                type="text"
-                                value={newTopic}
-                                onChange={(e) => setNewTopic(e.target.value)}
-                                onKeyPress={(e) =>
-                                  e.key === "Enter" && handleAddTopic()
-                                }
-                                className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-cyan-400 focus:border-transparent"
-                                placeholder="Tambah topik baru..."
-                                maxLength={20}
-                              />
-                              <button
-                                onClick={handleAddTopic}
-                                className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg text-sm font-medium transition-colors"
-                              >
-                                <Plus size={14} />
-                              </button>
-                            </div>
-
-                            <div className="flex gap-3 justify-end">
-                              <button
-                                onClick={handleTopicsCancel}
-                                disabled={loading.updateProfile}
-                                className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-800 font-medium disabled:opacity-50"
-                              >
-                                <X size={16} />
-                                <span>Batal</span>
-                              </button>
-                              <button
-                                onClick={handleTopicsSave}
-                                disabled={loading.updateProfile}
-                                className="flex items-center gap-2 px-6 py-2 bg-cyan-400 hover:bg-cyan-500 text-white rounded-lg font-medium transition-colors duration-200 disabled:opacity-50"
-                              >
-                                {loading.updateProfile ? (
-                                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                                ) : (
-                                  <Save size={16} />
-                                )}
-                                <span>Simpan</span>
-                              </button>
-                            </div>
-                          </div>
-                        ) : (
-                          <div className="flex flex-wrap gap-2">
-                            {profileData.interests &&
-                            profileData.interests.length > 0 ? (
-                              profileData.interests.map((topic, index) => (
-                                <span
-                                  key={index}
-                                  className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium"
-                                >
-                                  {topic}
-                                </span>
-                              ))
-                            ) : (
-                              <span className="text-gray-500 text-sm">
-                                Belum ada topik favorit. Klik edit untuk
-                                menambahkan.
-                              </span>
-                            )}
-                          </div>
-                        )}
                       </div>
                     </div>
                   </div>
@@ -1311,7 +1112,7 @@ export default function ProfilePage() {
                   type="password"
                   value={currentPassword}
                   onChange={(e) => setCurrentPassword(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-400 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-400 focus:border-transparent focus:outline-none text-black"
                   placeholder="Masukkan password saat ini"
                 />
               </div>
@@ -1323,7 +1124,7 @@ export default function ProfilePage() {
                   type="password"
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-400 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-400 focus:border-transparent focus:outline-none text-black"
                   placeholder="Masukkan password baru"
                 />
               </div>
@@ -1335,7 +1136,7 @@ export default function ProfilePage() {
                   type="password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-400 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-400 focus:border-transparent focus:outline-none text-black"
                   placeholder="Konfirmasi password baru"
                 />
               </div>

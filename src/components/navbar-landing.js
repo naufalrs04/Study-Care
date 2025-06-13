@@ -157,13 +157,6 @@ function Navbar() {
             >
               Contact
             </a>
-            <Link
-              href="/dashboard"
-              onClick={closeMobileMenu}
-              className="block px-6 py-4 text-gray-700 hover:text-[#0798C5] hover:bg-gray-50 transition-colors border-b border-gray-50"
-            >
-              Dashboard
-            </Link>
           </div>
 
           {/* Mobile Login Button */}

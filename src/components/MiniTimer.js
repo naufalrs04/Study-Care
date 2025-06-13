@@ -28,7 +28,7 @@ const MiniTimer = () => {
 
   return (
     <Link href="/pomodoro">
-      <div className={`fixed bottom-4 left-4 z-50 shadow-lg rounded-lg p-3 cursor-pointer hover:shadow-xl transition-shadow ${modeColors[currentMode]}`}>
+      <div className={`fixed bottom-50 left-4 z-50 shadow-lg rounded-lg p-3 cursor-pointer hover:shadow-xl transition-shadow ${modeColors[currentMode]}`}>
         <div className="text-xs font-semibold opacity-90">{modeNames[currentMode]}</div>
         <div className="text-lg font-mono font-bold">{formatTime(timeLeft)}</div>
         <div className="flex items-center gap-2 mt-1">

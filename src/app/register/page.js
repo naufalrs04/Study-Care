@@ -93,24 +93,25 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="flex h-screen w-full bg-gray-100">
-      {/* Left Side - Image Section */}
-      <div className="w-1/2 bg-white flex flex-col items-center justify-center p-12">
+    <div className="flex flex-col lg:flex-row min-h-screen w-full bg-gray-100">
+      {/* Left Side - Form Section */}
+      <div className="w-full lg:w-1/2 bg-white flex flex-col items-center justify-center p-6 sm:p-8 lg:p-12 order-2 lg:order-1">
         {/* Logo */}
-        <div className="mb-8 flex flex-col items-center">
+        <div className="mb-6 lg:mb-8 flex flex-col items-center">
           <div className="flex items-center mb-2">
             <Image
               src="/assets/mainLogo.png"
               alt="Main Logo"
-              width={150}
-              height={75}
+              width={120}
+              height={60}
+              className="sm:w-[150px] sm:h-[75px]"
             />
           </div>
         </div>
 
         {/* Welcome Text */}
-        <div className="text-center mb-8">
-          <h1 className="text-2xl font-medium text-[#0798C5] mb-1">
+        <div className="text-center mb-6 lg:mb-8">
+          <h1 className="text-xl sm:text-2xl font-medium text-[#0798C5] mb-1">
             Hai, Selamat datang!
           </h1>
           <p className="text-gray-400 text-sm">
@@ -125,7 +126,7 @@ const RegisterPage = () => {
         <div className="w-full max-w-md mb-4 h-12 flex items-center justify-center">
           {alert.message && (
             <div
-              className={`w-full px-4 py-2 rounded-md text-sm text-center transition-all duration-300 ${
+              className={`w-full px-4 py-2 rounded-md text-xs sm:text-sm text-center transition-all duration-300 ${
                 alert.type === "success"
                   ? "bg-green-100 text-green-700 border border-green-300"
                   : "bg-red-100 text-red-700 border border-red-300"
@@ -142,7 +143,7 @@ const RegisterPage = () => {
             <input
               type="text"
               placeholder="Nama Lengkap"
-              className="w-full px-4 py-3 border-2 border-gray-200 placeholder:text-[#A4A4A4] text-gray-700 rounded-md focus:outline-none focus:ring-1 focus:ring-cyan-500 transition-colors"
+              className="w-full px-4 py-3 border-2 border-gray-200 placeholder:text-[#A4A4A4] text-gray-700 rounded-md focus:outline-none focus:ring-1 focus:ring-cyan-500 transition-colors text-sm sm:text-base"
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
@@ -153,7 +154,7 @@ const RegisterPage = () => {
             <input
               type="email"
               placeholder="Email"
-              className={`w-full px-4 py-3 border-2 rounded-md focus:outline-none focus:ring-1 transition-colors ${
+              className={`w-full px-4 py-3 border-2 rounded-md focus:outline-none focus:ring-1 transition-colors text-sm sm:text-base ${
                 emailError
                   ? "border-red-300 focus:ring-red-500"
                   : "border-gray-200 focus:ring-cyan-500"
@@ -168,7 +169,7 @@ const RegisterPage = () => {
             <input
               type={showPassword ? "text" : "password"}
               placeholder="Password"
-              className="w-full px-4 py-3 pr-12 border-2 border-gray-200 placeholder:text-[#A4A4A4] text-gray-700 rounded-md focus:outline-none focus:ring-1 focus:ring-cyan-500 transition-colors"
+              className="w-full px-4 py-3 pr-12 border-2 border-gray-200 placeholder:text-[#A4A4A4] text-gray-700 rounded-md focus:outline-none focus:ring-1 focus:ring-cyan-500 transition-colors text-sm sm:text-base"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -182,7 +183,7 @@ const RegisterPage = () => {
             >
               {showPassword ? (
                 <svg
-                  className="h-5 w-5 text-gray-400 hover:text-gray-600 transition-colors"
+                  className="h-4 w-4 sm:h-5 sm:w-5 text-gray-400 hover:text-gray-600 transition-colors"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -196,7 +197,7 @@ const RegisterPage = () => {
                 </svg>
               ) : (
                 <svg
-                  className="h-5 w-5 text-gray-400 hover:text-gray-600 transition-colors"
+                  className="h-4 w-4 sm:h-5 sm:w-5 text-gray-400 hover:text-gray-600 transition-colors"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -221,7 +222,7 @@ const RegisterPage = () => {
             <input
               type={showRePassword ? "text" : "password"}
               placeholder="Konfirmasi Password"
-              className="w-full px-4 py-3 pr-12 border-2 border-gray-200 placeholder:text-[#A4A4A4] text-gray-700 rounded-md focus:outline-none focus:ring-1 focus:ring-cyan-500 transition-colors"
+              className="w-full px-4 py-3 pr-12 border-2 border-gray-200 placeholder:text-[#A4A4A4] text-gray-700 rounded-md focus:outline-none focus:ring-1 focus:ring-cyan-500 transition-colors text-sm sm:text-base"
               value={rePassword}
               onChange={(e) => setRePassword(e.target.value)}
               required
@@ -235,7 +236,7 @@ const RegisterPage = () => {
             >
               {showRePassword ? (
                 <svg
-                  className="h-5 w-5 text-gray-400 hover:text-gray-600 transition-colors"
+                  className="h-4 w-4 sm:h-5 sm:w-5 text-gray-400 hover:text-gray-600 transition-colors"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -249,7 +250,7 @@ const RegisterPage = () => {
                 </svg>
               ) : (
                 <svg
-                  className="h-5 w-5 text-gray-400 hover:text-gray-600 transition-colors"
+                  className="h-4 w-4 sm:h-5 sm:w-5 text-gray-400 hover:text-gray-600 transition-colors"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -273,12 +274,12 @@ const RegisterPage = () => {
           <button
             type="submit"
             disabled={isLoading || emailError}
-            className="w-full py-3 bg-cyan-500 text-white rounded-md hover:bg-cyan-600 transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+            className="w-full py-3 bg-cyan-500 text-white rounded-md hover:bg-cyan-600 transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center text-sm sm:text-base"
           >
             {isLoading ? (
               <>
                 <svg
-                  className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                  className="animate-spin -ml-1 mr-3 h-4 w-4 sm:h-5 sm:w-5 text-white"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
@@ -306,10 +307,10 @@ const RegisterPage = () => {
         </form>
 
         {/* Divider */}
-        <div className="w-full max-w-md mt-12 mb-4 border-t border-gray-200"></div>
+        <div className="w-full max-w-md mt-8 lg:mt-12 mb-4 border-t border-gray-200"></div>
 
         {/* Terms and Privacy Policy */}
-        <div className="text-center text-sm text-gray-500">
+        <div className="text-center text-xs sm:text-sm text-gray-500 px-4">
           <p>
             Dengan melanjutkan, kamu menerima{" "}
             <a href="#" className="text-cyan-500 hover:underline">
@@ -325,15 +326,15 @@ const RegisterPage = () => {
       </div>
 
       {/* Right Side - Background Image */}
-      <div className="w-1/2 bg-gradient-to-b from-[#7FD8E8] to-[#0798C5] flex items-center justify-center relative overflow-hidden rounded-tl-xl rounded-br-xl">
+      <div className="w-full lg:w-1/2 min-h-[250px] sm:min-h-[300px] lg:min-h-screen bg-gradient-to-b from-[#7FD8E8] to-[#0798C5] flex items-center justify-center relative overflow-hidden lg:rounded-tl-xl lg:rounded-br-xl order-1 lg:order-2">
         <div className="w-full h-full">
           <div className="absolute inset-0 flex items-center justify-center transform scale-x-[-1]">
             <Image
               src="/assets/loginImgg.png"
               alt="Main Logo"
-              width={500}
-              height={350}
-              className="w-full"
+              width={400}
+              height={280}
+              className="w-full max-w-[300px] sm:max-w-[400px] lg:max-w-[500px] h-auto"
             />
           </div>
         </div>

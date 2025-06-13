@@ -66,11 +66,11 @@ const Alert = ({ type, message, onClose, autoClose = true }) => {
   const alertStyle = alertTypes[type] || alertTypes.info;
 
   return (
-    <div className="fixed top-6 right-6 z-50 transform transition-all duration-500 ease-out animate-slide-in-bounce">
+    <div className="fixed top-4 right-4 left-4 md:top-6 md:right-6 md:left-auto z-50 transform transition-all duration-500 ease-out animate-slide-in-bounce">
       <div
-        className={`flex items-start p-5 rounded-2xl shadow-2xl border-2 ${alertStyle.bg} ${alertStyle.border} ${alertStyle.shadow} backdrop-blur-md max-w-sm min-w-80`}
+        className={`flex items-start p-4 md:p-5 rounded-2xl shadow-2xl border-2 ${alertStyle.bg} ${alertStyle.border} ${alertStyle.shadow} backdrop-blur-md max-w-sm mx-auto md:mx-0 md:min-w-80`}
       >
-        <div className="flex-shrink-0 mr-4 mt-0.5">{alertStyle.icon}</div>
+        <div className="flex-shrink-0 mr-3 md:mr-4 mt-0.5">{alertStyle.icon}</div>
         <div className="flex-1">
           <div
             className={`${alertStyle.textColor} font-semibold text-sm leading-relaxed`}
@@ -104,19 +104,19 @@ const ConfirmationModal = ({
 
   const typeStyles = {
     warning: {
-      icon: <AlertTriangle className="w-12 h-12 text-amber-500" />,
+      icon: <AlertTriangle className="w-8 h-8 md:w-12 md:h-12 text-amber-500" />,
       confirmBtn:
         "bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600",
       iconBg: "bg-amber-100",
     },
     danger: {
-      icon: <XCircle className="w-12 h-12 text-red-500" />,
+      icon: <XCircle className="w-8 h-8 md:w-12 md:h-12 text-red-500" />,
       confirmBtn:
         "bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600",
       iconBg: "bg-red-100",
     },
     info: {
-      icon: <Info className="w-12 h-12 text-blue-500" />,
+      icon: <Info className="w-8 h-8 md:w-12 md:h-12 text-blue-500" />,
       confirmBtn:
         "bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600",
       iconBg: "bg-blue-100",
@@ -132,21 +132,21 @@ const ConfirmationModal = ({
         onClick={onClose}
       />
       <div className="relative bg-white rounded-3xl shadow-2xl max-w-md w-full transform transition-all duration-300 animate-modal-appear">
-        <div className="p-8 text-center">
+        <div className="p-6 md:p-8 text-center">
           <div
-            className={`inline-flex items-center justify-center w-20 h-20 ${style.iconBg} rounded-full mb-6`}
+            className={`inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 ${style.iconBg} rounded-full mb-4 md:mb-6`}
           >
             {style.icon}
           </div>
 
-          <h3 className="text-xl font-bold text-gray-900 mb-3">{title}</h3>
+          <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-2 md:mb-3">{title}</h3>
 
-          <p className="text-gray-600 mb-8 leading-relaxed">{message}</p>
+          <p className="text-gray-600 mb-6 md:mb-8 leading-relaxed text-sm md:text-base">{message}</p>
 
-          <div className="flex space-x-4">
+          <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
             <button
               onClick={onClose}
-              className="flex-1 px-6 py-3 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-xl font-semibold transition-all duration-200 hover:scale-105"
+              className="flex-1 px-4 md:px-6 py-3 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-xl font-semibold transition-all duration-200 hover:scale-105 text-sm md:text-base"
             >
               {cancelText}
             </button>
@@ -155,7 +155,7 @@ const ConfirmationModal = ({
                 onConfirm();
                 onClose();
               }}
-              className={`flex-1 px-6 py-3 text-white ${style.confirmBtn} rounded-xl font-semibold transition-all duration-200 hover:scale-105 shadow-lg`}
+              className={`flex-1 px-4 md:px-6 py-3 text-white ${style.confirmBtn} rounded-xl font-semibold transition-all duration-200 hover:scale-105 shadow-lg text-sm md:text-base`}
             >
               {confirmText}
             </button>
@@ -177,18 +177,18 @@ const SuccessModal = ({ isOpen, onClose, title, message }) => {
         onClick={onClose}
       />
       <div className="relative bg-white rounded-3xl shadow-2xl max-w-md w-full transform transition-all duration-300 animate-modal-appear">
-        <div className="p-8 text-center">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-green-100 rounded-full mb-6">
-            <CheckCircle className="w-12 h-12 text-green-500" />
+        <div className="p-6 md:p-8 text-center">
+          <div className="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 bg-green-100 rounded-full mb-4 md:mb-6">
+            <CheckCircle className="w-8 h-8 md:w-12 md:h-12 text-green-500" />
           </div>
 
-          <h3 className="text-xl font-bold text-gray-900 mb-3">{title}</h3>
+          <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-2 md:mb-3">{title}</h3>
 
-          <p className="text-gray-600 mb-8 leading-relaxed">{message}</p>
+          <p className="text-gray-600 mb-6 md:mb-8 leading-relaxed text-sm md:text-base">{message}</p>
 
           <button
             onClick={onClose}
-            className="w-full px-6 py-3 text-white bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 rounded-xl font-semibold transition-all duration-200 hover:scale-105 shadow-lg"
+            className="w-full px-4 md:px-6 py-3 text-white bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 rounded-xl font-semibold transition-all duration-200 hover:scale-105 shadow-lg text-sm md:text-base"
           >
             Tutup
           </button>
@@ -242,7 +242,7 @@ const learningStyleColors = {
 
 const getStyleClass = (style) => {
   const colors = learningStyleColors[style] || learningStyleColors.default;
-  return `${colors.bg} ${colors.text} px-3 py-1 text-xs rounded-full shadow-sm transition-all duration-300 ${colors.hover}`;
+  return `${colors.bg} ${colors.text} px-2 md:px-3 py-1 text-xs rounded-full shadow-sm transition-all duration-300 ${colors.hover}`;
 };
 
 const getLearningStyleLabel = (style) => {
@@ -864,27 +864,27 @@ const DaftarTeman = () => {
     return (
       <div className="fixed inset-0 backdrop-blur-sm bg-black/30 flex items-center justify-center z-50 p-4">
         <div className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
-          <div className="p-8">
+          <div className="p-4 md:p-8">
             {/* Header */}
-            <div className="flex items-center justify-between mb-8">
-              <div className="flex items-center space-x-3">
-                <Heart className="w-6 h-6 text-pink-500" />
-                <h2 className="text-2xl font-bold text-gray-800">
+            <div className="flex items-center justify-between mb-6 md:mb-8">
+              <div className="flex items-center space-x-2 md:space-x-3">
+                <Heart className="w-5 h-5 md:w-6 md:h-6 text-pink-500" />
+                <h2 className="text-xl md:text-2xl font-bold text-gray-800">
                   Detail Teman
                 </h2>
               </div>
               <button
                 onClick={onClose}
-                className="p-3 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-all duration-200"
+                className="p-2 md:p-3 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-all duration-200"
               >
-                <X size={24} />
+                <X size={20} className="md:w-6 md:h-6" />
               </button>
             </div>
 
             {/* Profile Section */}
-            <div className="flex items-start space-x-6 mb-8 p-6 bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl">
-              <div className="relative">
-                <div className="w-24 h-24 bg-gray-300 rounded-full flex items-center justify-center ring-4 ring-white shadow-lg">
+            <div className="flex flex-col sm:flex-row items-start space-y-4 sm:space-y-0 sm:space-x-6 mb-6 md:mb-8 p-4 md:p-6 bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl">
+              <div className="relative mx-auto sm:mx-0">
+                <div className="w-20 h-20 md:w-24 md:h-24 bg-gray-300 rounded-full flex items-center justify-center ring-4 ring-white shadow-lg">
                   {friend.profile_picture ? (
                     <img
                       src={friend.profile_picture}
@@ -892,29 +892,29 @@ const DaftarTeman = () => {
                       className="w-full h-full rounded-full object-cover"
                     />
                   ) : (
-                    <span className="text-gray-600 text-2xl font-medium">
+                    <span className="text-gray-600 text-xl md:text-2xl font-medium">
                       {friend.name?.charAt(0).toUpperCase() || "?"}
                     </span>
                   )}
                 </div>
-                <div className="absolute -bottom-2 -right-2 bg-green-500 w-6 h-6 rounded-full border-3 border-white"></div>
+                <div className="absolute -bottom-2 -right-2 bg-green-500 w-5 h-5 md:w-6 md:h-6 rounded-full border-3 border-white"></div>
               </div>
-              <div className="flex-1">
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">
+              <div className="flex-1 text-center sm:text-left">
+                <h3 className="text-lg md:text-xl font-semibold text-gray-800 mb-2">
                   {friend.name}
                 </h3>
-                <p className="text-gray-600 mb-2">{friend.email}</p>
+                <p className="text-gray-600 mb-2 text-sm md:text-base">{friend.email}</p>
                 {friend.learning_style && (
                   <span className={getStyleClass(friend.learning_style)}>
                     {getLearningStyleLabel(friend?.learning_style)}
                   </span>
                 )}
                 {friend.bio && (
-                  <p className="italic">&quot;{friend.bio}&quot;</p>
+                  <p className="italic text-sm md:text-base mt-2">&quot;{friend.bio}&quot;</p>
                 )}
                 {friend.interest && (
-                  <p className="text-blue-600 mt-2">
-                    <Sparkles className="w-4 h-4 inline mr-1" />
+                  <p className="text-blue-600 mt-2 text-sm md:text-base">
+                    <Sparkles className="w-3 h-3 md:w-4 md:h-4 inline mr-1" />
                     <strong>Minat:</strong> {friend.interest}
                   </p>
                 )}
@@ -922,12 +922,12 @@ const DaftarTeman = () => {
             </div>
 
             {/* Friendship Info */}
-            <div className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-2xl p-6 mb-6 border border-blue-100">
-              <h4 className="font-semibold text-blue-800 mb-3 flex items-center">
-                <Heart className="w-5 h-5 mr-2" />
+            <div className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-2xl p-4 md:p-6 mb-4 md:mb-6 border border-blue-100">
+              <h4 className="font-semibold text-blue-800 mb-3 flex items-center text-sm md:text-base">
+                <Heart className="w-4 h-4 md:w-5 md:h-5 mr-2" />
                 Info Pertemanan
               </h4>
-              <div className="text-sm text-blue-700 space-y-2">
+              <div className="text-xs md:text-sm text-blue-700 space-y-2">
                 <p className="flex items-center">
                   <span className="w-2 h-2 bg-blue-400 rounded-full mr-2"></span>
                   Berteman sejak:{" "}
@@ -943,16 +943,16 @@ const DaftarTeman = () => {
 
             {/* Current Study */}
             {friend.current_study && (
-              <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-6 mb-6 border border-green-100">
-                <h4 className="font-semibold text-green-800 mb-3 flex items-center">
-                  <BookOpen size={20} className="mr-2" />
+              <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-4 md:p-6 mb-4 md:mb-6 border border-green-100">
+                <h4 className="font-semibold text-green-800 mb-3 flex items-center text-sm md:text-base">
+                  <BookOpen size={16} className="md:w-5 md:h-5 mr-2" />
                   Sedang Belajar
                 </h4>
-                <p className="text-green-700 font-medium text-lg">
+                <p className="text-green-700 font-medium text-base md:text-lg">
                   {friend.current_study.title}
                 </p>
-                <p className="text-sm text-green-600 flex items-center mt-2">
-                  <Clock className="w-4 h-4 mr-1" />
+                <p className="text-xs md:text-sm text-green-600 flex items-center mt-2">
+                  <Clock className="w-3 h-3 md:w-4 md:h-4 mr-1" />
                   Durasi:{" "}
                   {formatDuration(
                     friend.current_study.current_duration_minutes
@@ -962,41 +962,41 @@ const DaftarTeman = () => {
             )}
 
             {/* Study Statistics */}
-            <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-6 mb-6 border border-purple-100">
-              <h4 className="font-semibold text-purple-800 mb-4 flex items-center">
-                <Sparkles className="w-5 h-5 mr-2" />
+            <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-4 md:p-6 mb-4 md:mb-6 border border-purple-100">
+              <h4 className="font-semibold text-purple-800 mb-4 flex items-center text-sm md:text-base">
+                <Sparkles className="w-4 h-4 md:w-5 md:h-5 mr-2" />
                 Statistik Belajar
               </h4>
-              <div className="grid grid-cols-2 gap-6">
-                <div className="text-center p-4 bg-white/60 rounded-xl">
-                  <div className="text-3xl font-bold text-purple-600 mb-1">
+              <div className="grid grid-cols-2 gap-3 md:gap-6">
+                <div className="text-center p-3 md:p-4 bg-white/60 rounded-xl">
+                  <div className="text-2xl md:text-3xl font-bold text-purple-600 mb-1">
                     {friend.study_stats.total_sessions}
                   </div>
-                  <div className="text-sm text-purple-700 font-medium">
+                  <div className="text-xs md:text-sm text-purple-700 font-medium">
                     Total Sesi
                   </div>
                 </div>
-                <div className="text-center p-4 bg-white/60 rounded-xl">
-                  <div className="text-3xl font-bold text-purple-600 mb-1">
+                <div className="text-center p-3 md:p-4 bg-white/60 rounded-xl">
+                  <div className="text-2xl md:text-3xl font-bold text-purple-600 mb-1">
                     {friend.study_stats.total_study_hours}h
                   </div>
-                  <div className="text-sm text-purple-700 font-medium">
+                  <div className="text-xs md:text-sm text-purple-700 font-medium">
                     Total Jam
                   </div>
                 </div>
-                <div className="text-center p-4 bg-white/60 rounded-xl">
-                  <div className="text-3xl font-bold text-purple-600 mb-1">
+                <div className="text-center p-3 md:p-4 bg-white/60 rounded-xl">
+                  <div className="text-2xl md:text-3xl font-bold text-purple-600 mb-1">
                     {friend.study_stats.today_sessions}
                   </div>
-                  <div className="text-sm text-purple-700 font-medium">
+                  <div className="text-xs md:text-sm text-purple-700 font-medium">
                     Hari Ini
                   </div>
                 </div>
-                <div className="text-center p-4 bg-white/60 rounded-xl">
-                  <div className="text-3xl font-bold text-purple-600 mb-1">
+                <div className="text-center p-3 md:p-4 bg-white/60 rounded-xl">
+                  <div className="text-2xl md:text-3xl font-bold text-purple-600 mb-1">
                     {friend.study_stats.week_sessions}
                   </div>
-                  <div className="text-sm text-purple-700 font-medium">
+                  <div className="text-xs md:text-sm text-purple-700 font-medium">
                     Minggu Ini
                   </div>
                 </div>
@@ -1005,27 +1005,27 @@ const DaftarTeman = () => {
 
             {/* Recent Sessions */}
             {friend.recent_sessions && friend.recent_sessions.length > 0 && (
-              <div className="bg-gradient-to-r from-gray-50 to-slate-50 rounded-2xl p-6 border border-gray-100">
-                <h4 className="font-semibold text-gray-800 mb-4 flex items-center">
-                  <Clock className="w-5 h-5 mr-2" />
+              <div className="bg-gradient-to-r from-gray-50 to-slate-50 rounded-2xl p-4 md:p-6 border border-gray-100">
+                <h4 className="font-semibold text-gray-800 mb-4 flex items-center text-sm md:text-base">
+                  <Clock className="w-4 h-4 md:w-5 md:h-5 mr-2" />
                   Sesi Belajar Terbaru
                 </h4>
                 <div className="space-y-3">
                   {friend.recent_sessions.map((session, index) => (
                     <div
                       key={index}
-                      className="flex items-center justify-between p-4 bg-white rounded-xl shadow-sm border border-gray-100"
+                      className="flex items-center justify-between p-3 md:p-4 bg-white rounded-xl shadow-sm border border-gray-100"
                     >
-                      <span className="text-gray-700 font-medium">
+                      <span className="text-gray-700 font-medium text-sm md:text-base truncate mr-2">
                         {session.title}
                       </span>
-                      <div className="text-gray-500">
+                      <div className="text-gray-500 flex-shrink-0">
                         {session.duration_minutes ? (
-                          <span className="px-3 py-1 bg-gray-100 rounded-full text-sm">
+                          <span className="px-2 md:px-3 py-1 bg-gray-100 rounded-full text-xs md:text-sm">
                             {formatDuration(session.duration_minutes)}
                           </span>
                         ) : (
-                          <span className="px-3 py-1 bg-green-100 text-green-600 rounded-full text-sm font-medium">
+                          <span className="px-2 md:px-3 py-1 bg-green-100 text-green-600 rounded-full text-xs md:text-sm font-medium">
                             Berlangsung
                           </span>
                         )}
@@ -1042,7 +1042,7 @@ const DaftarTeman = () => {
   };
 
   return (
-    <div className="p-6">
+    <div className="p-3 md:p-6">
       <style jsx>{`
         @keyframes slide-in-bounce {
           0% {
@@ -1077,7 +1077,7 @@ const DaftarTeman = () => {
         }
       `}</style>
 
-      <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+      <div className="bg-white rounded-2xl shadow-xl p-4 md:p-8 border border-gray-100">
         {/* Alert */}
         {alert.show && (
           <Alert
@@ -1108,53 +1108,58 @@ const DaftarTeman = () => {
         />
 
         {/* Tab Navigation */}
-        <div className="flex border-b-0 bg-white/50 backdrop-blur-sm">
+        <div className="flex border-b-0 bg-white/50 backdrop-blur-sm overflow-x-auto">
           <a
             href="#connect"
             onClick={() => setActiveTab("daftar")}
-            className={`text-center cursor-pointer flex-1 py-6 px-8 text-sm font-semibold transition-all duration-300 relative ${
+            className={`text-center cursor-pointer flex-1 py-4 md:py-6 px-4 md:px-8 text-xs md:text-sm font-semibold transition-all duration-300 relative whitespace-nowrap ${
               activeTab === "daftar"
                 ? "bg-gradient-to-t from-[#0B92C2] to-[#7FD8E8] text-white rounded-t-3xl shadow-lg transform scale-105"
                 : "text-gray-600 hover:bg-gradient-to-t hover:from-gray-100 hover:to-gray-50 hover:text-gray-800 hover:scale-95"
             }`}
           >
-            <Heart className="w-4 h-4 inline mr-2" />
-            Daftar Teman ({friends.length})
+            <Heart className="w-3 h-3 md:w-4 md:h-4 inline mr-1 md:mr-2" />
+            <span className="hidden sm:inline">Daftar Teman </span>
+            <span className="sm:hidden">Teman </span>
+            ({friends.length})
           </a>
           <a
             href="#add"
             onClick={() => setActiveTab("rekomendasi")}
-            className={`text-center cursor-pointer flex-1 py-6 px-8 text-sm font-semibold transition-all duration-300 relative ${
+            className={`text-center cursor-pointer flex-1 py-4 md:py-6 px-4 md:px-8 text-xs md:text-sm font-semibold transition-all duration-300 relative whitespace-nowrap ${
               activeTab === "rekomendasi"
                 ? "bg-gradient-to-t from-[#0B92C2] to-[#7FD8E8] text-white rounded-t-3xl shadow-lg transform scale-105"
                 : "text-gray-600 hover:bg-gradient-to-t hover:from-gray-100 hover:to-gray-50 hover:text-gray-800 hover:scale-95"
             }`}
           >
-            <Sparkles className="w-4 h-4 inline mr-2" />
-            Rekomendasi
+            <Sparkles className="w-3 h-3 md:w-4 md:h-4 inline mr-1 md:mr-2" />
+            <span className="hidden sm:inline">Rekomendasi</span>
+            <span className="sm:hidden">Cari</span>
           </a>
           <a
             href="#req"
             onClick={() => setActiveTab("permintaan")}
-            className={`text-center cursor-pointer flex-1 py-6 px-8 text-sm font-semibold transition-all duration-300 relative ${
+            className={`text-center cursor-pointer flex-1 py-4 md:py-6 px-4 md:px-8 text-xs md:text-sm font-semibold transition-all duration-300 relative whitespace-nowrap ${
               activeTab === "permintaan"
                 ? "bg-gradient-to-t from-[#0B92C2] to-[#7FD8E8] text-white rounded-t-3xl shadow-lg transform scale-105"
                 : "text-gray-600 hover:bg-gradient-to-t hover:from-gray-100 hover:to-gray-50 hover:text-gray-800 hover:scale-95"
             }`}
           >
-            <AlertCircle className="w-4 h-4 inline mr-2" />
-            Permintaan ({friendRequests.length})
+            <AlertCircle className="w-3 h-3 md:w-4 md:h-4 inline mr-1 md:mr-2" />
+            <span className="hidden sm:inline">Permintaan </span>
+            <span className="sm:hidden">Req </span>
+            ({friendRequests.length})
           </a>
         </div>
 
         {/* Tab Content */}
-        <div className="p-8">
+        <div className="p-4 md:p-8">
           {activeTab === "daftar" && (
-            <div className="space-y-6">
+            <div className="space-y-4 md:space-y-6">
               {loading.friends ? (
                 <div className="text-center text-gray-500 mt-12 flex flex-col items-center">
                   <div className="w-8 h-8 border-4 border-blue-200 border-t-blue-500 rounded-full animate-spin mb-4"></div>
-                  <p>Loading daftar teman...</p>
+                  <p className="text-sm md:text-base">Loading daftar teman...</p>
                 </div>
               ) : friends.length > 0 ? (
                 friends.map((friend) => {
@@ -1162,11 +1167,11 @@ const DaftarTeman = () => {
                   return (
                     <div
                       key={friend.id}
-                      className="flex items-center justify-between p-6 rounded-3xl bg-gradient-to-r from-white to-gray-50 shadow-md hover:shadow-xl transition-all duration-300 hover:scale-[1.02] border border-gray-100"
+                      className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 md:p-6 rounded-3xl bg-gradient-to-r from-white to-gray-50 shadow-md hover:shadow-xl transition-all duration-300 hover:scale-[1.02] border border-gray-100 space-y-4 sm:space-y-0"
                     >
-                      <div className="flex items-center space-x-5">
+                      <div className="flex items-center space-x-3 md:space-x-5 w-full sm:w-auto">
                         <div className="relative group">
-                          <div className="w-16 h-16 bg-gray-300 rounded-full flex items-center justify-center shadow-lg ring-4 ring-white group-hover:ring-blue-200 transition-all duration-300">
+                          <div className="w-12 h-12 md:w-16 md:h-16 bg-gray-300 rounded-full flex items-center justify-center shadow-lg ring-4 ring-white group-hover:ring-blue-200 transition-all duration-300">
                             {friend.profile_picture ? (
                               <img
                                 src={friend.profile_picture}
@@ -1174,17 +1179,17 @@ const DaftarTeman = () => {
                                 className="w-full h-full rounded-full object-cover"
                               />
                             ) : (
-                              <span className="text-gray-600 font-medium text-lg">
+                              <span className="text-gray-600 font-medium text-sm md:text-lg">
                                 {friend.name?.charAt(0).toUpperCase() || "?"}
                               </span>
                             )}
                           </div>
                           {friend.is_currently_studying && (
-                            <div className="absolute -top-1 -right-1 w-6 h-6 bg-gradient-to-r from-green-400 to-green-500 rounded-full border-3 border-white shadow-lg animate-pulse"></div>
+                            <div className="absolute -top-1 -right-1 w-4 h-4 md:w-6 md:h-6 bg-gradient-to-r from-green-400 to-green-500 rounded-full border-2 md:border-3 border-white shadow-lg animate-pulse"></div>
                           )}
                         </div>
-                        <div className="flex flex-col">
-                          <h3 className="text-lg font-semibold text-gray-900 truncate">
+                        <div className="flex flex-col min-w-0 flex-1">
+                          <h3 className="text-base md:text-lg font-semibold text-gray-900 truncate">
                             {friend.name}
                           </h3>
                           {friend.learning_style && (
@@ -1194,18 +1199,18 @@ const DaftarTeman = () => {
                               {learningStyleLabels[friend.learning_style]}
                             </span>
                           )}
-                          <span className="text-sm text-gray-500">
+                          <span className="text-xs md:text-sm text-gray-500 truncate">
                             {friend.email}
                           </span>
                         </div>
                       </div>
 
-                      <div className="flex flex-col items-end space-y-2">
+                      <div className="flex flex-col items-start sm:items-end space-y-2 w-full sm:w-auto min-w-0">
                         <p
-                          className={`text-sm ${studyStatus.color} flex items-center font-medium`}
+                          className={`text-xs md:text-sm ${studyStatus.color} flex items-center font-medium truncate max-w-full`}
                         >
                           {studyStatus.icon}
-                          {studyStatus.text}
+                          <span className="truncate">{studyStatus.text}</span>
                         </p>
                         {friend.friend_since && (
                           <span className="text-xs text-gray-400">
@@ -1217,22 +1222,22 @@ const DaftarTeman = () => {
                         )}
                       </div>
 
-                      <div className="flex items-center space-x-3">
+                      <div className="flex items-center space-x-2 md:space-x-3 w-full sm:w-auto justify-end">
                         <button
                           onClick={() => handleViewFriendDetail(friend.id)}
                           disabled={loading.friendDetail}
-                          className="cursor-pointer p-4 text-gray-400 hover:text-blue-500 hover:bg-blue-50 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-md disabled:opacity-50"
+                          className="cursor-pointer p-3 md:p-4 text-gray-400 hover:text-blue-500 hover:bg-blue-50 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-md disabled:opacity-50"
                           title="Lihat Detail"
                         >
-                          <Eye size={20} />
+                          <Eye size={16} className="md:w-5 md:h-5" />
                         </button>
                         <button
                           onClick={() => handleUnfriend(friend.id, friend.name)}
                           disabled={loading.action}
-                          className="cursor-pointer p-4 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-md disabled:opacity-50"
+                          className="cursor-pointer p-3 md:p-4 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-md disabled:opacity-50"
                           title="Hapus Teman"
                         >
-                          <UserMinus size={20} />
+                          <UserMinus size={16} className="md:w-5 md:h-5" />
                         </button>
                       </div>
                     </div>
@@ -1240,8 +1245,8 @@ const DaftarTeman = () => {
                 })
               ) : (
                 <div className="text-center text-gray-500 mt-12 flex flex-col items-center">
-                  <Heart className="w-16 h-16 text-gray-300 mb-4" />
-                  <p className="text-lg">Belum ada teman</p>
+                  <Heart className="w-12 h-12 md:w-16 md:h-16 text-gray-300 mb-4" />
+                  <p className="text-base md:text-lg">Belum ada teman</p>
                   <p className="text-sm">
                     Mulai cari teman baru di tab Rekomendasi!
                   </p>
@@ -1251,32 +1256,32 @@ const DaftarTeman = () => {
           )}
 
           {activeTab === "rekomendasi" && (
-            <div className="py-6 space-y-8">
+            <div className="py-4 md:py-6 space-y-6 md:space-y-8">
               <div className="text-center">
-                <h3 className="text-2xl font-bold text-gray-900 mb-3 flex items-center justify-center">
-                  <Sparkles className="w-6 h-6 mr-2 text-purple-500" />
+                <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-2 md:mb-3 flex items-center justify-center">
+                  <Sparkles className="w-5 h-5 md:w-6 md:h-6 mr-2 text-purple-500" />
                   Cari Teman Baru
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-gray-600 text-sm md:text-base">
                   Temukan teman dengan minat yang sama!
                 </p>
               </div>
 
               {/* Search Input */}
-              <div className="flex items-center space-x-4 max-w-2xl mx-auto">
+              <div className="flex items-center space-x-3 md:space-x-4 max-w-2xl mx-auto">
                 <input
                   type="text"
                   placeholder="Masukkan nama (minimal 2 karakter)"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="flex-1 px-6 py-4 text-sm text-gray-700 bg-white border-2 border-gray-200 rounded-full focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500 placeholder-gray-400 shadow-sm"
+                  className="flex-1 px-4 md:px-6 py-3 md:py-4 text-sm text-gray-700 bg-white border-2 border-gray-200 rounded-full focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500 placeholder-gray-400 shadow-sm"
                 />
-                <button className="w-14 h-14 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 rounded-full flex items-center justify-center text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+                <button className="w-12 h-12 md:w-14 md:h-14 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 rounded-full flex items-center justify-center text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
                   {loading.search ? (
-                    <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    <div className="w-5 h-5 md:w-6 md:h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                   ) : (
                     <svg
-                      className="w-6 h-6"
+                      className="w-5 h-5 md:w-6 md:h-6"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -1294,10 +1299,10 @@ const DaftarTeman = () => {
 
               {/* Search Results */}
               {searchQuery.length >= 2 && (
-                <div className="space-y-6">
-                  <h4 className="text-lg font-bold text-gray-800 text-center flex items-center justify-center">
+                <div className="space-y-4 md:space-y-6">
+                  <h4 className="text-base md:text-lg font-bold text-gray-800 text-center flex items-center justify-center">
                     <svg
-                      className="w-5 h-5 mr-2"
+                      className="w-4 h-4 md:w-5 md:h-5 mr-2"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -1315,11 +1320,11 @@ const DaftarTeman = () => {
                     searchResults.map((user) => (
                       <div
                         key={user.id}
-                        className="flex items-center justify-between p-6 rounded-3xl bg-gradient-to-r from-white to-gray-50 shadow-md hover:shadow-xl transition-all duration-300 hover:scale-[1.02] border border-gray-100"
+                        className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 md:p-6 rounded-3xl bg-gradient-to-r from-white to-gray-50 shadow-md hover:shadow-xl transition-all duration-300 hover:scale-[1.02] border border-gray-100 space-y-4 sm:space-y-0"
                       >
-                        <div className="flex items-center space-x-5">
+                        <div className="flex items-center space-x-3 md:space-x-5 w-full sm:w-auto">
                           <div className="relative group">
-                            <div className="w-16 h-16 bg-gray-300 rounded-full flex items-center justify-center shadow-lg ring-4 ring-white group-hover:ring-blue-200 transition-all duration-300">
+                            <div className="w-12 h-12 md:w-16 md:h-16 bg-gray-300 rounded-full flex items-center justify-center shadow-lg ring-4 ring-white group-hover:ring-blue-200 transition-all duration-300">
                               {user.profile_picture ? (
                                 <img
                                   src={user.profile_picture}
@@ -1327,14 +1332,14 @@ const DaftarTeman = () => {
                                   className="w-full h-full rounded-full object-cover"
                                 />
                               ) : (
-                                <span className="text-gray-600 font-medium text-lg">
+                                <span className="text-gray-600 font-medium text-sm md:text-lg">
                                   {user.name?.charAt(0).toUpperCase() || "?"}
                                 </span>
                               )}
                             </div>
                           </div>
-                          <div className="flex flex-col">
-                            <h3 className="text-lg font-semibold text-gray-900 truncate">
+                          <div className="flex flex-col min-w-0 flex-1">
+                            <h3 className="text-base md:text-lg font-semibold text-gray-900 truncate">
                               {user.name}
                             </h3>
                             {user.learning_style && (
@@ -1344,16 +1349,16 @@ const DaftarTeman = () => {
                                 {getLearningStyleLabel(user.learning_style)}
                               </span>
                             )}
-                            <span className="text-sm text-gray-500">
+                            <span className="text-xs md:text-sm text-gray-500 truncate">
                               {user.email}
                             </span>
                           </div>
                         </div>
 
-                        <div className="flex items-center space-x-4">
+                        <div className="flex items-center space-x-3 md:space-x-4 w-full sm:w-auto justify-end">
                           {user.friendship_status === "friend" ? (
-                            <span className="px-6 py-3 bg-green-100 text-green-700 text-sm rounded-full font-semibold flex items-center">
-                              <CheckCircle className="w-4 h-4 mr-2" />
+                            <span className="px-4 md:px-6 py-2 md:py-3 bg-green-100 text-green-700 text-xs md:text-sm rounded-full font-semibold flex items-center">
+                              <CheckCircle className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
                               Teman
                             </span>
                           ) : user.friendship_status === "request_sent" ? (
@@ -1362,22 +1367,22 @@ const DaftarTeman = () => {
                                 handleCancelRequest(user.id, user.name)
                               }
                               disabled={loading.action}
-                              className="px-6 py-3 bg-orange-100 text-orange-700 text-sm rounded-full hover:bg-orange-200 transition-colors disabled:opacity-50 font-semibold"
+                              className="px-4 md:px-6 py-2 md:py-3 bg-orange-100 text-orange-700 text-xs md:text-sm rounded-full hover:bg-orange-200 transition-colors disabled:opacity-50 font-semibold"
                             >
                               {loading.action ? "Loading..." : "Batalkan"}
                             </button>
                           ) : user.friendship_status === "request_received" ? (
-                            <span className="px-6 py-3 bg-blue-100 text-blue-700 text-sm rounded-full font-semibold">
+                            <span className="px-4 md:px-6 py-2 md:py-3 bg-blue-100 text-blue-700 text-xs md:text-sm rounded-full font-semibold">
                               Request Masuk
                             </span>
                           ) : (
                             <button
                               onClick={() => handleSendFriendRequest(user.id)}
                               disabled={loading.action}
-                              className="cursor-pointer p-4 text-gray-400 hover:text-blue-500 hover:bg-blue-50 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-md disabled:opacity-50"
+                              className="cursor-pointer p-3 md:p-4 text-gray-400 hover:text-blue-500 hover:bg-blue-50 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-md disabled:opacity-50"
                               title="Tambah Teman"
                             >
-                              <UserPlus size={20} />
+                              <UserPlus size={16} className="md:w-5 md:h-5" />
                             </button>
                           )}
                         </div>
@@ -1385,8 +1390,8 @@ const DaftarTeman = () => {
                     ))
                   ) : (
                     <div className="text-center text-gray-500 mt-12 flex flex-col items-center">
-                      <XCircle className="w-16 h-16 text-gray-300 mb-4" />
-                      <p className="text-lg">
+                      <XCircle className="w-12 h-12 md:w-16 md:h-16 text-gray-300 mb-4" />
+                      <p className="text-base md:text-lg">
                         Akun yang kamu cari tidak ada, nih
                       </p>
                     </div>
@@ -1395,23 +1400,23 @@ const DaftarTeman = () => {
               )}
 
               {searchQuery.length === 0 && !loading.recommendations ? (
-                <div className="space-y-6">
-                  <h4 className="text-lg font-bold text-gray-800 text-center flex items-center justify-center">
-                    <Sparkles className="w-5 h-5 mr-2 text-purple-500" />
+                <div className="space-y-4 md:space-y-6">
+                  <h4 className="text-base md:text-lg font-bold text-gray-800 text-center flex items-center justify-center">
+                    <Sparkles className="w-4 h-4 md:w-5 md:h-5 mr-2 text-purple-500" />
                     Rekomendasi Teman
                   </h4>
-                  <p className="text-gray-500 text-center">
+                  <p className="text-gray-500 text-center text-sm md:text-base">
                     Teman dengan minat dan gaya belajar yang sama
                   </p>
                   {recommendations.length > 0 ? (
                     recommendations.map((user) => (
                       <div
                         key={user.id}
-                        className="flex items-center justify-between p-6 rounded-3xl bg-gradient-to-r from-white to-gray-50 shadow-md hover:shadow-xl transition-all duration-300 hover:scale-[1.02] border border-gray-100"
+                        className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 md:p-6 rounded-3xl bg-gradient-to-r from-white to-gray-50 shadow-md hover:shadow-xl transition-all duration-300 hover:scale-[1.02] border border-gray-100 space-y-4 sm:space-y-0"
                       >
-                        <div className="flex items-center space-x-5">
+                        <div className="flex items-center space-x-3 md:space-x-5 w-full sm:w-auto">
                           <div className="relative group">
-                            <div className="w-16 h-16 bg-gray-300 rounded-full flex items-center justify-center shadow-lg ring-4 ring-white group-hover:ring-blue-200 transition-all duration-300">
+                            <div className="w-12 h-12 md:w-16 md:h-16 bg-gray-300 rounded-full flex items-center justify-center shadow-lg ring-4 ring-white group-hover:ring-blue-200 transition-all duration-300">
                               {user.profile_picture ? (
                                 <img
                                   src={user.profile_picture}
@@ -1419,14 +1424,14 @@ const DaftarTeman = () => {
                                   className="w-full h-full rounded-full object-cover"
                                 />
                               ) : (
-                                <span className="text-gray-600 font-medium text-lg">
+                                <span className="text-gray-600 font-medium text-sm md:text-lg">
                                   {user.name?.charAt(0).toUpperCase() || "?"}
                                 </span>
                               )}
                             </div>
                           </div>
-                          <div className="flex flex-col">
-                            <h3 className="text-lg font-semibold text-gray-900 truncate">
+                          <div className="flex flex-col min-w-0 flex-1">
+                            <h3 className="text-base md:text-lg font-semibold text-gray-900 truncate">
                               {user.name}
                             </h3>
                             {user.learning_style && (
@@ -1436,15 +1441,15 @@ const DaftarTeman = () => {
                                 {getLearningStyleLabel(user.learning_style)}
                               </span>
                             )}
-                            <span className="text-sm text-gray-500">
+                            <span className="text-xs md:text-sm text-gray-500 truncate">
                               {user.email}
                             </span>
                           </div>
                         </div>
-                        <div className="flex items-center space-x-4">
+                        <div className="flex items-center space-x-3 md:space-x-4 w-full sm:w-auto justify-end">
                           {user.friendship_status === "friend" ? (
-                            <span className="px-6 py-3 bg-green-100 text-green-700 text-sm rounded-full font-semibold flex items-center">
-                              <CheckCircle className="w-4 h-4 mr-2" />
+                            <span className="px-4 md:px-6 py-2 md:py-3 bg-green-100 text-green-700 text-xs md:text-sm rounded-full font-semibold flex items-center">
+                              <CheckCircle className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
                               Teman
                             </span>
                           ) : user.friendship_status === "request_sent" ? (
@@ -1453,22 +1458,22 @@ const DaftarTeman = () => {
                                 handleCancelRequest(user.id, user.name)
                               }
                               disabled={loading.action}
-                              className="px-6 py-3 bg-orange-100 text-orange-700 text-sm rounded-full hover:bg-orange-200 transition-colors disabled:opacity-50 font-semibold"
+                              className="px-4 md:px-6 py-2 md:py-3 bg-orange-100 text-orange-700 text-xs md:text-sm rounded-full hover:bg-orange-200 transition-colors disabled:opacity-50 font-semibold"
                             >
                               {loading.action ? "Loading..." : "Batalkan"}
                             </button>
                           ) : user.friendship_status === "request_received" ? (
-                            <span className="px-6 py-3 bg-blue-100 text-blue-700 text-sm rounded-full font-semibold">
+                            <span className="px-4 md:px-6 py-2 md:py-3 bg-blue-100 text-blue-700 text-xs md:text-sm rounded-full font-semibold">
                               Request Masuk
                             </span>
                           ) : (
                             <button
                               onClick={() => handleSendFriendRequest(user.id)}
                               disabled={loading.action}
-                              className="cursor-pointer p-4 text-gray-400 hover:text-blue-500 hover:bg-blue-50 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-md disabled:opacity-50"
+                              className="cursor-pointer p-3 md:p-4 text-gray-400 hover:text-blue-500 hover:bg-blue-50 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-md disabled:opacity-50"
                               title="Tambah Teman"
                             >
-                              <UserPlus size={20} />
+                              <UserPlus size={16} className="md:w-5 md:h-5" />
                             </button>
                           )}
                         </div>
@@ -1476,8 +1481,8 @@ const DaftarTeman = () => {
                     ))
                   ) : (
                     <div className="text-center text-gray-500 mt-12 flex flex-col items-center">
-                      <Sparkles className="w-16 h-16 text-gray-300 mb-4" />
-                      <p className="text-lg">Tidak ada rekomendasi tersedia</p>
+                      <Sparkles className="w-12 h-12 md:w-16 md:h-16 text-gray-300 mb-4" />
+                      <p className="text-base md:text-lg">Tidak ada rekomendasi tersedia</p>
                     </div>
                   )}
                 </div>
@@ -1486,31 +1491,31 @@ const DaftarTeman = () => {
           )}
 
           {activeTab === "permintaan" && (
-            <div className="space-y-6">
+            <div className="space-y-4 md:space-y-6">
               {/* Received Requests */}
               <div>
-                <h3 className="text-lg font-medium text-gray-800 mb-4">
+                <h3 className="text-base md:text-lg font-medium text-gray-800 mb-4">
                   Permintaan Masuk ({friendRequests.length})
                 </h3>
                 {loading.requests ? (
                   <div className="text-center text-gray-500 mt-8">
-                    Loading permintaan pertemanan...
+                    <div className="text-sm md:text-base">Loading permintaan pertemanan...</div>
                   </div>
                 ) : friendRequests.length > 0 ? (
-                  <div className="space-y-4">
+                  <div className="space-y-3 md:space-y-4">
                     {friendRequests.map((request) => (
                       <div
                         key={request.request_id || request.id}
-                        className="flex items-center justify-between p-5 rounded-2xl bg-white shadow-sm hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 transition-all duration-300 hover:shadow-lg hover:scale-[1.02]"
+                        className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 md:p-5 rounded-2xl bg-white shadow-sm hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 transition-all duration-300 hover:shadow-lg hover:scale-[1.02] space-y-4 sm:space-y-0"
                         style={{
                           background:
                             "linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(248,250,252,0.8) 100%)",
                           backdropFilter: "blur(10px)",
                         }}
                       >
-                        <div className="flex items-center space-x-4">
+                        <div className="flex items-center space-x-3 md:space-x-4 w-full sm:w-auto">
                           <div className="relative group">
-                            <div className="w-14 h-14 bg-gray-300 rounded-full flex items-center justify-center shadow-lg ring-3 ring-white group-hover:ring-blue-200 transition-all duration-300">
+                            <div className="w-12 h-12 md:w-14 md:h-14 bg-gray-300 rounded-full flex items-center justify-center shadow-lg ring-3 ring-white group-hover:ring-blue-200 transition-all duration-300">
                               {request.profile_picture ? (
                                 <img
                                   src={request.profile_picture}
@@ -1518,14 +1523,14 @@ const DaftarTeman = () => {
                                   className="w-full h-full rounded-full object-cover"
                                 />
                               ) : (
-                                <span className="text-gray-600 font-medium">
+                                <span className="text-gray-600 font-medium text-sm md:text-base">
                                   {request.name?.charAt(0).toUpperCase() || "?"}
                                 </span>
                               )}
                             </div>
                           </div>
-                          <div className="flex flex-col">
-                            <h3 className="text-sm font-semibold text-gray-900 truncate">
+                          <div className="flex flex-col min-w-0 flex-1">
+                            <h3 className="text-sm md:text-base font-semibold text-gray-900 truncate">
                               {request.name}
                             </h3>
                             {request.learning_style && (
@@ -1537,14 +1542,14 @@ const DaftarTeman = () => {
                                 {getLearningStyleLabel(request.learning_style)}
                               </span>
                             )}
-                            <span className="text-xs text-gray-500">
+                            <span className="text-xs text-gray-500 truncate">
                               {request.email}
                             </span>
                           </div>
                         </div>
 
-                        <div className="flex flex-col items-end space-y-1">
-                          <p className="text-sm text-blue-400">
+                        <div className="flex flex-col items-start sm:items-end space-y-1 w-full sm:w-auto">
+                          <p className="text-xs md:text-sm text-blue-400">
                             {request.status ||
                               request.message ||
                               "Ingin berteman dengan Anda"}
@@ -1558,13 +1563,13 @@ const DaftarTeman = () => {
                           )}
                         </div>
 
-                        <div className="flex items-center space-x-3">
+                        <div className="flex items-center space-x-2 md:space-x-3 w-full sm:w-auto justify-end">
                           <button
                             onClick={() =>
                               handleAcceptRequest(request.request_id)
                             }
                             disabled={loading.action}
-                            className="px-3 py-2 bg-green-500 text-white text-sm rounded-lg hover:bg-green-600 transition-colors disabled:opacity-50"
+                            className="px-3 md:px-4 py-2 bg-green-500 text-white text-xs md:text-sm rounded-lg hover:bg-green-600 transition-colors disabled:opacity-50 font-medium"
                           >
                             {loading.action ? "Loading..." : "Terima"}
                           </button>
@@ -1574,7 +1579,7 @@ const DaftarTeman = () => {
                               handleRejectRequest(request.request_id)
                             }
                             disabled={loading.action}
-                            className="px-3 py-2 bg-red-500 text-white text-sm rounded-lg hover:bg-red-600 transition-colors disabled:opacity-50"
+                            className="px-3 md:px-4 py-2 bg-red-500 text-white text-xs md:text-sm rounded-lg hover:bg-red-600 transition-colors disabled:opacity-50 font-medium"
                           >
                             {loading.action ? "Loading..." : "Tolak"}
                           </button>
@@ -1584,35 +1589,35 @@ const DaftarTeman = () => {
                   </div>
                 ) : (
                   <div className="text-center text-gray-500 mt-8">
-                    Tidak ada permintaan pertemanan masuk
+                    <div className="text-sm md:text-base">Tidak ada permintaan pertemanan masuk</div>
                   </div>
                 )}
               </div>
 
               {/* Sent Requests */}
-              <div className="pt-6 border-t border-gray-200">
-                <h3 className="text-lg font-medium text-gray-800 mb-4">
+              <div className="pt-4 md:pt-6 border-t border-gray-200">
+                <h3 className="text-base md:text-lg font-medium text-gray-800 mb-4">
                   Permintaan Terkirim ({sentRequests.length})
                 </h3>
                 {loading.sentRequests ? (
                   <div className="text-center text-gray-500 mt-8">
-                    Loading permintaan terkirim...
+                    <div className="text-sm md:text-base">Loading permintaan terkirim...</div>
                   </div>
                 ) : sentRequests.length > 0 ? (
-                  <div className="space-y-4">
+                  <div className="space-y-3 md:space-y-4">
                     {sentRequests.map((request) => (
                       <div
                         key={request.request_id || request.id}
-                        className="flex items-center justify-between p-5 rounded-2xl bg-white shadow-sm hover:bg-gradient-to-r hover:from-orange-50 hover:to-yellow-50 transition-all duration-300 hover:shadow-lg hover:scale-[1.02]"
+                        className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 md:p-5 rounded-2xl bg-white shadow-sm hover:bg-gradient-to-r hover:from-orange-50 hover:to-yellow-50 transition-all duration-300 hover:shadow-lg hover:scale-[1.02] space-y-4 sm:space-y-0"
                         style={{
                           background:
                             "linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(248,250,252,0.8) 100%)",
                           backdropFilter: "blur(10px)",
                         }}
                       >
-                        <div className="flex items-center space-x-4">
+                        <div className="flex items-center space-x-3 md:space-x-4 w-full sm:w-auto">
                           <div className="relative group">
-                            <div className="w-14 h-14 bg-gray-300 rounded-full flex items-center justify-center shadow-lg ring-3 ring-white group-hover:ring-orange-200 transition-all duration-300">
+                            <div className="w-12 h-12 md:w-14 md:h-14 bg-gray-300 rounded-full flex items-center justify-center shadow-lg ring-3 ring-white group-hover:ring-orange-200 transition-all duration-300">
                               {request.profile_picture ? (
                                 <img
                                   src={request.profile_picture}
@@ -1620,14 +1625,14 @@ const DaftarTeman = () => {
                                   className="w-full h-full rounded-full object-cover"
                                 />
                               ) : (
-                                <span className="text-gray-600 font-medium">
+                                <span className="text-gray-600 font-medium text-sm md:text-base">
                                   {request.name?.charAt(0).toUpperCase() || "?"}
                                 </span>
                               )}
                             </div>
                           </div>
-                          <div className="flex flex-col">
-                            <h3 className="text-sm font-semibold text-gray-900 truncate">
+                          <div className="flex flex-col min-w-0 flex-1">
+                            <h3 className="text-sm md:text-base font-semibold text-gray-900 truncate">
                               {request.name}
                             </h3>
                             {request.learning_style && (
@@ -1639,14 +1644,14 @@ const DaftarTeman = () => {
                                 {getLearningStyleLabel(request.learning_style)}
                               </span>
                             )}
-                            <span className="text-xs text-gray-500">
+                            <span className="text-xs text-gray-500 truncate">
                               {request.email}
                             </span>
                           </div>
                         </div>
 
-                        <div className="flex flex-col items-end space-y-1">
-                          <p className="text-sm text-orange-500">
+                        <div className="flex flex-col items-start sm:items-end space-y-1 w-full sm:w-auto">
+                          <p className="text-xs md:text-sm text-orange-500">
                             Menunggu konfirmasi
                           </p>
                           {request.requested_at && (
@@ -1659,13 +1664,13 @@ const DaftarTeman = () => {
                           )}
                         </div>
 
-                        <div className="flex items-center space-x-3">
+                        <div className="flex items-center space-x-2 md:space-x-3 w-full sm:w-auto justify-end">
                           <button
                             onClick={() =>
                               handleCancelRequest(request.id, request.name)
                             }
                             disabled={loading.action}
-                            className="px-3 py-2 bg-red-500 text-white text-sm rounded-lg hover:bg-red-600 transition-colors disabled:opacity-50"
+                            className="px-3 md:px-4 py-2 bg-red-500 text-white text-xs md:text-sm rounded-lg hover:bg-red-600 transition-colors disabled:opacity-50 font-medium"
                           >
                             {loading.action ? "Loading..." : "Batalkan"}
                           </button>
@@ -1675,7 +1680,7 @@ const DaftarTeman = () => {
                   </div>
                 ) : (
                   <div className="text-center text-gray-500 mt-8">
-                    Tidak ada permintaan pertemanan terkirim
+                    <div className="text-sm md:text-base">Tidak ada permintaan pertemanan terkirim</div>
                   </div>
                 )}
               </div>

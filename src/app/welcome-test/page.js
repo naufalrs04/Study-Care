@@ -1128,7 +1128,6 @@ const LearningStyleQuiz = () => {
               </p>
             </div>
           </div>
-
         </div>
       </div>
     </div>

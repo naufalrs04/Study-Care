@@ -6,39 +6,37 @@ import React from "react";
 import VisualLearningPage from "@/components/result/visual";
 import AudLearningPage from "@/components/result/aud";
 import KineLearningPage from "@/components/result/kine";
+import LoadingPage from "@/components/result/loading";
 
-const LearningResultPage = ({ learning_style, onRetake }) => {
+// Komponen fallback bernama, agar tidak terkena error react/display-name
+const UnknownLearningStyle = () => (
+  <div className="text-center text-red-500 p-4">
+    Gaya belajar tidak dikenali.
+  </div>
+);
+
+const LearningResultPage = ({ learning_style }) => {
   let ComponentToRender;
 
   switch (learning_style) {
     case 1:
-      ComponentToRender = () => <VisualLearningPage onRetake={onRetake} />;
+      ComponentToRender = VisualLearningPage;
       break;
     case 2:
-      ComponentToRender = () => <AudLearningPage onRetake={onRetake} />;
+      ComponentToRender = AudLearningPage;
       break;
     case 3:
-      ComponentToRender = () => <KineLearningPage onRetake={onRetake} />;
+      ComponentToRender = KineLearningPage;
       break;
     default:
-      ComponentToRender = () => (
-        <div className="min-h-screen flex items-center justify-center">
-          <div className="text-center">
-            <div className="text-red-500 text-xl mb-4">
-              Gaya belajar tidak dikenali.
-            </div>
-            <button
-              onClick={onRetake}
-              className="px-8 py-3 bg-cyan-500 text-white rounded-full font-medium hover:bg-cyan-600 transition-colors"
-            >
-              Ulangi Tes
-            </button>
-          </div>
-        </div>
-      );
+      ComponentToRender = UnknownLearningStyle;
   }
 
-  return <ComponentToRender />;
+  return (
+    <div>
+      <ComponentToRender />
+    </div>
+  );
 };
 
 export default LearningResultPage;

@@ -766,7 +766,7 @@ const LearningStyleQuiz = () => {
 
             {/* Action Buttons */}
             <div className="flex gap-4 justify-end">
-              <button 
+              <button
                 onClick={onRetake}
                 className="px-8 py-3 border-2 border-cyan-500 text-cyan-600 rounded-full font-medium hover:bg-cyan-50 transition-colors"
               >
@@ -1052,16 +1052,6 @@ const LearningStyleQuiz = () => {
     setCurrentPage("welcome");
   };
 
-  // // Test function untuk development (hapus setelah tidak diperlukan)
-  const handleTestResult = (learningStyle) => {
-    setPredictionResult({
-      learning_style: learningStyle,
-      confidence: 0.85,
-      message: "Test result",
-    });
-    setCurrentPage("result");
-  };
-
   // Render result page based on learning style
   const renderResultPage = () => {
     if (!predictionResult) {
@@ -1092,9 +1082,9 @@ const LearningStyleQuiz = () => {
 
     switch (learningStyleValue) {
       case 1:
-        return <VisualLearningPage onRetake={handleRetakeTest} />;
-      case 2:
         return <AudLearningPage onRetake={handleRetakeTest} />;
+      case 2:
+        return <VisualLearningPage onRetake={handleRetakeTest} />;
       case 3:
         return <KineLearningPage onRetake={handleRetakeTest} />;
       default:
@@ -1268,8 +1258,8 @@ const LearningStyleQuiz = () => {
             <div className="text-gray-600 space-y-4 text-lg">
               <div className="p-4 bg-gray-50 rounded-lg">
                 <p className="italic">
-                  &quot;Saya biasanya belajar sambil mendengarkan musik instrumental
-                  karena membantu saya fokus...&quot;
+                  &quot;Saya biasanya belajar sambil mendengarkan musik
+                  instrumental karena membantu saya fokus...&quot;
                 </p>
               </div>
               <div className="p-4 bg-gray-50 rounded-lg">
@@ -1280,8 +1270,8 @@ const LearningStyleQuiz = () => {
               </div>
               <div className="p-4 bg-gray-50 rounded-lg">
                 <p className="italic">
-                  &quot;Saya lebih mudah memahami materi ketika bisa mempraktikkannya
-                  langsung...&quot;
+                  &quot;Saya lebih mudah memahami materi ketika bisa
+                  mempraktikkannya langsung...&quot;
                 </p>
               </div>
             </div>
@@ -1372,7 +1362,7 @@ const LearningStyleQuiz = () => {
     const isCurrentQuestionAnswered =
       quizAnswers[currentQuestionData.id] !== undefined;
 
-  return (
+    return (
       <div className="min-h-screen bg-gradient-to-br from-cyan-50 to-blue-100 flex flex-col p-3 sm:p-6">
         <div>
           <button

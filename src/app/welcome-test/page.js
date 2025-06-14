@@ -272,8 +272,8 @@ const LearningStyleQuiz = () => {
             {/* Main Character */}
             <div className="relative z-20 floating-animation">
               <Image
-                src="/assets/visuall.png"
-                alt="visual image"
+                src="/assets/aud.png"
+                alt="auditori image"
                 width={400}
                 height={300}
                 className="w-[500px] h-[500px] sm:w-[550px] sm:h-[550px] md:w-[699px] md:h-[600px] object-contain"
@@ -290,14 +290,14 @@ const LearningStyleQuiz = () => {
                 Gaya belajar kamu
               </h2>
               <h1 className="text-9xl font-extrabold text-black mb-6">
-                Visual
+                Auditori
               </h1>
             </div>
 
             <div className="flex items-center justify-end space-x-2 mb-6">
               <CheckCircle className="w-6 h-6 text-green-500" />
               <span className="text-lg text-gray-600">
-                Tingkat Kepercayaan: {confidencePercent}%
+                Tingkat Akurasi: {confidencePercent}%
               </span>
             </div>
 
@@ -361,8 +361,8 @@ const LearningStyleQuiz = () => {
           <div className="relative h-[60vh] flex items-center justify-center">
             <div className="relative z-20 floating-animation">
               <Image
-                src="/assets/visuall.png"
-                alt="visual image"
+                src="/assets/aud.png"
+                alt="auditori image"
                 width={400}
                 height={300}
                 className="w-[500px] h-[500px] sm:w-[550px] sm:h-[550px] md:w-[699px] md:h-[600px] object-contain"
@@ -379,7 +379,7 @@ const LearningStyleQuiz = () => {
                 Gaya belajar kamu
               </h2>
               <h1 className="text-6xl sm:text-7xl md:text-8xl font-extrabold text-black mb-4">
-                Visual
+                Auditori
               </h1>
             </div>
 
@@ -387,7 +387,7 @@ const LearningStyleQuiz = () => {
             <div className="flex items-center justify-center space-x-2 mb-6">
               <CheckCircle className="w-6 h-6 text-green-500" />
               <span className="text-lg text-gray-600">
-                Tingkat Kepercayaan: {confidencePercent}%
+                Tingkat Akurasi: {confidencePercent}%
               </span>
             </div>
 
@@ -445,7 +445,7 @@ const LearningStyleQuiz = () => {
     );
   };
 
-  // Auditory Learning Result Page
+  // Visual
   const VisualLearningPage = ({ onRetake }) => {
     const style = learningStyles[2];
     const confidencePercent = predictionResult?.confidence
@@ -486,8 +486,8 @@ const LearningStyleQuiz = () => {
             {/* Main Character */}
             <div className="relative z-20 floating-animation">
               <Image
-                src="/assets/aud.png"
-                alt="auditory image"
+                src="/assets/visuall.png"
+                alt="Visual image"
                 width={800}
                 height={500}
                 className="w-[400px] h-[300px] sm:w-[450px] sm:h-[340px] md:w-[500px] md:h-[375px] lg:w-[600px] lg:h-[450px] xl:w-[800px] xl:h-[650px] object-contain"
@@ -504,14 +504,14 @@ const LearningStyleQuiz = () => {
                 Gaya belajar kamu
               </h2>
               <h1 className="text-9xl font-extrabold text-black mb-6">
-                Auditori
+                Visual
               </h1>
             </div>
 
             <div className="flex items-center justify-end space-x-2 mb-6">
               <CheckCircle className="w-6 h-6 text-green-500" />
               <span className="text-lg text-gray-600">
-                Tingkat Kepercayaan: {confidencePercent}%
+                Tingkat Akurasi: {confidencePercent}%
               </span>
             </div>
 
@@ -575,8 +575,8 @@ const LearningStyleQuiz = () => {
           <div className="relative h-[60vh] flex items-center justify-center">
             <div className="relative z-20 floating-animation">
               <Image
-                src="/assets/aud.png"
-                alt="auditory image"
+                src="/assets/visuall.png"
+                alt="visual image"
                 width={400}
                 height={300}
                 className="w-[500px] h-[500px] sm:w-[550px] sm:h-[550px] md:w-[699px] md:h-[600px] object-contain"
@@ -599,7 +599,7 @@ const LearningStyleQuiz = () => {
             <div className="flex items-center justify-center space-x-2 mb-6">
               <CheckCircle className="w-6 h-6 text-green-500" />
               <span className="text-lg text-gray-600">
-                Tingkat Kepercayaan: {confidencePercent}%
+                Tingkat Akurasi: {confidencePercent}%
               </span>
             </div>
 
@@ -723,7 +723,7 @@ const LearningStyleQuiz = () => {
             <div className="flex items-center justify-end space-x-2 mb-6">
               <CheckCircle className="w-6 h-6 text-green-500" />
               <span className="text-lg text-gray-600">
-                Tingkat Kepercayaan: {confidencePercent}%
+                Tingkat Akurasi: {confidencePercent}%
               </span>
             </div>
 
@@ -811,7 +811,7 @@ const LearningStyleQuiz = () => {
             <div className="flex items-center justify-center space-x-2 mb-6">
               <CheckCircle className="w-6 h-6 text-green-500" />
               <span className="text-lg text-gray-600">
-                Tingkat Kepercayaan: {confidencePercent}%
+                Tingkat Akurasi: {confidencePercent}%
               </span>
             </div>
 
